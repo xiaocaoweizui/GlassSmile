@@ -22,74 +22,559 @@
             src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"
+            integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="crossorigin="anonymous"></script>
+        <style type="text/css">
+          
+        </style>
     </head>
     <body>
-        <div class="container">
-            <h1>h1. Bootstrap heading <small>Secondary text</small></h1>
-            <p class='lead'>
-                Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis
-                natoque penatibus et magnis dis parturient montes, nascetur
-                ridiculus mus. Nullam id dolor id nibh ultricies vehicula.
-            </p>
-            <p>
-                Cum sociis natoque penatibus et magnis dis parturient montes,
-                nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor
-                fringilla. Duis mollis, est non commodo luctus, nisi erat
-                porttitor ligula, eget lacinia odio sem nec elit. Donec
-                ullamcorper nulla non metus auctor fringilla.
 
-                Maecenas sed diam eget risus varius blandit sit amet non magna.
-                Donec id elit non mi porta gravida at eget metus. Duis mollis,
-                est non commodo luctus, nisi erat porttitor ligula, eget lacinia
-                odio sem nec elit.
-            </p>
-            <blockquote>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Integer posuere erat a ante.</p>
-                <footer>Someone famous in <cite title="Source Title">Source
-                        Title</cite></footer>
-            </blockquote>
-            <div class="row">
-                <div class="col-sm-9">
-                    Level 1: .col-sm-9
-                    <div class="row">
-                        <div class="col-xs-8 col-sm-6">
-                            Level 2: .col-xs-8 .col-sm-6
-                        </div>
-                        <div class="col-xs-4 col-sm-6">
-                            Level 2: .col-xs-4 .col-sm-6
-                        </div>
-                    </div>
+        <div class="container">
+            <div class="doc_section">
+                <h1>在线投标整体介绍 </h1>
+                <hr>
+            </div>
+            <div class="doc_section">
+                <h2>背景</h2>
+                <p class="lead">
+                    采购门户（Saas产品)无法支撑大量
+                    的客户二开场景，高频二开功能现在需要由ERP兑现，嵌入给门户使用。同时由于采招ERP，部分客户不希望暴露外网端口，所以需要分离一套系统出来，独立部署、开放外网端口，同时解决用户授权问题。
+                </p>
+            </div>
+            <div class="doc_section">
+                <h2>目的</h2>
+                <p class="lead">实现ERP和门户解耦，方便一线和二开快速扩展</p>
+            </div>
+            <div class="doc_section">
+                <h2>特性</h2>
+                <ul>
+                    <li>基于目前建模平台搭建</li>
+                    <li>独立部署在客户服务器</li>
+                    <li>需开放外网可访问端口</li>
+                    <li>软件模式，发版后后续二开由二开团队承接。</li>
+                </ul>
+            </div>
+            <div class="doc_section">
+                <h2>核心场景</h2>
+                <h3>1、供方企业资料维护</h3>
+                <p>供应商为参与开发商的招投标业务，需要完善企业认证资料</p>
+                <h3>2、供方我参与的招投标</h3>
+                <p>供应商线上参与招标标业务，和开发商进行招标互动。</p>
+                <h3>3、供方满意度调查以及投诉相关</h3>
+                <p>供应商线上参与招标标业务，和开发商进行招标互动。</p>
+            </div>
+            <div class="doc_section">
+                <h2>在线投标整体定位</h2>
+                <p>整体的关系图：</p>
+                <img src="../assets/5.png" alt="..." class="img-thumbnail">
+                <p>在线投标和采招系统关系图：</p>
+                <img src="../assets/1.png" alt="..." class="img-thumbnail">
+                <p>采招调用在线投标系统图：</p>
+                <img src="../assets/3.png" alt="..." class="img-thumbnail">
+                <ul>
+                    <li>1、使用代理，需要控制远程接口是否调用（同时解决了如果没有配置在线投标，代码调用远程接口会报错问）</li>
+                    <li>2、记录接口调用日志。由于目前远程接口调用，无法保证事务一致性，所以先记录日志。</li>
+                </ul>
+            </div>
+            <div class="doc_section">
+                <h2>整体设计</h2>
+                <h3>设计原则</h3>
+                <dl class="dl-horizontal">
+                    <dt>扩展性优先</dt>
+                    <dd>一线、二开扩展性优先</dd>
+                    <dt>无表数据同步</dt>
+                    <dd>在线投标仅存储自身业务数据，不存在表同步，所有数据通过接口传输。</dd>
+                    <dt>日志跟踪</dt>
+                    <dd>所有接口传输均记录操作日志（包含异常日志）</dd>
+                </dl>
+            </div>
+            <div class="doc_section">
+                <h3>在线投标整体代码结构目录介绍</h3>
+                <p>
+                    <img src="../assets/12.png" alt="..." class="img-thumbnail">
+                    <dl class="dl-horizontal">
+                        <dt>web_onlineBid</dt>
+                        <dd>一线、二开扩展性优先</dd>
+                        <dt>Mysoft.OnlineBid.Saas</dt>
+                        <dd>在线投标仅存储自身业务数据，不存在表同步，所有数据通过接口传输。</dd>
+                        <dt>Mysoft.OnlineBid.Saas.Interface</dt>
+                        <dd>所有接口传输均记录操作日志（包含异常日志）</dd>
+                    </dl>
+                </p>
+            </div>
+            <div class="doc_section">
+                <h3>表设计介绍</h3>
+                <p>依据少存数据的原则，在线投标目前仅5张表</p>
+                <div class="panel panel-default">
+                    <div class="panel-heading">表介绍</div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>中文名</th>
+                                <th>英文名</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>采招外网容器</td>
+                                <td>cg_CzwwContainer</td>
+                                <td>@</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>我参与的招标表</td>
+                                <td>cgob_MyBid</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">3</th>
+                                <td>招标节点映射表</td>
+                                <td>cgob_MyBidNodeMapping</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">4</th>
+                                <td>我参与招投标节点表</td>
+                                <td>cgob_MyBidNode</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">5</th>
+                                <td>满意度调查表</td>
+                                <td>cgob_ProviderStatisfy</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>cg_CzwwContainer：中间容器表。主要用于自定义的form和grid页面，方便拖拽建模用。（背景说明：建模form界面不支持自定义取数，需要拖一个中间表进行建模）</p>
+                <div class="panel panel-default">
+                    <div class="panel-heading">cg_CzwwContainer 采招外网容器</div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>中文名</th>
+                                <th>英文名</th>
+                                <th>字段类型</th>
+                                <th>字段数据类型</th>
+                                <th>字段描述</th>
+                                <th>字段关系</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><th scope='row'>1</th><td>主键GUID</td><td>KeyGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>2</th><td>创建人GUID</td><td>CreatedGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>3</th><td>创建人名称</td><td>CreatedName</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>4</th><td>创建时间</td><td>CreatedTime</td><td>日期时间</td><td>datetime</td><td></td><td></td></tr>
+                            <tr><th scope='row'>5</th><td>采招外网容器主键</td><td>CzwwContainerGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td>主键字段</td></tr>
+                            <tr><th scope='row'>6</th><td>修改人GUID</td><td>ModifiedGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>7</th><td>修改人名称</td><td>ModifiedName</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>8</th><td>修改时间</td><td>ModifiedTime</td><td>日期时间</td><td>datetime</td><td></td><td></td></tr>
+                            <tr><th scope='row'>9</th><td>时间戳</td><td>VersionNumber</td><td>时间戳</td><td>timestamp</td><td></td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>cgob_MyBid：招标信息表，主要记录所有的招标信息数据。</p>
+                <blockquote>
+                    <footer>维度：采购过程guid + 供应商 + 标段</footer>
+                </blockquote>
+                <div class="panel panel-default">
+                    <div class="panel-heading">cgob_MyBid 我参与的招标表</div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>中文名</th>
+                                <th>英文名</th>
+                                <th>字段类型</th>
+                                <th>字段数据类型</th>
+                                <th>字段描述</th>
+                                <th>字段关系</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><th scope='row'>1</th><td>投标保证金状态</td><td>BondStatus</td><td>整数(无小数)</td><td>int</td><td></td><td></td></tr>
+                            <tr><th scope='row'>2</th><td>公司GUID</td><td>BUGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>3</th><td>公司名称</td><td>BUName</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>4</th><td>投标保证金GUID</td><td>CgProcBidBondGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>5</th><td>采购过程GUID</td><td>CgSolutionGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>6</th><td>当前节点</td><td>CurrentStep</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>7</th><td>联系人GUID</td><td>EmployeeGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>8</th><td>标书下载标识</td><td>IsHideNoDownloadBidDoc</td><td>整数(无小数)</td><td>int</td><td></td><td></td></tr>
+                            <tr><th scope='row'>9</th><td>开标时间</td><td>OpenBidPlanTime</td><td>日期时间</td><td>datetime</td><td></td><td></td></tr>
+                            <tr><th scope='row'>10</th><td>招标项目</td><td>ProjectNameList</td><td>多行文本</td><td>nvarchar(max)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>11</th><td>供应商GUID</td><td>ProviderGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>12</th><td>招标发布信息</td><td>PublishTime</td><td>日期时间</td><td>datetime</td><td></td><td></td></tr>
+                            <tr><th scope='row'>13</th><td>标段GUID</td><td>SectionGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>14</th><td>标段名称</td><td>SectionText</td><td>文本(长度512)</td><td>nvarchar(512)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>15</th><td>标段排序</td><td>SectionVal</td><td>整数(无小数)</td><td>int</td><td></td><td></td></tr>
+                            <tr><th scope='row'>16</th><td>状态</td><td>Status</td><td>文本(长度64)</td><td>nvarchar(64)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>17</th><td>招标标题</td><td>Title</td><td>文本(长度512)</td><td>nvarchar(512)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>18</th><td>投标类型</td><td>Type</td><td>文本(长度32)</td><td>nvarchar(32)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>19</th><td>创建人GUID</td><td>CreatedGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>20</th><td>创建人名称</td><td>CreatedName</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>21</th><td>创建时间</td><td>CreatedTime</td><td>日期时间</td><td>datetime</td><td></td><td></td></tr>
+                            <tr><th scope='row'>22</th><td>修改人GUID</td><td>ModifiedGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>23</th><td>修改人名称</td><td>ModifiedName</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>24</th><td>修改时间</td><td>ModifiedTime</td><td>日期时间</td><td>datetime</td><td></td><td></td></tr>
+                            <tr><th scope='row'>25</th><td>我参与的招标表主键</td><td>MyBidGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td>主键字段</td></tr>
+                            <tr><th scope='row'>26</th><td>时间戳</td><td>VersionNumber</td><td>时间戳</td><td>timestamp</td><td></td><td></td></tr>
+                            <tr><th scope='row'>27</th><td>是否已经结束</td><td>IsOver</td><td>整数(无小数)</td><td>int</td><td></td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>cgob_MyBidNode：招标节点信息表，主要记录所有的招标节点信息数据。</p>
+                <blockquote>
+                    <footer>维度：采购过程guid + 供应商 + 标段</footer>
+                </blockquote>
+                <div class="panel panel-default">
+                    <div class="panel-heading">cgob_MyBidNode 我参与招投标节点表</div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>中文名</th>
+                                <th>英文名</th>
+                                <th>字段类型</th>
+                                <th>字段数据类型</th>
+                                <th>字段描述</th>
+                                <th>字段关系</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><th scope='row'>1</th><td>创建人GUID</td><td>CreatedGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>2</th><td>创建人名称</td><td>CreatedName</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>3</th><td>创建时间</td><td>CreatedTime</td><td>日期时间</td><td>datetime</td><td></td><td></td></tr>
+                            <tr><th scope='row'>4</th><td>修改人GUID</td><td>ModifiedGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>5</th><td>修改人名称</td><td>ModifiedName</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>6</th><td>修改时间</td><td>ModifiedTime</td><td>日期时间</td><td>datetime</td><td></td><td></td></tr>
+                            <tr><th scope='row'>7</th><td>我参与招投标节点表主键</td><td>MyBidNodeGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td>主键字段</td></tr>
+                            <tr><th scope='row'>8</th><td>时间戳</td><td>VersionNumber</td><td>时间戳</td><td>timestamp</td><td></td><td></td></tr>
+                            <tr><th scope='row'>9</th><td>节点名称</td><td>NodeName</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>10</th><td>节点CODE</td><td>SolutionStepCode</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>11</th><td>采购过程GUID</td><td>CgSolutionGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>12</th><td>节点顺序</td><td>OrderNum</td><td>整数(无小数)</td><td>int</td><td></td><td></td></tr>
+                            <tr><th scope='row'>13</th><td>计划截止时间</td><td>PlanEndDate</td><td>日期时间</td><td>datetime</td><td></td><td></td></tr>
+                            <tr><th scope='row'>14</th><td>实际截止日期</td><td>RealEndDate</td><td>日期时间</td><td>datetime</td><td></td><td></td></tr>
+                            <tr><th scope='row'>15</th><td>业务GUID</td><td>BusinessGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>16</th><td>标段GUID</td><td>SectionGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td>外键字段:
+                                    一对多:【cgob_MyBid.SectionGUID】;
+                                </td></tr>"<tr><th scope='row'>17</th><td>节点状态</td><td>NodeState</td><td>文本(长度64)</td><td>nvarchar(64)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>18</th><td>供应商GUID</td><td>ProviderGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>19</th><td>编辑模式</td><td>Mode</td><td>整数(无小数)</td><td>int</td><td></td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p>cgob_MyBidNodeMapping：招标节点映射表，主要记录在线投标系统的节点和内网节点的对应关系。</p>
+                <div class="panel panel-default">
+                    <div class="panel-heading">cgob_MyBidNodeMapping 招标节点映射表</div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>中文名</th>
+                                <th>英文名</th>
+                                <th>字段类型</th>
+                                <th>字段数据类型</th>
+                                <th>字段描述</th>
+                                <th>字段关系</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><th scope='row'>序号</th><td>中文名</td><td>英文名</td><td>字段类型</td><td>字段数据类型</td><td></td><td>字段关系</td></tr>
+                            <tr><th scope='row'>1</th><td>创建人GUID</td><td>CreatedGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>2</th><td>创建人名称</td><td>CreatedName</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>3</th><td>创建时间</td><td>CreatedTime</td><td>日期时间</td><td>datetime</td><td></td><td></td></tr>
+                            <tr><th scope='row'>4</th><td>招标节点映射表主键</td><td>MappingGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td>主键字段</td></tr>
+                            <tr><th scope='row'>5</th><td>修改人GUID</td><td>ModifiedGUID</td><td>唯一标识(GUID类型)</td><td>uniqueidentifier</td><td></td><td></td></tr>
+                            <tr><th scope='row'>6</th><td>修改人名称</td><td>ModifiedName</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>7</th><td>修改时间</td><td>ModifiedTime</td><td>日期时间</td><td>datetime</td><td></td><td></td></tr>
+                            <tr><th scope='row'>8</th><td>时间戳</td><td>VersionNumber</td><td>时间戳</td><td>timestamp</td><td></td><td></td></tr>
+                            <tr><th scope='row'>9</th><td>采购过程节点Code</td><td>NodeCode</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>10</th><td>在线投标节点Code</td><td>OBNodeCode</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>11</th><td>在线投标节点名称</td><td>OBNodeName</td><td>文本(长度128)</td><td>nvarchar(128)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>12</th><td>招标类型</td><td>BidType</td><td>文本(长度32)</td><td>nvarchar(32)</td><td></td><td></td></tr>
+                            <tr><th scope='row'>13</th><td>排序字段</td><td>OrderNum</td><td>整数(无小数)</td><td>int</td><td></td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                节点对应关系：（内网节点&lt;--&gt;在线投标节点）
+                <hr>
+                <div class="bs-example" data-example-id="horizontal-dl">
+                    <dl class="dl-horizontal">
+                        <dt>资格预审</dt>
+                        <dd>招标预告</dd>
+                        <dt>资格预审</dt>
+                        <dd>招标邀请</dd>
+                        <dt>资格预审</dt>
+                        <dd>内部邀请</dd>
+                        <dt>--</dt>
+                        <dd>入围</dd>
+                        <dt>发(技术/商务)标</dt>
+                        <dd>发(技术/商务)标</dd>
+                        <dt>(技术/商务)答疑</dt>
+                        <dd>(技术/商务)答疑</dd>
+                        <dt>回(技术/商务)标</dt>
+                        <dd>回(技术/商务)标</dd>
+                        <dt>评(技术/商务)标</dt>
+                        <dd>(技术/商务)澄清</dd>
+                        <dt>(技术/商务)清标</dt>
+                        <dd>--</dd>
+                        <dt>商务谈判</dt>
+                        <dd>商务谈判</dd>
+                        <dt>定标</dt>
+                        <dd>中标</dd>
+                    </dl>
+                </div>
+                <p>cgob_ProviderStatisfy:满意度调查表</p>
+                <div class="panel panel-default">
+                    <div class="panel-heading">cgob_ProviderStatisfy 满意度调查表</div>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>中文名</th>
+                                <th>英文名</th>
+                                <th>字段类型</th>
+                                <th>字段数据类型</th>
+                                <th>字段描述</th>
+                                <th>字段关系</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>主键GUID</td>
+                                <td>KeyGUID</td>
+                                <td>唯一标识(GUID类型)</td>
+                                <td>uniqueidentifier</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>采招外网容器主键</td>
+                                <td>CzwwContainerGUID</td>
+                                <td>唯一标识(GUID类型)</td>
+                                <td>uniqueidentifier</td>
+                                <td></td>
+                                <td>主键</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <ul>
-                <li>Lorem ipsum dolor sit amet</li>
-                <li>Consectetur adipiscing elit</li>
-            </ul>
-            <ul class="list-inline">
-                <li>Lorem ipsum</li>
-                <li>Phasellus iaculis</li>
-                <li>Nulla volutpat</li>
-            </ul>
+            <div class="doc_section">
+                <h3>整体开发模式介绍</h3>
+                <h4>在线投标取采招数据介绍</h4>
+                <img src="../assets/7.png" alt="..." class="img-thumbnail">
+                <hr/>
+                    <dl>
+                        <dt>通过远程接口取值:</dt>
+                        <dd>
+                            利用平台的IRemoteService，例如：
+                            <pre>[RemoteService("0220", "Mysoft.Cgztb.Czww.Interfaces.IBidDocDetailPublicService")]
+DataTable GetCgProcSendBidHis(Guid sid, string stepCode);</pre>
+                            该代码位于：<code>Mysoft.OnlineBid.Saas.Interfaces
+                                IBidDocDetailRemoteService</code>
+                            <blockquote>
+                                <footer>使用远程服务调用前，一定要在对应程序类对应的<code>AppInitializer.cs</code>中进行注册.如上例：需要在Mysoft.OnlineBid.Saas.AppInitializer进行注册，
+                                    注册代码：<code>RegisterRemoteService.Register&lt;IBidDocDetailRemoteService&gt;();</code>
+                                </footer>
+                            </blockquote>
+                        </dd>
+                        <dt>接口业务异常说明:</dt>
+                        <dd>
+                            如果需要抛业务异常的，接口类需要返回值JsonMessage，然后自行抛出。例如：<br>
+                            在采招系统，定义了如下接口：
+                            <pre>/// &lt;summary&gt;
+/// 保存投标保证金
+/// &lt;/summary&gt;
+/// &lt;param name="dto"&gt;&lt;/param&gt;
+/// &lt;param name="providerGUID"&gt;&lt;/param&gt;
+///  &lt;param name="sectionGUID"&gt;&lt;/param&gt;
+/// &lt;returns&gt;&lt;/returns&gt;
+public virtual JsonMessage SaveBidBond(CgProcBidBondDto dto, Guid providerGUID, Guid sectionGUID)
+{
+    //重新取值做时间判断
+    CgProcBidBondDto bidBondDto = GetCgProcBidBond(dto.CgSolutionGUID, providerGUID, sectionGUID);
+    //抛出异常信息
+    if (bidBondDto.BidBondStatus == BidBondStatusEnum.Received)
+    {
+        return new JsonMessage() { IsError = true, Message = CgSolutionLangRes.BidBondStatusReceived };
+    }
+    if (bidBondDto.BidBondStatus == BidBondStatusEnum.Refunded)
+    {
+        return new JsonMessage() { IsError = true, Message = CgSolutionLangRes.BidBondStatusRefunded };
+    }
+    if (bidBondDto.ReceiveEndTime &lt; Utils.Now())
+    {
+        return new JsonMessage() { IsError = true, Message = CgSolutionLangRes.BidBondReceiveEndTime };
+    }
+    var bidBond = _bidBondES.Instance.FindById(dto.CgProcBidBondGUID);
+    bidBond.ReceivedTime = Utils.Now();
+    bidBond.PaymentVoucher = dto.PaymentVoucher;
+    bidBond.ReceivedAmount = dto.ReceivedAmount;
+    bidBond.BusinessStatus = BidBondStatusEnum.UnConfirm;
+    using (var scope = new ConnectionScope(TransactionMode.Required))
+    {
+        _bidBondES.Instance.Update(bidBond);
+        scope.Commit();
+    }
+    return new JsonMessage() { IsError = false, Data = bidBond };
+}</pre>
+                            <p>在在线投标系统中接受信息，自行抛出：</p>
+                            <pre>
+/// &lt;summary&gt;
+/// 保存投标保证金
+/// &lt;/summary&gt;
+/// &lt;param name="dto"&gt;&lt;/param&gt;
+/// &lt;param name="providerGUID"&gt;&lt;/param&gt;
+///  &lt;param name="sectionGUID"&gt;&lt;/param&gt;
+/// &lt;returns&gt;&lt;/returns&gt;
+    public virtual bool SaveBidBond(CgProcBidBondDto dto, Guid providerGUID, Guid sectionGUID)
+    {
+        MyBid myBid = _myBidES.Instance.Find(x => x.CgSolutionGUID == dto.CgSolutionGUID 
+                                            && x.CgProcBidBondGUID == dto.CgProcBidBondGUID)
+                                        .FirstOrDefault();
+        if (myBid == null)
+        {
+            throw new ArgumentNullException(nameof(dto));
+        }
+        // 远程接口调用
+        JsonMessage result = _remoteDS.Instance.SaveBidBond(dto, providerGUID, sectionGUID);
+        if (result.IsError)
+        {
+            throw new BusinessLogicException(result.Message);
+        }
+        // 修改为待确认
+        myBid.BondStatus = BidBondStatusEnum.UnConfirm;
+        _myBidES.Instance.Update(myBid);
+                    
+        return true;
+    }</pre>
+                        </dd>
+                        <dt>通用的获取实体接口：</dt>
+                        <dd>
+                            <p>在线投标提供了通用的获取实体的接口，清单如下：</p>
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>接口名称</th>
+                                        <th>返回值</th>
+                                        <th>参数</th>
+                                        <th>说明</th>
+                                        <th>使用场景</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">1</th>
+                                        <td>GetEntityById</td>
+                                        <td>Dictionary&lt;string, object&gt;</td>
+                                        <td>string tableName, Guid keyId</td>
+                                        <td>根据主键获取单个实体</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">2</th>
+                                        <td>GetEntityList</td>
+                                        <td>IEnumerable&lt;Dictionary&lt;string,
+                                            object&gt;&gt;</td>
+                                        <td>string tableName</td>
+                                        <td>获取多个实体列表（无过滤）</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">3</th>
+                                        <td>GetEntityListByFkGUID</td>
+                                        <td>IEnumerable&lt;Dictionary&lt;string,
+                                            object&gt;&gt;</td>
+                                        <td>string tableName, string field, Guid
+                                            fkGUID</td>
+                                        <td>根据外键或者单条件查询，获取多个实体列表</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">4</th>
+                                        <td>GetEntityListByParams</td>
+                                        <td>IEnumerable&lt;Dictionary&lt;string,
+                                            object&gt;&gt;</td>
+                                        <td>string tableName, Dictionary<string,
+                                                object> queryParams</td>
+                                            <td>根据多条件查询，获取多个实体列表</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                示例代码：
+                                <pre>LazyService&lt;IEntityRemoteService&gt; _entityRS =new LazyService&lt;IEntityRemoteService&gt;();
+var dict = _entityRS.Instance.GetEntityById("Cg_CgSolutionInviteBidProvider", oid);</pre>
+                                <blockquote>
+                                    <footer>获取的Dictionary对象获取值，请直接使用<code>dict.GetValue&lt;DateTime&gt;("InquiryEndTime")</code><br>
+                                        如果是GUID,请使用：<code>dict.GetGuid("InviteBidGUID")</code>
+                                    </footer>
+                                </blockquote>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="doc_section">
+                        <h4>在线投标回填采招数据介绍</h4>
+                        <img src="../assets/8.png" alt="..."
+                            class="img-thumbnail">
+                        <dl>
+                            <dt>业务逻辑：</dt>
+                            <dd>都在采招系统，在线投标系统仅处理收集数据</dd>
+                            <dt>异业务常信息:</dt>
+                            <dd>抛业务异常的，返回值JsonMessage</dd>
+                            <dt>收集数据:</dt>
+                            <dd>
+                                <p>统一建议：使用DTO对象进行收集，然后将数据传输给采招系统，采招系统mapping转换成实体保存</p>
+                                <p>
+                                    目前采招有两种收集数据回填数据的实现。<br>
+                                    <strong>精简版：</strong><br>
+                                    <img src="../assets/9.png" alt="..."
+                                        class="img-thumbnail"><br>
+                                    <strong>复杂版：</strong><br>
+                                    <img src="../assets/10.png" alt="..."
+                                        class="img-thumbnail"><br>
+                                </p>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="doc_section">
+                        <h4>在线投标采购过程介绍</h4>
+                        <strong>核心设计思路：</strong>
+                        <ul>
+                            <li>1、在线投标自己存储一套自己的招标信息</li>
+                            <li>2、在线招投标独立一套节点数据，和内网节点内置好对应关系（可有可无）。减低耦合度</li>
+                            <li>3、有节点对应关系的节点，取数和数据回填产品统一使用API。针对二开建议使用API!</li>
+                            <li>4、没有对应内网的节点的，在线投标系统需要自己存储业务数据</li>
+                            <li>5、在线投标的节点状态变更，订阅内网节点状态变更事件。</li>
+                        </ul>
+                        <p>业务交互图：</p>
+                        <img src="../assets/11.png" alt="..."
+                            class="img-thumbnail">
+                        <p><strong>事件规划：</strong></p>
+                        <img src="../assets/2.png" alt="..."
+                            class="img-thumbnail">
+                        <p>实际案例说明：</p>
+                        <img src="../assets/4.png" alt="..."
+                            class="img-thumbnail">
+                    </div>
+                    <div class="doc_section">
+                        <h2>七、接口清单</h2>
+                        <h3>1、在线投标提供给采招系统</h3>
+                        <h3>2、采招系统提供给在线投标系统</h3>
+                    </div>
+                </div>
 
-            <p> For example, <code>&lt;section&gt;</code> should be wrapped as
-                inline.</p>
-            <pre>&lt;p&gt;Sample text here...&lt;/p&gt;</pre>
-            <var>y</var> = <var>m</var><var>x</var> + <var>b</var>
-            <table class="table .table-striped">
-                <tr>
-                    <th>test1</th>
-                    <th>test1</th>
-                    <th>test1</th>
-                </tr>
-                <tr>
-                    <td>test1</td>
-                    <td>test1</td>
-                    <td>test1</td>
-                </tr>
-            </table>
-        </div>
-
-    </body>
-</html>
+            </body>
+        </html>
