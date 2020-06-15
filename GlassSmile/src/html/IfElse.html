@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p v-if='seen'>现在你能看到我了</p>
+        <a v-bind:href="url"></a>
+        <div @click="clickFunc1">
+            <div @click="clickFunc2">
+                click me
+            </div>
+        </div>
+        <div @click="clickFunc1">
+
+            <div @click.stop="clickFunc2">
+                click me
+            </div>
+        </div>
+        <div>
+            {{ message }}
+        </div>
+        <div v-show="ok">OK</div>
+    </div>
+
+    <script type="text/javascript">
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: "",
+                seen: true,
+                url: "https://www.baidu.com",
+                ok:true
+            },
+            //stop 当前节点触发完后不在触发其他 
+            methods: {
+                clickFunc1: function () {
+                    vm.message += "click1.....";
+                },
+                clickFunc2: function () {
+                    vm.message += "click2.....";
+                }
+            }
+        })
+        setTimeout(() => {
+            vm.seen = false;
+        }, 3000);
+
+    </script>
+    <style type="text/css">
+
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+        <input type="text" v-model="test" />
+        <div>
+            观察test,旧值{{ testOld }},新值 {{ testNew }}
+        </div>
+    </div>
+  
+    <script type="text/javascript">
+        var data = {
+            message: 'Hello Vue!',
+            test: "test",
+            testOld: "",
+            testNew: ""
+        };
+        var app = new Vue({
+            el: '#app',
+            data: data
+        })
+        app.$watch("test", function (newVal, oldVal) {
+            app.testOld = oldVal;
+            app.testNew = newVal;
+        })
+
+        app.test = "test002";
+        app.$data.test = "test0000555";
+
+
+    </script>
+</body>
+
+</html>

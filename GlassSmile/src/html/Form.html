@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="ex-1">
+            <input v-model="message" placeholder="edit me">
+            <p>Message is : {{ message}}</p>
+            <textarea v-model="message2" placeholder="add mutiple lines"></textarea>
+            <p style="white-space: pre-line;">{{ message2}}</p>
+
+            <div style="margin-top: 20px;">
+                <input type="checkbox" id="jack" value="jack" v-model="checkedNames">
+                <label for="jack">Jack</label>
+                <input type="checkbox" id="john" value="john" v-model="checkedNames">
+                <label for="john">John</label>
+                <input type="checkbox" id="mike" value="mike" v-model="checkedNames">
+                <label for="mike">Mike</label>
+                <br>
+                <span>Checked Names:{{checkedNames}}</span>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <input type="radio" id="one" value="one" v-model="picked">
+                <label for="one">one</label>
+                <input type="checkbox" id="two" value="two" v-model="picked">
+                <label for="two">two</label>
+                <input type="checkbox" id="three" value="three" v-model="picked">
+                <label for="three">three</label>
+                <br>
+                <span>Checked Names:{{picked}}</span>
+            </div>
+            <input type="submit" @click="submit"></input>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: 0,
+                message2: "Hi Vue",
+                checkedNames: ['jack'],
+                picked: "three"
+            },
+            methods: {
+                submit: function () {
+                    var vm = this;
+                    alert(vm.checkedNames);
+                }
+            }
+        })
+
+
+
+
+    </script>
+
+</body>
+
+</html>

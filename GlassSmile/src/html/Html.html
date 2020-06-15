@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+        <p v-html="rawHtml"></p>
+        <div v-bind:id="dymaicId" v-bind:class="color">teststtetetet</div>
+        <p>{{ number +11}}</p>
+        <p>{{ number>10?'Yes':'No'}}</p>
+        <p>{{ message.split('').reverse().join('')}}</p>
+    </div>
+
+    <script type="text/javascript">
+        let test="hello1 hello2 ";
+        let pattern=/hello\d\s?/g;
+        let result=pattern.exec(test);
+        alert(result[0]);
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                message: "Hi VUE!",
+                rawHtml: '<span style="color:red">this is should be red</span>',
+                color: "blue",
+                number: 100
+            }
+        })
+
+        setTimeout(() => {
+            vm.color = "red";
+        }, 3000);
+
+
+    </script>
+    <style type="text/css">
+        .red {
+            color: red
+        }
+
+        .blue {
+            color: blue
+        }
+    </style>
+</body>
+
+</html>
