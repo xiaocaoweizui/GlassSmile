@@ -738,25 +738,30 @@ var dict = _entityRS.Instance.GetEntityById("Cg_CgSolutionInviteBidProvider", oi
                         <img src="../assets/17.png" alt="..."
                         class="img-thumbnail">
                         <div class="bs-callout bs-callout-danger" id="callout-tables-responsive-ff-fieldset">
+                            <h4>地址说明： </h4>
+                            <code>/Ajax/Mysoft.OnlineBid.Saas.Handlers.PageHandler/Redirect</code>
                             <h4>参数说明 </h4>
                             <p>
-                                <dl class="dl-horizontal">
-                                <dt>eid</dt>
-                                <dd>联系人guid</dd>
-                                <dt>pid</dt>
-                                <dd>供应商GUID</dd>
-                                <dt>sid</dt>
-                                <dd>采购过程guid</dd>
-                                </dl>    
+                                只有一个参数data，传递前请先序列化下   </p>
+                                <pre>{
+                                    "action":"Cgztb",
+                                    "pid":"B365B83B-3618-4352-86C3-196DAF0F0AB5",
+                                    "eid":"215DFC51-60FE-434D-A1ED-8E4348210D72",
+                                    "sid":"5DD759A8-5D38-428A-A2BB-52FDAB5670B4",
+                                    "isAdmin":"0",
+                                }</pre>
+                             <p> 备注：如果参数没有，可以直接传null或者空
                             </p>
                             <p>action对应界面地址说明：</p>
                             <table class="table table-condensed">
                                 <thead>
-                                  <tr><th>#</th><th>action</th><th>对应地址</th><th>说明</th></tr>
+                                  <tr><th>#</th><th>action</th><th>说明</th><th>实际地址</th></tr>
                                 </thead>
                                 <tbody>
-                                  <tr><th scope="row">1</th><td>provider</td><td>供应商企业资料</td><td></td></tr>
-                                  <tr><th scope="row">2</th><td>ztb</td><td>我参与的招投标</td><td></td></tr>
+                                  <tr><th scope="row">1</th><td>Satisfy</td><td>满意度调查</td><td></td></tr>
+                                  <tr><th scope="row">2</th><td>Cgztb</td><td>我参与的招投标</td><td></td></tr>
+                                  <tr><th scope="row">3</th><td>Complaint</td><td>供应商投诉</td><td></td></tr>
+                                  <tr><th scope="row">4</th><td>ProviderInfo</td><td>企业资料</td><td></td></tr>
                                 </tbody>
                               </table>
                         </div>
