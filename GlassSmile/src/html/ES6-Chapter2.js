@@ -1,18 +1,4 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="utf-8">
-    <title></title>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
-</head>
-
-<body>
-    <div id="app">
-
-    </div>
-
-    <script type="text/javascript">
 
         let text="吉";
         console.log(text.length);
@@ -70,8 +56,3 @@ World!`;
         console.log(msg3);/*Multiline
 string*/
         console.log(msg4);//Multiline\nstring
-    </script>
-
-</body>
-
-</html>
