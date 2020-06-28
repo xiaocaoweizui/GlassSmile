@@ -80,6 +80,12 @@
         </a>
       </li>
     </ul>
+     <a
+          href="../html/KcReport.html"
+          target="_blank"
+        >
+          KcReport
+        </a>
   </div>
 </template>
 

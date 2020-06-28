@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script src="../3rd/jspdf.min.js"></script>
+        <script src="../3rd/html2canvas.min.js"></script>
+        <script type="text/javascript">
+        $(function(){
+            var img=$("img");
+            img.attr("crossOrigin","anonymous")
+            var canvas = document.getElementById("canvas");
+            var ctx = canvas.getContext('2d');
+            img.onload = function () {
+                canvas.width = img.width;
+                canvas.height = img.height + 200;
+                ctx.drawImage(img, 0, 0);
+                document.getElementById('canvasImg').src = canvas.toDataURL("image/jpeg", 1);
+            };
+            var downPdf = $("#exportToPdf");
+            downPdf.bind("click", function(){
+                var width = $('.kc_container').width() ; //截出来图片有白边，把画布减少一点，
+                var height = $('.kc_container').height();
+                html2canvas($('.kc_container')[0], {
+                                    width: width,
+                                    height: height,
+                                    useCORS: false,    
+                                    background: "#fff" 
+                                }).then(function (canvas) {
+                                            var contentWidth = canvas.width;
+                                            var contentHeight = canvas.height;
+
+                                            //一页pdf显示html页面生成的canvas高度;
+                                            var pageHeight = contentWidth / 592.28 * 841.89;
+                                            //未生成pdf的html页面高度
+                                            var leftHeight = contentHeight;
+                                            //pdf页面偏移
+                                            var position = 0;
+                                            //html页面生成的canvas在pdf中图片的宽高（a4纸的尺寸[595.28,841.89]）
+                                            var imgWidth = 595.28;
+                                            var imgHeight = 592.28 / contentWidth * contentHeight;
+
+
+                                            var pageData = canvas.toDataURL('image/jpeg', 1.0);
+                                            var pdf = new jsPDF('', 'pt', 'a4');
+
+                                            //有两个高度需要区分，一个是html页面的实际高度，和生成pdf的页面高度(841.89)
+                                            //当内容未超过pdf一页显示的范围，无需分页
+                                            if (leftHeight < pageHeight) {
+                                                pdf.addImage(pageData, 'JPEG', 0, 0, imgWidth, imgHeight);
+                                            } else {
+                                                while (leftHeight > 0) {
+                                                    pdf.addImage(pageData, 'JPEG', 0, position, imgWidth, imgHeight)
+                                                    leftHeight -= pageHeight;
+                                                    position -=  841.89;
+                                                    //避免添加空白页
+                                                    if (leftHeight > 0) {
+                                                        pdf.addPage();
+                                                    }
+                                                }
+                                            }
+                                            pdf.save('content.pdf');
+                                        });
+
+            }); 
+        });
+        
+
+        </script>
+    </head>
+    <body>
+        <button id="exportToPdf">导出为PDF</button><canvas id="canvas" style="display: none"></canvas>
+        <style type="text/css">
+            .kc_container {
+                font-family: Arial, Helvetica, sans-serif;
+                width: 720px;
+                left: -330px;
+                margin-left:50%;
+                position: absolute;
+                border: 30px solid #fff;
+            }
+            .kc_container_table{
+               width: 100%;
+                border-collapse: collapse;
+                font-size: 14px;
+            }
+            .kc_container_table td {
+                border: 1px solid #222;
+                padding: 8px;
+            }
+            .kc_td_textarea_title{
+                height: 80px;
+            }
+            .kc_td_textarea_content{
+                height: 80px;
+                vertical-align: text-top;
+            }
+            .kc_td_title{
+                width: 120px;
+                background-color: #aaa;
+                font-weight: bold;
+            }
+                .kc_div_t {
+                    text-align: center;
+                }
+                .kc_div_t hr{
+                    border: 3px solid #000;
+                }
+    
+                .kc_div_p {
+                    text-align: center;
+                }
+                .kc_div_p hr{
+                    border: 3px solid #000;
+                }
+                .kc_page {
+                    min-height: 800px;
+                }
+                .kc_pic_div{
+                    margin-bottom: 20px;
+                }
+                .kc_pic_table{
+                    border: 0px;
+                    border-collapse:collapse;
+                }
+                .kc_pic_table td{
+                    border: 1px solid #bbb;
+                }
+                .kc_pic_div img{
+                    height: 200px;
+                    width: 203px;
+                }
+                .kc_pic_div_pan{
+                    border: 1px solid #bbb;
+                    height: 250px;
+                    width: 203px;
+                    background-color: #ddd;
+                    padding:5px 5px 0px 5px;
+                    box-sizing: content-box;
+                    display: inline-block;
+                    margin-left: 2px;
+                    margin-bottom: 10px;
+                }
+                .kc_pic_div_pan div{
+                    height: 50px;
+                    vertical-align: middle;
+                    line-height: 50px;
+                    width: 100%;
+                    text-align: center;
+                }
+            </style>
+        <div class="kc_container">
+            <div class="kc_page">
+                <div class="kc_div_t">
+                    <h2>2020年度保温材料供应商考察</h2>
+                    <hr>
+                </div>
+                <div>
+                    <h3>考察概况</h3>
+                    <table class="kc_container_table">
+                        <tr>
+                            <td class="kc_td_title">考察计划名称</td>
+                            <td colspan="3">2020年度保温材料供应商考察</td>
+                        </tr>
+                        <tr>
+                            <td class="kc_td_title">考察负责人</td>
+                            <td>张珊</td>
+                            <td class="kc_td_title">考察城市</td>
+                            <td>上海、武汉、长沙</td>
+                        </tr>
+                        <tr>
+                            <td class="kc_td_title">考察团队</td>
+                            <td colspan="3">张珊、李思、王武</td>
+                        </tr>
+                        <tr>
+                            <td class="kc_td_textarea_title">考察说明</td>
+                            <td class="kc_td_textarea_content" colspan="3">考察说明考察说明考察说明考察说明考察说明考察说明</td>
+                        </tr>
+                        <tr>
+                            <td class="kc_td_title">计划开始日期</td>
+                            <td>2020-06-20</td>
+                            <td class="kc_td_title">计划结束日期</td>
+                            <td>2020-06-20</td>
+                        </tr>
+                        <tr>
+                            <td class="kc_td_title">实际开始日期</td>
+                            <td>2020-06-20</td>
+                            <td class="kc_td_title">实际结束日期</td>
+                            <td>2020-06-20</td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h3>考察结果总览</h3>
+                    <table class="kc_container_table">
+                        <tr>
+                            <td class="kc_td_title">供应商名称</td>
+                            <td class="kc_td_title">供应商类别</td>
+                            <td class="kc_td_title">综合得分</td>
+                            <td class="kc_td_title">考察结果</td>
+                        </tr>
+                        <tr>
+                            <td>上海第一建筑服务有限公司</td>
+                            <td>保温材料</td>
+                            <td>88</td>
+                            <td>考察合格</td>
+                        </tr>
+                        <tr>
+                            <td>武汉蓝海建材服务有限公司</td>
+                            <td>保温材料</td>
+                            <td>98</td>
+                            <td>考察合格</td>
+                        </tr>
+                        <tr>
+                            <td>长沙诚心装饰建材服务有限公司</td>
+                            <td>保温材料</td>
+                            <td>78</td>
+                            <td>考察合格</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+            <div class="kc_page">
+                <div class="kc_div_p">
+                    <h3>上海第一建筑服务有限公司</h3>
+                    <hr>
+                </div>
+                <div>
+                    <h3>考察概况</h3>
+                    <table class="kc_container_table">
+                        <tr>
+                            <td class="kc_td_title">供应商类别</td>
+                            <td>保温材料</td>
+                            <td class="kc_td_title">考察结束日期</td>
+                            <td>2020-06-01</td>
+                        </tr>
+                        <tr>
+                            <td class="kc_td_title">考察负责人</td>
+                            <td>张珊</td>
+                            <td class="kc_td_title">考察城市</td>
+                            <td>上海</td>
+                        </tr>
+                        <tr>
+                            <td class="kc_td_title">考察团队</td>
+                            <td colspan="3">张珊、李思、王武</td>
+                        </tr>
+                        <tr>
+                            <td class="kc_td_textarea_title">汇总意见</td>
+                            <td class="kc_td_textarea_content" colspan="3">张珊：考察合格，推荐入库
+                                李思：考察合格，推荐入库
+                                王武：考察合格，推荐入库
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="kc_td_title">综合得分</td>
+                            <td>88</td>
+                            <td class="kc_td_title">考察结果</td>
+                            <td>考察合格</td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h3>评分情况</h3>
+                    <table class="kc_container_table">
+                        <tr>
+                            <td class="kc_td_title">考察内容</td>
+                            <td class="kc_td_title">张珊</td>
+                            <td class="kc_td_title">李思</td>
+                            <td class="kc_td_title">王武</td>
+                        </tr>
+                        <tr>
+                            <td class="kc_td_title">汇总评分</td>
+                            <td class="kc_td_title">76</td>
+                            <td class="kc_td_title">88</td>
+                            <td class="kc_td_title">59</td>
+                        </tr>
+                        <tr>
+                            <td class="kc_td_title">经营现场考察 (满分70分)</td>
+                            <td class="kc_td_title">76</td>
+                            <td class="kc_td_title">88</td>
+                            <td class="kc_td_title">59</td>
+                        </tr>
+                        <tr>
+                            <td>1.合作意愿重视程度 (10分) (必填)</td>
+                            <td>76</td>
+                            <td>88</td>
+                            <td>59</td>
+                        </tr>
+                        <tr>
+                            <td>2.生产设备数量和先进程度 (10分) (必填)</td>
+                            <td>76</td>
+                            <td>88</td>
+                            <td>59</td>
+                        </tr>
+                        <tr>
+                            <td>3.生产流程管理 (10分) (必填)</td>
+                            <td>76</td>
+                            <td>88</td>
+                            <td>59</td>
+                        </tr>
+                        <tr>
+                            <td>4.生产质量监控 (10分) (必填)</td>
+                            <td>76</td>
+                            <td>88</td>
+                            <td>59</td>
+                        </tr>
+                        <tr>
+                            <td>5.产品质量 (10分) (必填)</td>
+                            <td>76</td>
+                            <td>88</td>
+                            <td>59</td>
+                        </tr>
+                        <tr>
+                            <td>6.生产/办公环境 (10分) (必填)</td>
+                            <td>76</td>
+                            <td>88</td>
+                            <td>59</td>
+                        </tr>
+                        <tr>
+                            <td class="kc_td_title">工程实例考察（满分30分）</td>
+                            <td class="kc_td_title">76</td>
+                            <td class="kc_td_title">88</td>
+                            <td class="kc_td_title">59</td>
+                        </tr>
+                        <tr>
+                            <td>1.产品实际使用情况 (30分) (必填)</td>
+                            <td>76</td>
+                            <td>88</td>
+                            <td>59</td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h3>现场拍照</h3>
+                    <div class="kc_pic_div">
+                        <div class="kc_pic_div_pan">
+                            <img
+                                src="1.png"
+                                alt="" />
+                            <div>安全生产宣传栏</div>
+                        </div>
+                        <div class="kc_pic_div_pan">
+                            <img
+                            src="1.png"
+                                alt="" />
+                            <div>企业荣誉墙</div>
+                        </div>
+                        <div class="kc_pic_div_pan">
+                            <img
+                            src="1.png"
+                                alt="" />
+                            <div>企业文化墙</div>
+                        </div>
+                    </div>
+                    <h3>生产环境</h3>
+                    <div class="kc_pic_div">
+                        <div class="kc_pic_div_pan">
+                            <img
+                            src="1.png"
+                                alt="" />
+                            <div>原材料库房</div>
+                        </div>
+                        <div class="kc_pic_div_pan">
+                            <img
+                            src="1.png"
+                                alt="" />
+                            <div>自动化车间</div>
+                        </div>
+                        <div class="kc_pic_div_pan">
+                            <img
+                            src="1.png"
+                                alt="" />
+                            <div>生产设备</div>
+                        </div>
+                        <div class="kc_pic_div_pan">
+                            <img
+                            src="1.png"
+                                alt="" />
+                            <div>机加工车间</div>
+                        </div>
+                        <div class="kc_pic_div_pan">
+                            <img
+                            src="1.png"
+                                alt="" />
+                            <div>在建工程现场</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
