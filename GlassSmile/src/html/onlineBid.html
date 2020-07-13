@@ -540,7 +540,8 @@
             </div>
             <div class="doc_section">
                 <h3>整体开发模式介绍</h3>
-                <h4>在线投标取采招数据介绍</h4>
+                <hr>
+                <h4>一、在线投标取采招数据介绍</h4>
                 <img src="../assets/7.png" alt="..." class="img-thumbnail">
                 <hr/>
                 <div class="bs-callout bs-callout-warning" id="callout-tables-responsive-ff-fieldset">
@@ -670,7 +671,7 @@ var dict = _entityRS.Instance.GetEntityById("Cg_CgSolutionInviteBidProvider", oi
                         </blockquote>
                 </div>
                     <div class="doc_section">
-                        <h4>在线投标回填采招数据介绍</h4>
+                        <h4>二、在线投标回填采招数据介绍</h4>
                         <img src="../assets/8.png" alt="..." class="img-thumbnail">
                         <div class="bs-callout bs-callout-danger" id="callout-tables-responsive-ff-fieldset">
                             <h4>业务逻辑均在采招系统 </h4>
@@ -711,7 +712,23 @@ var dict = _entityRS.Instance.GetEntityById("Cg_CgSolutionInviteBidProvider", oi
                         </div>
                     </div>
                     <div class="doc_section">
+                        <h4>三、二开如何增加简单的form页面。实例：新增表单</h4>
+                        <p>第一步：新增页面，选择cg_CzwwContainer表</p>
+                        <img src="../assets/one.png" alt="..." class="img-thumbnail">
+                        <p>第二步：拖拽字段</p>
+                        <img src="../assets/two.png" alt="..." class="img-thumbnail">
+                        <p>第三步：使用精简版</p>
+                        <img src="../assets/three.png" alt="..." class="img-thumbnail">
+                        <p>第四步：编写后端取数逻辑</p>
+                        <img src="../assets/four.png" alt="..." class="img-thumbnail">
+                        <p>第五步：前端pageReady里面对form页面进行赋值</p>
+                        <img src="../assets/five.png" alt="..." class="img-thumbnail">
+                        <p>第六步：调用远程接口提交数据</p>
+                        <img src="../assets/six.png" alt="..." class="img-thumbnail">
+                    </div>
+                    <div class="doc_section">
                         <h3>在线投标采购过程介绍</h3>
+                        <hr>
                         <h4>核心设计思路：</h4>
                         <ol>
                             <li>在线投标自己存储一套自己的招标信息</li>
