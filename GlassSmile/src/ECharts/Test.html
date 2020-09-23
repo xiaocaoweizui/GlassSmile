@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+
+    <body>
+        <div id="main" style="width: 600px;height:400px;float: left;"></div>
+        <div id="main2" style="width: 600px;height:400px;float: left;"></div>
+        <div id="main3" style="width: 600px;height:400px;float: left;"></div>
+        <script src="../3rd/jquery-3.3.1.min.js"></script>
+        <script src="../3rd/echarts.custom.min.js"></script>
+        <script type="text/javascript">
+    
+// 基于准备好的dom，初始化echarts实例
+var myChart = echarts.init(document.getElementById('main'));
+// 绘制图表
+myChart.setOption({
+    title: {
+        text: 'ECharts 入门示例'
+    },
+    tooltip: {},
+    xAxis: {
+        data: ['衬衫', '羊毛衫', '雪纺衫', '裤子', '高跟鞋', '袜子']
+    },
+    yAxis: {},
+    series: [{
+        name: '销量',
+        type: 'bar',
+        data: [5, 20, 36, 10, 10, 20]
+    }]
+});
+        echarts.init(document.getElementById('main2')).setOption(
+            {
+                title: {
+                    text: '股东持股比例'
+                },
+                series: {
+                        type: 'pie',
+                        data: [
+                            {name: '股东A', value: 20},
+                            {name: '股东B', value: 30},
+                            {name: '股东C', value: 50}
+                        ]
+                    }
+            });
+        
+            var option1={
+    title:{
+        show:true,
+        text:"公司参投率",
+        textStyle:{
+            fontSize:'30',
+            fontWeight:'bold'
+        },
+        left:"center",
+        top:"54%"
+    },
+    legend: {
+        orient: 'vertical',
+        left: 10,
+        data: []
+    },
+    color:["#42CB52","#F7F6F6"],
+    series: [
+        {
+            name: '',
+            type: 'pie',
+            radius: ['70%', '85%'],
+            stillShowZeroSum:true,
+            avoidLabelOverlap: false,
+            label: {
+                show: true,
+                position: 'center',
+                fontSize: '55',
+                fontWeight: 'bold',
+                padding:[0,0,15,0]
+            },
+            
+            labelLine: {
+                show: false
+            },
+            data: [
+                {value: 75,name:"75%"},
+                {value: 25}
+            
+            ]
+        }
+    ]
+};
+
+            echarts.init($('#main3')[0]).setOption(option1);
+
+
+    </script>
+    </body>
+
+</html>
