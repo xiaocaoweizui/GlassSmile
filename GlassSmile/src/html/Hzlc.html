@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+
+        <script src="../3rd/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <style type="text/css">
+       #divHzlc{
+           margin-top: 10px;
+       }
+        .hzlc{
+            padding-top: 16px;
+            width: 100%;
+            left:50%;
+            margin-left:-307px;
+            position:relative;
+            overflow: hidden;
+        }
+       .hzlc_left{
+           height: 24px;
+
+       }
+        .hzlc_r_date{
+            height: 24px;
+            line-height: 24px;
+            vertical-align: top;
+            width: 100px;
+            float: left;
+        }
+    
+        .hzlc_cicle{
+            width: 24px;
+            height: 24px;
+            background-color: white;
+    border-radius: 50%;
+    border: 1px solid #ccc ;
+box-sizing:border-box ;
+float: left;
+
+        }
+        .hzlc_cicle_child{
+    width: 14px;
+    height: 14px;
+    background-color: white;
+    border-radius: 50%;
+    border: 4px solid #ccc ;
+    position: relative;
+    box-sizing:border-box ;
+    top: 4px;
+    left: 4px;
+}
+.hzlc_div_Y_line{
+    background-color: #ccc;
+    width: 2px;
+    left:111px;
+    position: relative;
+    position: absolute;
+    height: 550px;
+    z-index: -9;
+    top: 0px;
+
+}
+.hzlc_div_X_line{
+    background-color: #eee;
+    height: 2px;
+    width: 28px;
+    top:11px;
+    position: relative;
+    float: left;
+
+}
+.hzlc_content{
+    font-size: 12px;
+    float: left;
+    width: 363px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.14);
+    position: relative;
+    top: -15px;
+    padding: 14px 20px;
+    line-height: 22px;
+}
+.hzlc_content_tip{
+    border-radius: 4px;
+    background-color: rgba(238, 245, 255, 1);
+    color: #3B91FF ;
+    padding: 3px 16px;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+#divHzlc ul{
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+.hzlc_content_title{
+    color: #aaa;
+}
+.hzlc_selectType{
+    margin-bottom: 15px;
+    font-size: 12px;
+}
+.hzlc_selectType li{
+    float: left;
+    width: 80px;
+    height: 26px;
+    border-radius: 4px;
+    text-align: center;
+    line-height: 26px;
+    box-sizing: border-box;
+    margin-right: 10px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+.nomarl {
+    border: 1px solid #e7e7eb;
+    color: #666;
+}
+
+.selectType_active{
+ 
+background: rgba(71, 173, 255, 0.1);
+border-radius: 4px;
+border: 1px solid rgba(71, 173, 255, 0.3);
+color: #47ADFF;
+}
+.hzlc_main{
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-top: 5px;
+    height: 800px;
+
+}
+
+    </style>
+    </head>
+
+    <body>
+        <div id="divHzlc">
+            <div class="hzlc_selectType">
+                <ul>
+                    <li v-for="(item,index) in types"  class="nomarl" v-bind:data-id="item.value" @click="selectType" >{{item.text}}</li>
+                </ul>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="hzlc_main" >
+                <div class="hzlc" v-for="(item,index) in data">
+                    <div class="hzlc_left">
+                        <div class="hzlc_r_date">{{ item.AdjustDate }}</div>
+                            <div class="hzlc_cicle">
+                                <div class="hzlc_cicle_child"></div>
+                            </div>
+                        <div class="hzlc_div_X_line"></div>
+                        <div class="hzlc_content">
+                            <div class="hzlc_content_tip">{{ item.TypeName }}</div>
+                                <ul>
+                                    <li v-for="info in item.Content">
+                                        <span class="hzlc_content_title">{{ info.text}}：</span>{{info.value}}
+                                    </li>
+                                </ul>
+                        </div>
+                    </div>
+                    <div class="hzlc_div_Y_line" style="height: 0px" v-if="count==1"></div>
+                    <div class="hzlc_div_Y_line" style="top: 16px;" v-else-if="index==0"></div>
+                    <div class="hzlc_div_Y_line" v-else-if="index!=count-1"></div>
+                    <div class="hzlc_div_Y_line" style="height: 20px;" v-else-if="count!=1" > </div>
+                    
+                </div>
+            </div>
+          
+        </div>
+        
+        <script type="text/javascript"> 
+
+        var data=[{
+            AdjustDate:"2020-08-12",
+            TypeName:"直接入库",
+            Content:[  { text:"日期",value:"2020/11/11 10:50:17"},  
+            { text:"参与方式",value:"公开招标"}]
+        }];
+    
+        var types = [
+                { text: "全部", value: 0 },
+                { text: "列入黑名单", value: 1 },
+                { text: "解除黑名单", value: 2 },
+                { text: "冻结", value: 3 },
+                { text: "解冻", value: 4 },
+                { text: "直接入库", value: 5 }
+            ]
+        var vm = new Vue({
+            el: '#divHzlc',
+            data: {
+                data:data,
+                count: data.length,
+                types:types
+            },
+            methods: {
+                selectType:function(e){
+                    var li=e.target;
+                    if(li.className=="nomarl"){
+                        li.className="selectType_active"
+                    }else{
+                        li.className="nomarl" ;
+                    }
+                   // $(li).addClass("selectType_active")
+                },
+                IsScroll:function(){
+                    var mainHeight= $(".hzlc_main").height();
+                    var contentHeight=0;
+
+                    for(var i =0;i<$(".hzlc").length;i++){
+                        var hzlc=$(".hzlc").eq(i);
+                        contentHeight+=hzlc.height();
+                    }
+                  
+                    return contentHeight>mainHeight;
+                }
+            },
+            mounted: function () {
+                if(this.IsScroll()){
+                    $(".hzlc_main").css("overflow-y","scroll");
+                }
+                $(".hzlc_main").on("scroll",function(e){
+                    
+                })
+            }
+        });
+          setTimeout(() => {
+              var data2={
+                    AdjustDate:"2020-09-12",
+                    TypeName:"签订战略协议",
+                    Content:[  { text:"日期",value:"2020/11/11 10:50:17"},  
+                    { text:"参与方式",value:"公开招标"},  
+                    { text:"采购过程名称",value:"zy测试1111"},  
+                    { text:"项目名称",value:"翠湖名居-翠湖一期"}]
+              };
+              vm.data.push(data2);
+            
+            vm.count+=1;
+        }, 3000);
+      
+
+    </script>
+    </body>
+
+</html>

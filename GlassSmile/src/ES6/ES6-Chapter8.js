@@ -165,3 +165,4 @@ console.log(iteraHigh.next(4));//4+2=6
 console.log(iteraHigh.next(5));//5*3=15
 
 //第一次调用next时，无论传递什么都会被丢弃
+
