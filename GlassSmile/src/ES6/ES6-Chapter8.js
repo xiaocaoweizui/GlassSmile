@@ -163,6 +163,23 @@ let iteraHigh=createIteratorHigh();
 console.log(iteraHigh.next());
 console.log(iteraHigh.next(4));//4+2=6
 console.log(iteraHigh.next(5));//5*3=15
-
+//console.log(iteraHigh.throw(new Error("Boom")));
 //第一次调用next时，无论传递什么都会被丢弃
 
+
+function *createIteratorThrow(){
+    let first=yield 1;
+    let second=4;
+    try{
+        second=yield first+2;
+    }
+    catch(ex){
+        second=6;
+    }
+    yield second+3;
+}
+let iteraThrow=createIteratorThrow();
+console.log(iteraThrow.next())//{ value: 1, done: false }
+console.log(iteraThrow.next(4))//{ value: 6, done: false }
+console.log(iteraThrow.throw(new Error("Boom")));//{ value: 9, done: false }
+console.log(iteraThrow.next(3));//{ value: undefined, done: true }
