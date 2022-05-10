@@ -2,7 +2,7 @@ var http = require('http');
 var fs = require('fs');
 
 var server = new http.Server();
-server.listen(8000);
+server.listen(8009);
 
 // // 端口，主机
 // server.listen(8000, 'localhost');

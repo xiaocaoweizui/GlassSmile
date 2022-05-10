@@ -25,8 +25,8 @@ console.log(name2);//undefined
 
 //为非同名局部变量赋值
 let { type: localType, name: localName } = node;
-console.log(localType);//undefined
-console.log(localName);//undefined
+console.log(`localType : ${localType}`);//Identifier
+console.log(`localName : ${localName}`);//foo
 
 //嵌套对象也能解析
 let { loc: { start } } = node;
@@ -39,8 +39,8 @@ console.log(localStart);//{ line: 1, column: 2 }
 //数组的解构
 let colors = ["red", "green", "blue"];
 let [firstColor, , thridColor] = colors;
-console.log(firstColor);//red
-console.log(thridColor);//blue
+console.log(`firstColor: ${firstColor}`);//red
+console.log(`thridColor: ${thridColor}`);//blue
 /*
  等同代码：
   let firstColor="black",thridColor="purple"
