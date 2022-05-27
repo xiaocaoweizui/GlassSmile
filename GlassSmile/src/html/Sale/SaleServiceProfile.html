@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="SaleServiceProfile.css">
+    <script src="../../3rd/jquery-3.3.1.min.js"></script>
+    <script src="../../3rd/vue.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+</head>
+
+<body>
+    <div class="content" id="mycontent">
+        <div class="content-item" :style="{width: itemWidth + 'px'}" v-for="item in data" >
+            <div class="content-item-header"> 
+                <span class="ci-p-header" :style="{backgroundImage: 'url('+item.logo+')'}">{{item.name}}</span>
+                <hr class="ci-hr-split">
+                <div class="ci-header">
+                    <div>
+                        <a class="ci-header-num" @click="openTotalUrl">{{item.total}}</a> 
+                        <span class="cdd-num-unit">户</span> <br>
+                        <span class="ci-header-tip">总计</span>
+                    </div>
+                    <div class="ci-header-right">
+                        <a class="ci-header-num ci-header-num-red" >{{item.outdateNum}}</a> 
+                        <span class="cdd-num-unit">户</span> <br>
+                        <span class="ci-header-tip">已逾期</span>
+                    </div>
+                </div>
+            </div>
+            <div class="content-detail" v-for="detail in item.details">
+                <div class="content-title">{{detail.title}}</div>
+                <div class="content-detail-info">
+                    <span class="cdd-num" @click="openDetailUrl">{{detail.num}}</span>
+                    <span class="cdd-num-unit">户</span>
+                    <span class="cdd-zb">占 {{detail.rate}} %</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript"> 
+        var data=[
+            {
+                name:"按揭服务",
+                logo:"aj.png",
+                total:40,
+                outdateNum:4,
+                details:[
+                    {
+                        title:"未办理",
+                        num:25,
+                        rate:62.50
+                    },
+                    {
+                        title:"银行出承诺函",
+                        num:5,
+                        rate:12.50
+                    },
+                    {
+                        title:"已放款",
+                        num:10,
+                        rate:25.00
+                    }
+                ]
+            },
+            {
+                name:"入伙服务",
+                total:392,
+                outdateNum:24,
+                logo:"rh.png",
+                details:[
+                    {
+                        title:"未办理",
+                        num:369,
+                        rate:94.13
+                    },
+                    {
+                        title:"资料提交",
+                        num:23,
+                        rate:5.87
+                    },
+                    {
+                        title:"入伙日期",
+                        num:0,
+                        rate:0.00
+                    }
+                ]
+            },
+            {
+                name:"产权服务",
+                total:401,
+                outdateNum:6,
+                logo:"cq.png",
+                details:[
+                    {
+                        title:"未办理",
+                        num:289,
+                        rate:78.50
+                    },
+                    {
+                        title:"资料提交",
+                        num:34,
+                        rate:5.87
+                    },
+                    {
+                        title:"已办理",
+                        num:12,
+                        rate:12.89
+                    },{
+                        title:"其他",
+                        num:8,
+                        rate:6.89
+                    }
+                ]
+            }
+        ];
+
+        var item={
+                name:"公积金服务",
+                total:401,
+                outdateNum:6,
+                logo:"cq.png",
+                details:[
+                    {
+                        title:"未办理",
+                        num:289,
+                        rate:78.50
+                    },
+                    {
+                        title:"资料提交",
+                        num:34,
+                        rate:5.87
+                    },
+                    {
+                        title:"已办理",
+                        num:12,
+                        rate:12.89
+                    },{
+                        title:"其他",
+                        num:8,
+                        rate:6.89
+                    }
+                ]
+            }
+            
+        var addNum=getQueryVariable('addNum');
+
+        if(addNum!=undefined){
+            for(var i=0;i<addNum;i++){
+                data.push(item);
+            }
+        }
+        
+            
+        var vm=new Vue({
+            el:'#mycontent',
+            data:{
+                data:data
+            },
+            computed:{
+                itemWidth:function(){
+                    return Math.floor(100.00/data.length * document.body.scrollWidth/100) -10 ;
+                }
+            },
+            methods:{
+                openTotalUrl:function(e){
+                    var aObj=e.target;
+                    alert("打开URL");
+                },
+                openDetailUrl:function(e){
+                    var aObj=e.target;
+                    alert("打开明细URL");
+                }
+            }
+            
+        });
+        function getQueryVariable(variable)
+        {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i=0;i<vars.length;i++) {
+                    var pair = vars[i].split("=");
+                    if(pair[0] == variable){return pair[1];}
+            }
+            return(false);
+        }
+
+        console.log(vm.itemWidth );
+        console.log( document.body.scrollWidth);
+    </script>
+</body>
+</html>

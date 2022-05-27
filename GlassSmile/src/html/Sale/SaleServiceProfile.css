@@ -1,0 +1,108 @@
+.content{
+    height: 800px;
+    width: 100%;
+    font-family: MicrosoftYaHei;
+}
+
+.content-item{
+    min-width: 200px;
+    height: 100%;
+    background: #F4F5F9;
+    border-radius: 4px;
+    float: left;
+    margin: 5px;  
+    box-sizing: border-box;
+}
+.content-item-header{
+    background: linear-gradient(270deg, #F9FCFF 0%, #F1F7FF 100%);
+    box-shadow: 0px 2px 4px 0px rgba(17, 28, 49, 0.1);
+    border-radius: 3px 3px 0px 0px;
+    padding: 15px 10px;
+    margin: 2px;
+}
+.ci-p-header{
+    background-position: 10% 3px;
+    background-repeat: no-repeat;
+    background-size: 18px;
+    padding-left: 35px;
+}
+.ci-hr-split{
+    border: 1px solid #EDF0F7;
+}
+.ci-header{
+    list-style: none;   
+    padding: 0px;
+    margin: 0px 0px 0px 10px ;
+    width: 100%;
+    position: relative;
+}
+.ci-header div{
+    display: inline-block;
+}
+.ci-header-right
+{
+    position:absolute;
+    right: 60px;
+}
+.ci-header-num{
+    height: 29px;
+    font-size: 22px;
+    font-family: MicrosoftYaHei;
+    color: #222222;
+    line-height: 29px;
+}
+.ci-header-num-red {
+    color: #FF5D5D;
+}
+.ci-header-num-red:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.ci-header-tip{
+    height: 17px;
+    font-size: 13px;
+    color: #999999;
+    line-height: 17px;
+}
+
+.content-detail{
+    background: #FFFFFF;
+    margin: 5px;
+    border: 1px solid #F0F0F0;
+    height: 72px;
+    padding: 10px;
+    box-sizing: border-box;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.06);
+    border-radius: 4px;
+}
+.content-detail:hover{
+    border: 1px solid #13ADFF;
+    cursor: pointer;
+}
+
+.content-title{
+    height: 26px;
+    font-size: 14px;
+    color: #999999;
+    line-height: 26px;
+}
+.content-detail-info{
+    height: 31px;
+    line-height: 31px;
+    position: relative;
+}
+.cdd-num{
+    color: #222222;
+}
+.cdd-zb{
+    font-size: 12px;
+    color: #666666;
+    position: absolute;
+    right: 10px;
+}
+.cdd-num-unit{
+    height: 16px;
+    font-size: 12px;
+    color: #222222;
+    line-height: 16px;
+}
