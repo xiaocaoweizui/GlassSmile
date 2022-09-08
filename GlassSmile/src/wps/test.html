@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WebOffice</title>
+    <style>
+           * { margin: 0; padding: 0; }
+        html, body { width: 100%; height: 100%; overflow: hidden; }
+        .custom-mount { width: 100%; height: 100%; }
+    </style>
+</head>
+
+<body>
+    <div class="custom-mount"></div>
+    <script src="weboffice/web-office-sdk-v1.1.19.umd.js"></script>
+    <script>
+        console.log('引入后可以开始使用 jssdk 了！');
+        console.log(WebOfficeSDK);
+
+        window.onload = function () {
+            const jssdk = WebOfficeSDK.config({
+                mount: document.querySelector('.custom-mount'),
+                url: 'demo.doc', // 该地址需要后端提供，https://wwo.wps.cn/office/p/xxx
+            });
+
+            // 如果需要对 iframe 进行特殊的处理，可以通过以下方式拿到 iframe 的 dom 对象
+            console.log(jssdk.iframe);
+
+            // 打开文档结果
+            jssdk.on('fileOpen', (data) => {
+                console.log(data.success);
+            });
+        };
+
+    </script>
+</body>
+
+</html>
