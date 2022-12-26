@@ -7,23 +7,26 @@ var calcGem=function(price,count){
 
 var oneNineGem=calcGem(priceOfGem,9);
 var oneTenGem=calcGem(priceOfGem,10);
-console.log(oneTenGem*8);
+console.log(oneTenGem*11);
 
 
-let priceOfLaw=34;
+let priceOfLaw=40;
 var calcLaw=function(priceOfLaw,level){
     switch(level){
         case 3:
             return 60* priceOfLaw;
         case 4:
             return 150* priceOfLaw;
+        case 5:
+            return 300* priceOfLaw;
     }
 }
 
 let level=4;
-let fourLaw=calcLaw(priceOfLaw,level);
-let threeLaw=calcLaw(priceOfLaw,level);
-console.log(fourLaw + threeLaw);
+let fourLaw=calcLaw(priceOfLaw,4);
+let threeLaw=calcLaw(priceOfLaw,3);
+let fiveLaw=calcLaw(priceOfLaw,5);
+console.log(` the five law costs: ${fourLaw + threeLaw + fiveLaw} `);
 
 
 // console.log((oneTenGem*8 +fourLaw + threeLaw)/300);
@@ -55,5 +58,18 @@ var calcCountOfThunder=function(level){
 }
 
 calcCountOfThunder(11);
+
+/*
+    -- 金币
+    烽火 4件 ：150 *4=600
+    11段宝石需要宝石锤子： 7*12=96，96*3.7=355.2
+    驱鬼功：100
+    
+    一共：1155.2
+
+    -----银币（w）
+    阵法：20000
+    12个10段宝石：3584*11=39424
+*/
 
 
