@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <title>Lottery Demo</title>
+    <link href="bootstrap-3.3.5-dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="bootstrap-3.3.5-dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+
+    <script src="pub/jquery-1.11.3.min.js" type="text/javascript"></script>
+
+    <script src="bootstrap-3.3.5-dist/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <script src="Lottery.js" type="text/javascript"></script>
+
+    <style type="text/css">
+        #drawPercent
+        {
+            color: #F60;
+        }
+        #div_rotate
+        {
+            background-color:forestgreen;
+            overflow :hidden;
+            width:900px;
+            height:400px;
+            position:relative;
+            border:solid 1px #eee;
+               /* transform-style:preserve-3d;
+                 transform:perspective(800px) rotateX(-10deg) rotateY(0deg);*/
+        }
+            #div_rotate .rotate
+            {
+                 width:272px;
+                 height:132px;
+			     margin:20px 0px 0px 20px;
+                 position:relative;
+                 display:inline-block;
+                 border:solid 1px #eee;
+                 border-radius:5px;
+			     box-shadow:0 0 10px #fff;
+              
+            }
+          
+    </style>
+
+    <script type="text/javascript">
+       var persons = ["张毅", "陈波", "董丽丽", "李翔", "彭江","程丹","朱楷"];
+
+        function getRandomPersons() {
+            var r = Math.random() * persons.length;
+            var selectedName = persons[Math.floor(r)];
+
+            persons.splice(r, 1);
+            return selectedName;
+        }
+
+
+        window.onload = function() {
+           
+            initLottery(false);
+
+            $("#btnOk").bind("click", function() {
+                var holder = $("#inputMain").val();
+                var index = persons.indexOf(holder);
+                if (index >= 0) {
+                    persons.splice(index, 1);
+                    $("#lotteryZcr").text(holder).css({ "font": "Bold 30px Arial", "color": "#F60" });
+                    initLottery(true);
+                }
+            });
+
+  
+
+        };
+
+        function initLottery(isHasZcr) {
+
+            if (!isHasZcr) {
+                var lotteryZcr = new Lottery({
+                    conId: 'lotteryZcr',
+                    lottery: getRandomPersons(),
+                    lotteryType: "text",
+                    coverText: "",
+                    drawPercentCallback: null
+                });
+                lotteryZcr.init();
+            }
+
+            var lotteryRecorder = new Lottery({
+                conId: 'lotteryRecorder',
+                lottery: getRandomPersons(),
+                lotteryType: "text",
+                drawPercentCallback: null
+            });
+
+            lotteryRecorder.init();
+
+            var lotteryOtherOne = new Lottery({
+                conId: 'lotteryOtherOne',
+                lottery: getRandomPersons(),
+                lotteryType: "text",
+                drawPercentCallback: null
+            });
+            lotteryOtherOne.init();
+
+            var lotteryOtherTwo = new Lottery({
+                conId: 'lotteryOtherTwo',
+                lottery: getRandomPersons(),
+                lotteryType: "text",
+                drawPercentCallback: null
+            });
+            lotteryOtherTwo.init();
+
+            var lotteryOtherThree = new Lottery({
+                conId: 'lotteryOtherThree',
+                lottery: getRandomPersons(),
+                lotteryType: "text",
+                drawPercentCallback: null
+            });
+            lotteryOtherThree.init();
+
+            var lotteryOtherFour= new Lottery({
+                conId: 'lotteryOtherFour',
+                lottery: getRandomPersons(),
+                lotteryType: "text",
+                drawPercentCallback: null
+            });
+            lotteryOtherFour.init();
+
+
+            var lotteryOtherFive = new Lottery({
+                conId: 'lotteryOtherFive',
+                lottery: getRandomPersons(),
+                lotteryType: "text",
+                drawPercentCallback: null
+            });
+            lotteryOtherFive.init();
+
+            reFillPersons();
+
+        }
+
+        function reFillPersons() {
+            persons = ["张毅", "陈波", "董丽丽", "李翔", "彭江", "程丹", "朱楷"];
+        }
+
+
+    </script>
+
+</head>
+<body>
+    <div class=".container-fluid" style="padding: 15px">
+        <!-- <button id="freshBtn" class="btn">刷新</button>-->
+        <h1>
+            采招会议轮岗</h1>
+        <hr />
+        <div class="form-group" style="height: 50px">
+            <label class="col-sm-2 control-label">
+                预设主持人：</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="inputMain" placeholder="主持人">
+            </div>
+            <input type="button" class="btn" value="确定" id="btnOk" />
+        </div>
+        <hr>
+        <div class="form-group" style="height: 150px">
+            <label class="col-sm-2 control-label">
+                主持人：</label>
+            <div id="lotteryZcr" class="col-sm-4">
+            </div>
+            <label class="col-sm-2 control-label">
+                记录人：</label>
+            <div id="lotteryRecorder" class="col-lg-4 col-sm-5">
+            </div>
+        </div>
+        <div class="form-group" style="height: 150px">
+            <label class="col-sm-2 control-label">
+                其他与会人员：</label>
+            <div id="div_rotate">
+                  <div class="rotate"> <div id="lotteryOtherOne" ></div></div>
+                  <div class="rotate"> <div id="lotteryOtherTwo" ></div></div>
+                  <div class="rotate"> <div id="lotteryOtherThree" ></div></div>
+                  <div class="rotate"> <div id="lotteryOtherFour" ></div></div>
+                  <div class="rotate"> <div id="lotteryOtherFive"></div></div>
+            </div>
+         
+        </div>
+    </div>
+</body>
+</html>

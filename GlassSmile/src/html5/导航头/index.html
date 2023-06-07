@@ -1,0 +1,114 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,intial-scale=1">
+<!--为移动端，目的是让文字等布局根据设备宽度  默认是一倍-->
+<title>无标题文档</title>
+<script src="js/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+    $(window).resize(function(){
+		$("div,span,h3").css("font-size",$(this).width()/16);	
+	});
+});
+</script>
+<style>
+/*	div{ 
+		border:red solid 1px;
+		/*边框：红色 实线 1像素* /
+		height:170px;
+		/*高度：170像素* /
+		width:200px;
+		/*宽度：200px* /
+		background:#56bde8;
+		/*背景：黑色* /
+		transition:all 3s; /*css3 兼容性有限 IE9+* /
+		float:left;
+		/*向左浮动* /
+	}
+	div:hover{
+		/*hover 伪类 鼠标移上去的，改变css特性* /
+		background:yellow;
+	}
+	h1{
+		clear:both;
+	}*/
+
+*, body, html {
+	margin: 0;
+	padding: 0;
+}
+.header>div {
+	/*浮动布局 1.控制宽度  2.进行浮动*/
+	width: 50%;
+	float: left;
+}
+.header h3 {
+	text-align: center;/*文本对齐：居中*/
+	padding: 1em 0;  /*内边距：上下 1em  左右0；*/
+}
+.headerLeft {
+	background: #15abd0;
+}
+.headerRight {
+	background: #56bde8;
+}
+.imgs{ padding:2em; width:30%; display:inline-block;}
+.imgs img{ width:100%;}
+.text{ padding:2em;}
+.fen{ padding:2em;  color:#15abd0;}
+.footer>div{
+	background:black;
+	color:white;
+	width:25%;
+	float:left;
+	padding:1em 0;
+	text-align:center;
+}
+</style>
+</head>
+
+<body>
+<!--容器 div 层
+	默认样式： 从上到下堆叠
+		宽度 父级标签 自适应
+		高度是根据文字内容做自适应
+	
+--> 
+<!--div用于布局的时候 先考虑上下，再考虑左右--> 
+<!--	<div>
+		1哇塞!!!
+	</div>
+	<div>
+		2哇塞!!!
+	</div>
+	<div>
+		3哇塞!!!
+	</div>
+
+<h1>原来还有人比我不懂</h1>--> 
+<!--h1 是一级标题标签-->
+<div class="header">
+  <div class="headerLeft">
+    <h3>正在：15</h3>
+  </div>
+  <div class="headerRight">
+    <h3>退换：2</h3>
+  </div>
+</div>
+<div class="content">
+  <div class="cont1"><span class="imgs"><img src="images/index(1).jpg"></span><span class="text">小熊</span><span class="fen">200积分</span></div>
+  <div class="cont2"><span class="imgs"><img src="images/index(2).jpg"></span><span class="text">小熊</span><span class="fen">200积分</span></div>
+  <div class="cont3"><span class="imgs"><img src="images/index(3).jpg"></span><span class="text">小熊</span><span class="fen">200积分</span></div>
+  <div class="cont4"><span class="imgs"><img src="images/index(4).jpg"></span><span class="text">小熊</span><span class="fen">200积分</span></div>
+  <div class="cont5"><span class="imgs"><img src="images/index(5).jpg"></span><span class="text">小熊</span><span class="fen">200积分</span></div>
+</div>
+<div class="footer">
+  <div class="card"><img src="images/index(3).png"><br>领卡</div>
+  <div class="vip"><img src="images/index(4).png"><br>特权</div>
+  <div class="share"><img src="images/index(1).png"><br>分享</div>
+  <div class="youHuiQuan"><img src="images/index(2).png"><br>优惠券</div>
+</div>
+</body>
+</html>

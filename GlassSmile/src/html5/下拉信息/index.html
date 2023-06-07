@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="Generator" content="">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>图片展示</title>
+	<style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei"}
+		img{border:0;}
+		ul li{list-style:none;
+		}
+		a{
+		    text-decoration:none;
+			color:white;
+		}
+		#nav{
+		    width:900px;
+			height:45px;
+			background:#8c8c8c;
+			margin:100px auto 0;
+		}
+		#nav h2{
+		    width:240px;height:45px;
+			background:#f00;
+			font-size:20px;
+			font-weight:300px;
+			line-height:45px;
+			text-indent:20px;
+			float:left;
+		}
+		#nav ul{
+		    width:660px;
+			height:45px;
+			position:relative;
+			float:left;
+		}
+		#nav ul li{
+		    float:left;line-height:45px;
+			
+		}
+		#nav ul li a{
+		    display:block;padding:0 15px;
+		}
+		#nav ul li:hover{
+		    background:#003;
+		}
+		.banner{
+		    width:900px;
+			height:auto;
+			margin:0 auto;
+		}
+		.banner img{width:100%;}
+		#nav ul li .hov_div{
+		    width:660px;height:160px;
+			background:#efefef;
+			left:0;float:right;
+			position:absolute;
+			display:none;
+		}
+		#nav .hov_div .hov_lt{
+		    width:330px;height:160px;
+			background:#ff0099;
+			float:left;
+		}
+		#nav ul li span{
+		    width:0;height:0;
+			display:block;
+			border-width:5px;border-style:solid;
+			border-color:transparent transparent #fff transparent;
+			position:absolute;top:35px;left:100px;
+			display:none;
+		}
+	</style>
+</head>
+<body>
+    <div id="nav">
+	    <h2><a href="#">全部商品</a></h2>
+		<ul>
+		    <li class="hover"><a href="#">首页</a>
+			    <div class="hov_div">
+				    <div class="hov_lt">
+					    <img src="images/xm1.jpg" />
+					</div>
+				    <div class="hov_lt">
+					    <img src="images/xm2.jpg" /></div>
+				</div
+			</li>
+		    <li class="hover"><a href="#">小米电视</a>
+			    <span></span>
+			    <div class="hov_div">
+				    <div class="hov_lt">
+					    <img src="images/hm1.jpg" />
+					</div>
+				    <div class="hov_lt">
+					    <img src="images/hm2.jpg" /></div>
+				</div
+			</li>
+		    <li class="hover"><a href="#">路由器</a>
+			    <div class="hov_div">
+				    <div class="hov_lt">
+					    <img src="images/xm1.jpg" />
+					</div>
+				    <div class="hov_lt">
+					    <img src="images/xm2.jpg" /></div>
+				</div
+			</li>
+		    <li class="hover"><a href="#">小米手机</a>
+			    <div class="hov_div">
+				    <div class="hov_lt">
+					    <img src="images/xm1.jpg" />
+					</div>
+				    <div class="hov_lt">
+					    <img src="images/xm2.jpg" /></div>
+				</div
+			</li>
+		</ul>
+	</div>
+    <div class="banner">
+	    <img src="images/banner.jpg" />
+	</div>
+	
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script>
+	    $(function() {
+		    $(".hover").hover(function() {
+			    $(this).find(".hov_div").css("z-index", "2").stop(true, true).slideDown(400);
+				$(this).find("span").show();
+			}, function () {
+			    $(this).find(".hov_div").css("z-index", "1").stop(true, true).delay(100).slideUp(400);
+				$(this).find("span").hide();
+			});
+		});
+	</script>
+</body>
+</html>

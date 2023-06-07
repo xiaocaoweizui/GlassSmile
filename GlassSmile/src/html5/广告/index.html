@@ -1,0 +1,76 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>优惠券详情</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--这里是jquery.js文件 引入-->
+<script src="js/jquery.min.js"></script>
+<!--这里是jquery mobile js文件 引入-->
+<script src="js/jquery.mobile.min.js"></script>
+<!--这里是jquery mobile css文件 引入-->
+<link href="css/jquery.mobile.min.css" rel="stylesheet">
+
+<script>
+$(document).ready(function() {
+    $("button").click(function(){
+		$("ol").slideToggle();
+		/* 选中 ol标签 ， slide滑动  toggle 如果是隐藏的则显示，如果是显示的则隐藏*/
+	});
+	
+	$(".move").mousemove(function(e){
+		$(this).html( e.clientX+","+e.clientY);
+	});
+});
+</script>
+
+<style>
+	ol li{ color:red; /*文字颜色：红色*/}
+	ol{ display:none; /*显示：不显示*/}
+	.content img{ width:100%;}
+	.Ptitle{ width:65%; float:left; }
+	.price{ width:35%; float:right; color:#e53c01;}
+	.price span{ font-size:3em; vertical-align:top; line-height:0.7em;}
+	ul li{ line-height:1.5em;}
+	.move{ font-size:24px; color:#FFF;}
+	
+</style>
+</head>
+
+<body>
+<!--用户交互 用户单击鼠标  敲击键盘  滑动手指-->
+<!--<button>单击我，有下拉菜单</button>
+<ol>
+	<li>沐晨</li>
+	<li>石头</li>
+	<li>子如</li>
+</ol>-->
+<!--- 创建一个手机页面-->
+
+	<!---创建通常网页三个部分  header  content  footer--->
+    <header class="ui-header ui-bar-inherit" role="banner" data-role="header">
+    	<h1 aria-level="1" role="heading" class="ui-title">HTML5</h1>
+    </header>
+    <div role="main" data-role="content" class="content ui-content">
+    	<img src="images/1.jpeg">
+        <div>
+        	<p class="Ptitle">T1缤纷珍珠奶茶+麦乐鸡(5块)</p>
+            <p class="price">￥<span>15.</span>50</p>
+        </div>
+        <img src="images/3.png">
+        <div>
+        	<ul>
+            	<li>本券每日上午10:30时后使用.</li>
+            	<li>仅限中国大陆地区售卖优惠券内产品的除机场、火车站外的部分麦当劳餐厅使用.</li>
+            	<li>食品以实物为准,图片仅供参考.</li>
+            	<li>食品单价以餐厅实际餐牌价格为准.</li>
+            	<li>本优惠券不适用于送餐服务,餐具不在售卖范围之内;</li>
+				<li>具体以店内公示为准.</li>
+            </ul>
+        </div>
+    </div>
+    <footer class="ui-footer ui-bar-inherit ui-footer-fixed slideup" role="contentinfo" data-role="footer" data-position="fixed">
+    	<h1 aria-level="1" role="heading" class="ui-title">HTML5</h1>
+    </footer>
+</div>
+</html>

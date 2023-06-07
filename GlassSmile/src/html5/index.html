@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous">
+
+        <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+            integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+            crossorigin="anonymous">
+            <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"
+            integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="crossorigin="anonymous"></script>
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+            <script type="module">
+              import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+              
+              createApp({
+                data() {
+                  return {
+                    message: 'Hello World ',
+                    items:[
+                        { name:"俄罗斯方块",url:"/html5/俄罗斯方块/index.html"},
+                        { name:"360论坛",url:"/html5/360论坛/360论坛展示.html"},
+                        { name:"360论坛2",url:"/html5/360论坛/图片展示.html"},
+                        { name:"360metro页",url:"/html5/360metro页/360metro页.html"},
+                        { name:"商城楼层",url:"/html5/360metro页/商城楼层.html"},
+                        { name:"百度换肤",url:"/html5/百度换肤/index.html"},
+                        { name:"百度微任务",url:"/html5/百度微任务/index.html"},
+                        { name:"播放器",url:"/html5/播放器/index.html"},
+                        { name:"图片滚动",url:"/html5/播放器/图片滚动.html"},
+                        { name:"产品展示",url:"/html5/产品展示/index.html"},
+                        { name:"导航头",url:"/html5/导航头/index.html"},
+                        { name:"二级菜单",url:"/html5/二级菜单/index.html"},
+                        { name:"翻页",url:"/html5/翻页/index.html"},
+                        { name:"呱呱乐",url:"/html5/呱呱乐/index.html"},
+                        { name:"广告",url:"/html5/广告/index.html"},
+                        { name:"轮播-风格1",url:"/html5/轮播/风格1.html"},
+                        { name:"轮播-风格2",url:"/html5/轮播/风格2.html"},
+                        { name:"轮播-风格3",url:"/html5/轮播/风格3.html"},
+                        { name:"轮播-风格4",url:"/html5/轮播/风格4.html"},
+                        { name:"拼图游戏",url:"/html5/拼图游戏/index.html"},
+                        { name:"视频带弹幕",url:"/html5/视频带弹幕/index.html"},
+                        { name:"太极",url:"/html5/太极/index.html"},
+                        { name:"图片动画",url:"/html5/图片动画/index.html"},
+                        { name:"图片浮动文字",url:"/html5/图片浮动文字/index.html"},
+                        { name:"图片滑动",url:"/html5/图片滑动/index.html"},
+                        { name:"图片列表",url:"/html5/图片列表/index.html"},
+                        { name:"图片切割",url:"/html5/图片切割/index.html"},
+                        { name:"图片提示",url:"/html5/图片提示/index2.html"},
+                        { name:"图片提示-风格1",url:"/html5/图片提示/风格1.html"},
+                        { name:"图片提示-风格2",url:"/html5/图片提示/风格2.html"},
+                        { name:"图片旋转",url:"/html5/图片旋转/index.html"},
+                        { name:"图片移动",url:"/html5/图片移动/index.html"},
+                        { name:"图片移动之购物车",url:"/html5/图片移动之购物车/index.html"},
+                        { name:"图片展示2",url:"/html5/图片展示2/布局.html"},
+                        { name:"图片展示3",url:"/html5/图片展示2/日历.html"},
+                        { name:"图片展示4",url:"/html5/图片展示2/转动.html"},
+                        { name:"文字滑动",url:"/html5/文字滑动/文字滑动.html"},
+                        { name:"文字滑动",url:"/html5/文字滑动/旋转.html"},
+                        { name:"下拉导航",url:"/html5/下拉导航/index.html"},
+                        { name:"下拉信息",url:"/html5/下拉信息/index.html"},
+                        { name:"相册",url:"/html5/相册/index.html"},
+                        { name:"metro图示",url:"/html5/metro图示/index.html"},
+                        { name:"QQ在线客服",url:"/html5/QQ在线客服/index.html"},
+                        { name:"拼图游戏",url:"/html5/QQ在线客服/拼图游戏/index.html"},
+                        { name:"WIN8图标",url:"/html5/WIN8图标/index.html"}
+                    ]
+                  }
+                }
+              }).mount('#app')
+            </script>
+    </head>
+    <body>
+        <div class="container" id="app">
+            <h1>Xiaocaoweizui css/js demo <small>zhangy04@mingyuanyun.com</small></h1>
+           
+            <blockquote>
+                <p>{{ message }},每天进步一点点...</p>
+                <footer>zhangy04 <cite title="Source Title">mingyuanyun</cite></footer>
+            </blockquote>
+          
+         
+            <p> <code>&lt;Demo&gt;</code> 示例 :</p>
+            <ol  >
+                <li v-for="item,index in items" :key="index" >
+                    <a :href="item.url">{{item.name}}</a>
+                </li>
+            </ol>
+
+            <!-- <table class="table .table-striped .table-condensed">
+                <tr>
+                    <th>序号</th>
+                    <th>地址</th>
+                    <th>备注</th>
+                </tr>
+                <tr v-for="item,index in items" :key="index">
+                    <td>{{ index +1 }}</td>
+                    <td><a :href="item.url">{{item.name}}</a></td>
+                    <td></td>
+                </tr>
+            </table> -->
+
+
+      
+           
+        </div>
+
+    </body>
+</html>

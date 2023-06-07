@@ -1,0 +1,94 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>图片动画</title>
+	<style>
+	    *{margin:0;padding:0;}
+		li{
+		    list-style:none;
+		}
+		body{
+		}
+		#box{
+		    width:960px;
+			height:400px;
+			margin:100px auto;
+		}
+		img{
+		    width:300px;
+			height:400px;
+		}
+		ul{
+		}
+		ul li{
+		    width:300px;
+			height:400px;
+			float:left;
+			margin-left: 20px;
+			position:relative;
+			transition: all 1.5s;
+			border-radius:50px;
+			overflow:hidden;
+		}
+		.cover{
+		    position:absolute;
+			top:0;
+			color:#fff;
+			background:rgba(136, 68, 34, 0.8);
+			height:100%;
+			left:-300px;
+			width:100%;
+			line-height:30px;
+			border-radius:50px;
+		    transition:all 1.5s;
+		}
+		ul li img{
+		    transition: all 1.5s;
+			border-radius:50px;
+		}
+		ul li:hover{
+		    margin-top:-50px;
+			box-shadow:0 10px 20px 20px #000;
+		}
+		ul li:hover img{
+		    margin-top:0;
+			transform:rotatey(180deg);
+		}
+		ul li:hover .cover{
+		    left:0px;
+			top:0;
+		}
+	</style>
+</head>
+<body>
+    <div id="box">
+	    <ul>
+		    <li>
+			    <a href="#"><img src="images/1.jpg" /></a>
+				<div class="cover">
+				    <h3>自觉教育</h3>
+					<p>Dreamweaver网页设计班</p>
+					<p>Adobe Dreamweaver，简称“DW”，中文名称"梦想编织者"，是美国MACROMEDIA公司开发的集网页制作和管理网站于一身的所见即所得网页编辑器，DW是第一套针对专业网页设计师特别发展的视觉化网页开发工具，利用它可以轻而易举地制作出跨越平台限制和跨越浏览器限制的充满动感的网页。</p>
+				</div>
+			</li>
+		    <li>
+			    <a href="#"><img src="images/2.jpg" /></a>
+				<div class="cover">
+				    <h3>自觉教育</h3>
+					<p>Dreamweaver网页设计班</p>
+					<p>Adobe Dreamweaver，简称“DW”，中文名称"梦想编织者"，是美国MACROMEDIA公司开发的集网页制作和管理网站于一身的所见即所得网页编辑器，DW是第一套针对专业网页设计师特别发展的视觉化网页开发工具，利用它可以轻而易举地制作出跨越平台限制和跨越浏览器限制的充满动感的网页。</p>
+				</div>
+			</li>
+		    <li>
+			    <a href="#"><img src="images/3.jpg" /></a>
+				<div class="cover">
+				    <h3>自觉教育</h3>
+				    <p>Dreamweaver网页设计班</p>
+					<p>Adobe Dreamweaver，简称“DW”，中文名称"梦想编织者"，是美国MACROMEDIA公司开发的集网页制作和管理网站于一身的所见即所得网页编辑器，DW是第一套针对专业网页设计师特别发展的视觉化网页开发工具，利用它可以轻而易举地制作出跨越平台限制和跨越浏览器限制的充满动感的网页。</p>
+				</div>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

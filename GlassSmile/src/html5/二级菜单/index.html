@@ -1,0 +1,115 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>二级菜单</title>
+	<style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei"}
+		#nav{
+		    width:250px;background:#000;
+			margin:0 auto;
+		}
+		#nav .logo{text-align:center;padding: 10px 0; 
+		    border-bottom:1px solid #424242;
+		}
+		#nav > ul > li{
+			list-style:none;
+			color:white;
+			line-height:45px;
+			border-bottom:1px solid #424242;
+			cursor:pointer;
+		}
+		#nav > ul > li > div{
+		    transition:all 0.7s;
+		}
+		#nav > ul > li img{
+		    margin-left:20px;
+		    margin-right:10px; 
+		}
+		.content li{
+		    text-indent:50px;
+			background:#333;
+			border-bottom:1px solid #424242;
+			font-size:14px;
+		    transition:all 0.3s;
+		}
+		.content li:hover{
+		    background:#5F5F5F;
+		}
+		.hide{
+		    display:none;
+		}
+		.selected{
+		    background:#70BF88;
+		}
+	</style>
+</head>
+<body><div class="icon"></div>
+    <div id="nav">
+	    <div class="logo"><img src="images/logo.png" /></div>
+		<ul>
+		    <li>
+			    <div class="selected"><img src="images/img1.png" />IT培训</div>
+				<ul class="content">
+				    <li>web前端</li>
+				    <li>后端</li>
+				    <li>android</li>
+				    <li>嵌入式</li>
+				</ul>
+			</li>
+		    <li><div><img src="images/img2.png" />技能学习</div>
+			    <ul class="content hide">
+				    <li>技工</li>
+				    <li>厨师</li>
+				    <li>医生</li>
+				</ul>
+			</li>
+		    <li><div><img src="images/img3.png" />语言学习</div>
+			    <ul class="content hide">
+				    <li>html</li>
+				    <li>java</li>
+				    <li>css</li>
+				    <li>C++</li>
+				    <li>js</li>
+				</ul>
+			</li>
+		    <li><div><img src="images/img4.png" />兴趣爱好</div>
+			    <ul class="content hide">
+				    <li>打游戏</li>
+				    <li>学习</li>
+				    <li>看书</li>
+				    <li>看电影</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script>
+	    $(function() {
+		    //$("#nav > ul > li:gt(0) ul").slideUp();
+			/*$("#nav > ul > li > div").click(function() {
+				$(this).addClass("selected").parent().find("ul").slideToggle();
+				$(this).parent().siblings().find("div").removeClass("selected")
+				    .end().find("ul").slideUp();
+			});
+			
+			$(".content li").click(function(){
+			    alert($(this).text());
+			});*/
+			$("#nav > ul > li").click(function() {
+				$(this).addClass("selected").find("ul").slideToggle();
+				$(this).siblings().find("div").removeClass("selected")
+				    .end().find("ul").slideUp();
+			});
+			
+			$(".content li").click(function(){
+			    alert($(this).text());
+				return false;
+			});
+		})
+	</script>
+</body>
+</html>

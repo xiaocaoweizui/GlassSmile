@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="Generator" content="">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>商城楼层</title>
+	<style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei"}
+		img{border:0;}
+		ul li{list-style:none;}
+		
+		#menu{
+			height:360px;
+			position:fixed;
+			top:200px;left:50px;
+		}
+		#menu ul li{
+		    width:32px;
+			height:32px;
+			border-bottom:1px dotted #ddd;
+			list-style:none;font-size:12px;
+			color:#666;text-align:center;
+			line-height:32px;position:relative;
+		}
+		#menu ul li span{
+		    width:32px;height:32px;background:#c00;
+			display:none;position:absolute;
+			left:0;top:0;color:white;
+			cursor:pointer;
+		}
+		#menu ul li:hover span{
+		    display:block;
+		}
+		.active span{
+		    background:#fff;color:#f00;
+		}
+		#menu ul li span.active {
+		    background:#fff;color:#f00;
+			display:block;
+		}
+		#con{
+		    width:1200px;height:99990px;margin: 0 auto;background:green;
+		}
+		#con .floor{
+			height:600px;
+		}
+	</style>
+</head>
+<body>
+    <div id="menu">
+	    <ul>
+		    <li>F1 <span>服饰</span></li>
+		    <li>F2 <span>美妆</span></li>
+		    <li>F3 <span>手机</span></li>
+		    <li>F4 <span>家电</span></li>
+		    <li>F5 <span>数码</span></li>
+		    <li>F6 <span>运动</span></li>
+		    <li>F7 <span>居家</span></li>
+		    <li>F8 <span>母婴</span></li>
+		    <li>F9 <span>食品</span></li>
+		    <li>F10 <span>图书</span></li>
+		    <li>F11 <span>服务</span></li>
+		</ul>
+	</div>
+	<div id="con">
+	   <div id="floor1" class="floor"><img src="images/f1.png" /></div> 
+	   <div id="floor2" class="floor"><img src="images/f2.png" /></div> 
+	   <div id="floor3" class="floor"><img src="images/f3.png" /></div> 
+	   <div id="floor4" class="floor"><img src="images/f4.png" /></div> 
+	   <div id="floor5" class="floor"><img src="images/f5.png" /></div> 
+	   <div id="floor6" class="floor"><img src="images/f6.png" /></div> 
+	   <div id="floor7" class="floor"><img src="images/f7.png" /></div> 
+	   <div id="floor8" class="floor"><img src="images/f8.png" /></div> 
+	   <div id="floor9" class="floor"><img src="images/f9.png" /></div> 
+	   <div id="floor10" class="floor"><img src="images/f10.png" /></div> 
+	   <div id="floor11" class="floor"><img src="images/f11.png" /></div> 
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script>
+	    $(function() {
+		    $("#menu ul li").hover(function() {
+			    $(this).addClass("active");
+			}, function() {
+			    $(this).removeClass();
+			});
+			
+			$("#menu ul li").click(function() {
+			    $(this).find("span").addClass("active").parent().siblings("li").find("span").removeClass("active");
+				var top = $("#floor" + ($(this).index() + 1)).offset().top;
+				$("body,html").animate({scrollTop:top}, 500);
+			});
+			
+			
+		});
+	</script>
+</body>
+</html>

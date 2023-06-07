@@ -1,0 +1,38 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script type="text/javascript" src="jquery.min.js" ></script>
+    <script type="text/javascript" src="Jigsaw.js" ></script>
+    <style type="text/css">
+        .divCanvas{
+             position:absolute; 
+            left:30%;
+            margin-left:-200px;
+            margin-top:100px;
+        }
+        .divPointer{
+            position:absolute; 
+            left:50%;
+            margin-left:-200px;
+            margin-top:500px;
+            font-size:30px;
+            font-family:Verdana;
+        }
+    </style>
+</head>
+<body>
+    <div class="divCanvas">
+        <canvas id="myCanvas" width="400" height="400" style="border:solid 1px black"></canvas>
+        <canvas id="picCanvas" width="400" height="400"style="border:solid 1px black"></canvas>
+    </div>
+    <div id="divponiter" class="divPointer">
+        <span>计时：</span>
+        <span id="spnTime"></span>
+        <img id="img" src="Tulips.jpg" style="display:block;width:400px;height:400px;"  />
+    </div>
+    
+</body>
+</html>

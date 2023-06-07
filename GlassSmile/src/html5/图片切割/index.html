@@ -1,0 +1,87 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="Generator" content="">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>图片切割</title>
+	<style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei"}
+		img{border:0;}
+		ul li{list-style:none;float:left;
+		    border:2px dashed #f8f5f5;
+			width:50px; height:60px;
+		}
+		body{
+		    background:#45daf9;
+		}
+		#box{
+		    width:400px;
+		    height:400px;
+			background:#d0d0d0;
+			box-shadow:0 0 100px #fb0004;
+			border-radius: 50%;
+			margin: 100px auto;
+			position:relative;
+			/*overflow:hidden;*/
+		}
+		#img{
+		    width:193px;
+			height:289px;
+			border-radius:50%;
+			background:#5059fb;
+			margin-left:104px;
+			overflow:hidden;
+		}
+		#img img{
+		    width:193px;
+			height:289px;
+		    border-radius:50%;
+			margin:auto;
+		}
+		#box ul{
+			margin:20px 90px;
+		    position:absolute;
+		}
+		ul li.left{
+		    border-radius:0 0 0 20px;
+		}
+		ul li.left, ul li.left img{
+		    border-radius:0 0 0 20px;
+		}
+		ul li.right, ul li.right img{
+		    border-radius:0 0 20px 0;
+		}
+		ul li img{
+		    width:100%;
+			height:100%;
+		}
+		ul li:hover{
+		    border:2px solid green;
+		}
+		a{height:0;tex-decoration:none;}
+	</style>
+</head>
+<body>
+    <div id="box">
+	    <div id="img">
+		    <img id="1" src="images/1.png" />
+		    <img id="2" src="images/2.png" />
+		    <img id="3" src="images/3.png" />
+		    <img id="4" src="images/4.png" />
+		</div>
+		<ul>
+			<li class="left"><a href="#1"><img src="images/1.png" /></a></li>
+			<li><a href="#2"><img src="images/2.png" /></a></li>
+			<li><a href="#3"><img src="images/3.png" /></a></li>
+			<li class="right"><a href="#4"><img src="images/4.png" /></a></li>
+		</ul>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script>
+	    
+	</script>
+</body>
+</html>

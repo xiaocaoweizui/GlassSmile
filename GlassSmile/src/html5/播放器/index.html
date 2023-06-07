@@ -1,0 +1,220 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    <link href="css/reset.css" rel="stylesheet" type="text/css">
+    <style>
+        * {
+            font-family: "Microsoft YaHei";
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            background: url(images/bg.jpg);
+            background-position: -524px 0;
+        }
+
+        .MP3 {
+            width: 536px;
+            height: 524px;
+            margin: 140px auto 0;
+            background: url(images/MP3.png);
+            position: relative;
+        }
+
+        .circle {
+            position: absolute;
+            left: 60px;
+            top: 60px;
+        }
+
+        .lightProcess {
+            width: 415px;
+            height: 415px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-top: -207px;
+            margin-left: -207px;
+        }
+
+            .lightProcess.goRotate {
+                -webkit-animation: goRotate 30s infinite linear;
+            }
+
+        @-webkit-keyframes goRotate {
+            from {
+                -webkit-transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        .box {
+            width: 415px;
+            height: 415px;
+            position: absolute;
+            left: 50%;
+            top: 68px;
+            margin-left: -209px;
+        }
+
+            .box .name {
+                color: white;
+                margin: 45px auto 0;
+                text-align: center;
+            }
+
+            .box .songName {
+                margin: 25px auto 0;
+                text-align: center;
+                font-size: 24px;
+                color: #3ff;
+            }
+
+            .box .singer {
+                width: 120px;
+                height: 120px;
+                border-radius: 50%;
+                top: 50%;
+                left: 50%;
+                position: absolute;
+                margin-top: -60px;
+                margin-left: -60px;
+            }
+
+                .box .singer.goRotate2 {
+                    -webkit-animation: goRotate2 5s infinite linear;
+                }
+
+        @-webkit-keyframes goRotate2 {
+            from {
+                -webkit-transform: rotate(0deg);
+            }
+
+            to {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        .box .play {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            margin-top: -27px;
+            margin-left: -27px;
+        }
+
+        .box .goodSong {
+            text-align: center;
+            padding-top: 33px;
+            background: url(images/goodSong.png) no-repeat center top;
+            width: 42px;
+            height: 20px;
+            display: block;
+            position: absolute;
+            left: 150px;
+            bottom: 45px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .box .nextSong {
+            width: 42px;
+            height: 20px;
+            display: block;
+            position: absolute;
+            left: 218px;
+            bottom: 45px;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            padding-top: 33px;
+            display: block;
+            background: url(images/next.png) no-repeat center top;
+        }
+    </style>
+</head>
+<body>
+    <div class="MP3">
+        <img src="images/circle.png" class="circle" />
+        <div class="lightProcess">
+            <img src="images/light.png" />
+        </div>
+        <div class="box">
+            <p class="name">王菲</p>
+            <p class="songName">因为爱情</p>
+            <img class="singer" src="images/王菲.jpg" />
+            <a href="javascript:void(0)"><img class="play" src="images/play.png" /></a>
+            <a href="#" class="goodSong">好听</a>
+            <a href="#" class="nextSong">切歌</a>
+        </div>
+    </div>
+    <audio id="player"></audio><!-- 自动播放添加autoplay属性 -->
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script>
+	    $(function() {
+		    var flag = false;
+		    var arr = ["music/因为爱情.mp3", "music/爱你一万年.mp3", "music/海阔天空.mp3", "music/想和你去吹吹风.mp3"];
+		    var arrJson = [{
+		        "vidioSrc": "music/因为爱情.mp3",
+		        "songName": "因为爱情",
+		        "singer": "王菲",
+		        "singerImg": "images/王菲.jpg"
+		    },
+            {
+                "vidioSrc": "music/爱你一万年.mp3",
+                "songName": "爱你一万年",
+                "singer": "张学友",
+                "singerImg": "images/张学友.jpg"
+            },
+            {
+                "vidioSrc": "music/海阔天空.mp3",
+                "songName": "海阔天空",
+                "singer": "Beyond",
+                "singerImg": "images/刘德华.jpg"
+            },
+            {
+                "vidioSrc": "music/想和你去吹吹风.mp3",
+                "songName": "想和你去吹吹风",
+                "singer": "周华健",
+                "singerImg": "images/周华健.jpg"
+            }
+           ]
+			var currentSong = 0;
+		    $(".play").click(function() {
+			    $(".lightProcess").toggleClass("goRotate");
+			    $(".singer").toggleClass("goRotate2");
+
+				flag = !flag;
+				if ($("#player").attr("src") != arrJson[currentSong].vidioSrc) {
+				    $("#player").attr("src", arrJson[currentSong].vidioSrc);
+				}
+				if(flag) {
+				    $("#player")[0].play();
+				} else {
+				    $("#player")[0].pause();
+				}
+			});
+
+			$(".nextSong").click(function() {
+			    currentSong = ++currentSong % arr.length;
+			    $("#player").attr("src", arrJson[currentSong].vidioSrc);
+			    $(".name").text(arrJson[currentSong].singer);
+			    $(".songName").text(arrJson[currentSong].songName);
+			    $(".singer").attr("src", arrJson[currentSong].singerImg);
+				$("#player")[0].play();
+			});
+		});
+    </script>
+</body>
+</html>

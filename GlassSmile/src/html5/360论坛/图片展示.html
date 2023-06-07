@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="Generator" content="">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>图片展示</title>
+	<style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei"}
+		img{border:0;}
+		ul li{list-style:none;
+		}
+		body{background:url(images/bg3.jpg);}
+		#course{width:986px;height:620px;background:#cb5412;margin:0 auto;
+		}
+		#course .cous_con{height:466px;background:#fff;margin:30px auto;padding:10px 10px;
+		}
+		#course .cous_con .content{width:297px;height:198px;
+		    position:relative;float:left;margin:10px 10px;overflow:hidden;
+		}
+		.cous_con .coutxt{
+		    width:297px;height:45px;background:#000;position:absolute;left:0;
+			bottom:-152px;background-color:rgba(0,0,0,0.5);height:198px;
+			transition:all 0.7s;
+		}
+		.content .coutxt h3{color:#fff;font-size:20px;font-weight:100px;
+		    text-align:center;height:45px;
+			line-height:45px;transition:all 0.7s;
+		}
+		.content .coutxt p{
+		    font-size:14px;color:#fff;text-align:center;
+		}
+		/*.cous_con .content:hover .coutxt{
+		    bottom:0px;
+		}
+		.cous_con .content:hover h3{
+		    padding-top:60px;
+		}/*
+	</style>
+</head>
+<body>
+    <div id="course">
+	    <img src="images/course.jpg" />
+	    <div class="cous_con">
+		    <div class="content">
+				<img src="images/class1.jpg" />
+				<div class="coutxt">
+				    <h3>IT培训</h3>
+					<p>为您铺成为IT大神的在线学习之路</p>
+				</div>
+			</div>
+		    <div class="content">
+				<img src="images/class2.jpg" />
+				<div class="coutxt">
+				    <h3>IT培训</h3>
+					<p>为您铺成为IT大神的在线学习之路</p>
+				</div>
+			</div>
+		    <div class="content">
+				<img src="images/class3.jpg" />
+				<div class="coutxt">
+				    <h3>IT培训</h3>
+					<p>为您铺成为IT大神的在线学习之路</p>
+				</div>
+			</div>
+		    <div class="content">
+				<img src="images/class4.jpg" />
+				<div class="coutxt">
+				    <h3>IT培训</h3>
+					<p>为您铺成为IT大神的在线学习之路</p>
+				</div>
+			</div>
+		    <div class="content">
+				<img src="images/class5.jpg" />
+				<div class="coutxt">
+				    <h3>IT培训</h3>
+					<p>为您铺成为IT大神的在线学习之路</p>
+				</div>
+			</div>
+		    <div class="content">
+				<img src="images/class6.jpg" />
+				<div class="coutxt">
+				    <h3>IT培训</h3>
+					<p>为您铺成为IT大神的在线学习之路</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script>
+	    $(function() {
+		    $(".content").hover(function() {
+			    var $this = $(this);
+			    $(this).find(".coutxt").animate({bottom:"0"}, 0);
+			    $(this).find(".coutxt h3").animate({"padding-top":"60px"}, 0);
+			}, function() {
+			    $(this).find(".coutxt").animate({bottom:"-152px"}, 0);
+			    $(this).find(".coutxt h3").animate({"padding-top":"0"}, 0);
+			});
+		});
+	</script>
+</body>
+</html>

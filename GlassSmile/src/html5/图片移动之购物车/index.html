@@ -1,0 +1,188 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="Generator" content="">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>购物车</title>
+	<style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei"}
+		ul li{list-style:none;}
+		#banner{width:100%;height:160px;background:url(images/banner.jpg);}
+		#product{
+		    width:928px;height:310px;margin: 30px auto 0px;
+		}
+		#product ul li{
+		    float:left;
+			margin-left:10px;
+			border:1px solid blue;
+		}
+		#product ul li a{
+		    width:220px;
+			height:220px;
+			display:block;
+		}
+		#product ul li{
+		    border:1px solid red;
+		}
+		#product ul li img{display:block;}
+		#product ul li p.ti{
+		    font-size:12px;color:#666;line-height:30px;
+		}
+		#product ul li p.price{
+		    line-height:35px;
+		}
+		#product ul li p.price font{
+		    font-size:16px;color:red;
+			font-weight:bold; font-family:"Arial";
+		}
+		#product ul li p.price span{
+		    float:right; width:100px;height:35px;background:#f00;
+			display:block; border-radius:5px;text-align:center;
+			color:white; cursor:pointer;margin-right:3px;margin-bottom:3px;
+		}
+		
+		#carBox{
+		    width:40px;height:100%;background:red;position:fixed;top:0;right:0;
+			overflow:hidden;
+		}
+		#carBox .car{
+		    height:100%;width:40px;background:#000;
+			position:absolute;left:0;top:0;
+		}
+		#carBox .box{
+		    float:right;
+			height:100%;
+			width:220px;
+			background:#ddd;
+			position:absolute;
+			right:0;top:0;
+			overflow:scroll;
+		}
+		#carBox .car span{
+		    color:white;display:block;
+			width:12px;height:100px;
+			font-size:12px;padding:10px 14px;
+			position:absolute;
+			margin-top:-50px;
+			top:50%;
+			cursor:pointer;
+		}
+		.car img{
+		    margin-left:-10px;
+		}
+		#carBox.carBoxHide{
+		    width:40px;
+		}
+		.fly{width:50px;height:50px;border-radius:50px;}
+		
+		#carBox ul li{padding:0.2em 0.6em;}
+		#carBox ul li .ti{font-size:12px;}
+		
+		.box dl{
+		    height:60px;padding:10px;
+			border-bottom:1px solid black;
+		}
+		.box dl dt{
+		    width:60px;height:60px;float:left;
+		}
+		.box dl dd{
+		    width:100px;height:25px;float:left;padding:0 10px;
+			font-size:12px;color:#666;
+		}
+		.box dl dd.boxTi{height:40px;line-height:18px;}
+		.box dl dd.boxPrice{height:20px;line-height:20px;}
+	</style>
+</head>
+<body>
+    <div id="banner">
+	</div>
+	
+	<div id="product">
+	    <ul>
+		    <li><a href="#"><img src="images/1.jpg" width="220" height="220" /></a>
+			    <p class="ti">2013夏季新品海南之家男装正品</p>
+				<p class="price"><font>￥109.20</font><span>加入购物车</span></p>
+			</li>
+		    <li><a href="#"><img src="images/2.jpg" width="220" height="220" /></a>
+			    <p class="ti">2014夏季新品海南之家男装正品</p>
+				<p class="price"><font>￥194.20</font><span>加入购物车</span></p>
+			</li>
+		    <li><a href="#"><img src="images/3.jpg" width="220" height="220" /></a>
+			    <p class="ti">2015夏季新品海南之家男装正品</p>
+				<p class="price"><font>￥594.20</font><span>加入购物车</span></p>
+			</li>
+		    <li><a href="#"><img src="images/4.jpg" width="220" height="220" /></a>
+			    <p class="ti">2015夏季新品海南之家男装正品</p>
+				<p class="price"><font>￥1094.20</font><span>加入购物车</span></p>
+			</li>
+		</ul>
+	</div>
+	<div id="carBox">
+	    <div class="box">
+		    <!--<ul>
+			</ul>-->
+			<!--<dl>
+			    <dt><img src="images/1.jpg" width="60" height="60" /></dt>
+				<dd class="boxTi">2015夏季新品海南之家男装正品</dd>
+				<dd class="boxPrice">￥194.20</dd>
+			</dl>-->
+		</div>
+	    <div class="car">
+		    <span class="join"><img src="images/car.png" />加入购物车</span>
+		</div>
+	</div>
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/tz_fly.js"></script>
+	<script>
+	    $(function() {
+		    var flag = true;
+		    $("#carBox .car span").click(function() {
+			    //$("#carBox").toggleClass("carBoxHide");
+				var width = 40;
+				if(flag) {
+				    width = 260;
+				}
+				$("#carBox").animate({"width" : width + "px"}, 500);
+				flag = !flag;
+			});
+			
+			$("#product ul li p span").click(function(event) {
+			    addProduct(event, this);
+			});
+		});
+		
+		function addProduct(e, obj) {
+		    var offset = $(".join").offset();
+			var _this = $(e.target);
+			var src = _this.parent().parent().find("img").attr("src");
+			var flyer = $("<img src='" + src + "' class='fly' />");
+			flyer.fly({
+			    start:{left:e.clientX,top:e.clientY},
+				end:{left:offset.left,top:offset.top,width:20,height:20},
+				onEnd:function() {
+				    //var html = $('<li><img src="' + flyer.attr("src") + '" width="200" height="200" /><p class="ti">2015夏季新品海南之家男装正品</p><p class="price"><font>￥194.20</font></p></li>');
+					//html.hide();
+				    //$("#carBox .box ul").append(html);
+					//html.fadeIn();
+					
+					var li = $(obj).parent().parent();
+					var html = $('<dl><dt><img src="' + flyer.attr("src") +
+					'" width="60" height="60" /></dt><dd class="boxTi">' +
+					li.find(".ti").text() + '</dd><dd class="boxPrice">' +
+					li.find(".price font").text() + '</dd></dl>');
+					html.hide();
+				    $("#carBox .box").append(html);
+					html.fadeIn();
+					
+				    flyer.fadeOut("slow", function() {
+					    $(this).remove();
+					});
+				}
+			});
+		}
+	</script>
+</body>
+</html>

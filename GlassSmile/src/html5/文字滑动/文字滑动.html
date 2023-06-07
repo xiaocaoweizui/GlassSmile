@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>图片上滑动的文字</title>
+<style>
+div img {
+	width: 300px;/*宽度：300像素*/
+}
+div {
+	width: 300px;
+	float: left;
+	margin: 30px;/*外边距：30像素*/
+	position:relative;/*布局:相对布局*/
+	overflow:hidden;/*超出部分消失*/
+	line-height:0;
+}
+div p {
+	position: absolute;/*布局：绝对布局*/
+	top: 370px;
+	text-align:justify;
+	padding:5px;
+	background:rgba(51,51,51,0.4); /*IE9+*/
+	/*背景：red green blue  aphla[0,1]*/
+	margin:0;
+	color:#FFF;
+	height:100%;
+	line-height:1.5em;
+	transition:all 1.5s;
+}
+div b{
+	display:inline-block;
+}
+div:hover p{
+	top:0;
+}
+</style>
+</head>
+
+<body>
+<div class="p1"> <img src="images/1.jpg">
+  <p><B>Red-eyed</B>Red-eyed tree frogs, as their name states, have bold red eyes with vertically narrowed pupils, a vibrant green body with yellow and blue striped sides, and orange toes. There is a great deal of regional variation in flank and thigh coloration.</p>
+  <!--文字段落标记--> 
+</div>
+<div class="p2"> <img src="images/2.jpg">
+  <p><B>Red-eyed</B>Red-eyed tree frogs, as their name states, have bold red eyes with vertically narrowed pupils, a vibrant green body with yellow and blue striped sides, and orange toes. There is a great deal of regional variation in flank and thigh coloration.</p>
+</div>
+<div class="p3"> <img src="images/3.jpg">
+  <p><B>Red-eyed</B>Red-eyed tree frogs, as their name states, have bold red eyes with vertically narrowed pupils, a vibrant green body with yellow and blue striped sides, and orange toes. There is a great deal of regional variation in flank and thigh coloration.</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,88 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>图片滑动</title>
+	<style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei"}
+		html{width:100%;height:100%}
+		body{width:100%;height:100%}
+		.web{width:100%;height:100%;overflow:hidden;position:relative;}
+		.pic{
+		    width:30000px;height:100%;
+			position:relative;
+		}
+		.pic img{float:left;}
+		.move{
+		    width:100%;height:150px;position:absolute;
+			left:0;bottom:0;
+			background:rgba(0, 0, 0, 0.2);
+		}
+		.moveBar{
+		    width:880px;height:11px;
+			border:1px solid green;
+			margin:65px auto;background:url(images/scrollbar.png);
+			position:relative;
+		}
+		.moveBtn{
+		    width:48px;
+			height:11px;
+			position:absolute;
+			background:url(images/button.png);
+		}
+	</style>
+</head>
+<body>
+    <div class="web">
+	    <div class="pic">
+            <img src="images/1.jpg" />
+            <img src="images/2.jpg" />
+            <img src="images/3.jpg" />
+            <img src="images/4.jpg" />
+            <img src="images/5.jpg" />
+            <img src="images/6.jpg" />
+            <img src="images/7.jpg" />
+            <img src="images/8.jpg" />
+            <img src="images/9.jpg" />
+            <img src="images/10.jpg" />
+            <img src="images/11.jpg" />
+            <img src="images/12.jpg" />
+            <img src="images/13.jpg" />
+            <img src="images/14.jpg" />
+            <img src="images/15.jpg" />
+            <img src="images/16.jpg" />
+		</div>
+		<div class="move">
+		    <div class="moveBar">
+			    <div class="moveBtn"></div>
+			</div>
+		</div>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script>
+	    $(function() {
+		    var m = $(".moveBar").offset().left;;
+		    $(".moveBtn").mousedown(function() {
+			    $(document).mousemove(function(e) {
+				    var min = m - $(".moveBtn").width() / 2;
+				    if(e.pageX < m + $(".moveBtn").width() / 2) {
+					    e.pageX = m + $(".moveBtn").width() / 2;
+					}
+					var max = min + $(".moveBar").width();
+					if(e.pageX > max) {
+					    e.pageX = max;
+					}
+				    $(".moveBtn").css("left", (e.pageX - m - $(".moveBtn").width() / 2) + "px");
+				    $(".pic").css("left", (-(e.pageX - m - $(".moveBtn").width() / 2)) * 20 + "px");
+			    }).mouseup(function () {
+			        $(document).unbind("mousemove");
+
+				});
+			});
+		});
+	</script>
+</body>
+</html>

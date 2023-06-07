@@ -1,0 +1,116 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="Generator" content="">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>布局</title>
+	<style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei"}
+		img{border:0;}
+		ul li{list-style:none;
+		}
+		body{
+		    background:url(images/044.png);
+		}
+		#box{
+		    width:1100px;
+			height:666px;
+			margin:0 auto;
+			background:#ccc;
+		}
+		#left{
+		    width:715px;
+			height:666px;
+			background:#fb8385;
+			float:left;
+		}
+		#right{
+		    width:385px;
+			height:666px;
+			background:url(images/4.jpg);
+			float:right;
+			text-align:center;
+			transition:all 2s;
+		}
+		#leftTop{
+		    width:715px;
+			height:333px;
+			background:url(images/2.jpg) no-repeat;
+			background-position-x:-98px;
+			background-position-y:-140px;
+			transition:all 2s;
+		}
+		#leftBottom{
+		    width:715px;
+			height:333px;
+			background:#00f;
+			text-align:left;
+		}
+		#leftBottomLeft{
+		    width:358px;
+			height:333px;
+		    float:left;
+			background:url(images/1.png) no-repeat;
+			background-position-x:76px;
+			background-position-y:120px;
+			transition:all 2s;
+		}
+		#leftBottomRight{
+		    width:357px;
+			height:333px;
+		    float:left;
+			background:url(images/11.jpg) no-repeat;
+			background-position-x:80px;
+			transition:all 2s;
+		}
+		#leftTop img{
+		    margin-top:21px;
+		    margin-right:9px;
+			float:right;
+		}
+		#right img{
+		    margin-top:50px;
+		}
+		#right:hover{
+		    background-position-y:-53px;
+		}
+		#leftTop:hover{
+		    background-position-x:-48px;
+		    background-position-y:-90px;
+		}
+		#leftBottomRight:hover{
+			background-position-x:25px;
+		}
+		#leftBottomLeft:hover{
+		    background-position-y:30px;
+		}
+	</style>
+</head>
+<body>
+    <div id="box">
+	    <div id="left">
+		    <div id="leftTop">
+		        <img src="images/1-1.png" />
+		    </div>
+			<div id="leftBottom">
+		        <div id="leftBottomLeft">
+		
+		        </div>
+		        <div id="leftBottomRight">
+		
+		        </div>
+		    </div>
+		</div>
+		<div id="right">
+		    <img src="images/4-1.jpg" />
+		</div>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script>
+	    
+	</script>
+</body>
+</html>

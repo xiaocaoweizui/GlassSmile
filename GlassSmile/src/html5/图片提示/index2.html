@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>视频播放</title>
+	<style>
+	    *{margin:0;padding:0;}
+		
+	</style>
+</head>
+<body>
+    <video src="oceans-clip.mp4" width="800" height="410" id="video"
+	poster="oceans-clip.png"></video>
+	<br />
+	<button id="" onclick="quickBack()">快 退</button>
+	<button id="btnClick" onclick="play()">播 放</button>
+	<button id="" onclick="stop()">暂 停</button>
+	<button id="" onclick="quick()">快 进</button>
+	<script>
+	    window.onload = function() {
+		    var video = document.getElementById("video");
+			
+			
+		}
+		function play() {
+			video.play();
+		};
+		
+		function stop() {
+		    video.pause();
+		}
+		
+		function quick(){
+		    video.currentTime += 3;
+		}
+		function quickBack(){
+		    video.currentTime += -3;
+		}
+	</script>
+</body>
+</html>

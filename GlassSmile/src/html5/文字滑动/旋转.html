@@ -1,0 +1,88 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>图片上滑动的文字</title>
+
+<style>
+h1{
+	color  :   red    ;
+	/* 文字颜色：红色*/
+/* CSS 样式 四个部分  样式名称   ：   样式的值   ；*/
+
+}
+
+#big{
+	font-size:100px;
+	/*这里是css3的应用    过度效果*/
+	transition:all 2s;
+}
+
+h2{
+	color:yellow;
+	font-size:40px;
+	/*文字大小：40像素*/
+}
+
+.big{
+	font-size:110px;
+}
+ /* 接下来讲伪类*/
+#big:hover{
+	/*hover 伪类  作用：鼠标移上去 应用相关样式*/
+	color:blue;
+	font-size:30px;
+	transform:rotate(-30deg);
+}
+
+/* before 和 after 伪类*/
+.bagua{
+	border-top:green solid 100px;
+	/*上边框：红色 实线 1像素*/
+	border-bottom:yellow solid 100px;
+	/*下边框：红色 实线 1像素*/
+	width:200px;
+	/*css3 属性*/
+	border-radius:100%; /*IE9+*/
+	margin:0 auto; /*静态布局的居中*/
+}
+.bagua:before{  /*行内元素 变成块级*/
+	content:'';
+	border:yellow solid 33px;
+	width:34px;
+	border-radius:100%; /*IE9+*/
+	height:34px;
+	display:block; /*显示样式：块级*/
+	float:left;		/*设置对齐方式：向左浮动*/
+	background:green;
+	margin-top:-50px;
+}
+.bagua:after{  /*行内元素 变成块级*/
+	content:'';
+	border:green solid 33px;
+	width:34px;
+	border-radius:100%; /*IE9+*/
+	height:34px;
+	display:block; /*显示样式：块级*/
+	float:right;		/*设置对齐方式：向左浮动*/
+	background:yellow;
+	margin-top:-50px;
+}
+
+
+.test{
+}
+</style>
+
+</head>
+
+<body>
+<!--h1是一级标题标签    h1-h6 -->
+<h1 id="big">HTML5</h1>
+
+<h2 class="big">CSS3</h2>
+ <div class="bagua"></div>
+ 
+ <div class="test"></div>
+</body>
+</html>

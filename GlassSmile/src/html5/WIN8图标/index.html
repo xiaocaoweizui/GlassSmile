@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<link href="css/reset.css" rel="stylesheet" type="text/css">
+<style> 
+body {
+	background: url(images/bg_pic1.jpg);
+	background-size: 100%;
+}
+.top {
+	background: url(images/logo.png) no-repeat;
+	width: 329px;
+	height: 150px;
+	margin: 0 auto;
+}
+.center {
+	width: 816px;
+	overflow: hidden;
+	margin: 0 auto;
+}
+.center ul {
+	height: 540px;
+	margin-top: 30px;
+}
+.center li {
+	float: left;
+	width: 270px;
+	height: 270px;
+	position: relative;
+	background: rgba(20,20,20,.5);
+	margin: 1px;
+	color:#fecc5d;
+	font-weight:bolder;
+	font-family:"微软雅黑";
+	font-style:italic;
+	cursor:pointer;
+	transition: all ease-out .5s;
+	-moz-transition: all ease-out .5s;
+	-webkit-transition: all ease-out .5s;
+	-ms-transition: all ease-out .5s;
+}
+.center li img {
+	position: absolute;
+	top: 72px;
+	left: 72px;
+}
+.over {
+	display: none;
+}
+.center li:hover {
+	background: #fecc5d; 
+	color:#FFF;
+}
+.center li:hover span{
+	color:#FFF;
+}
+.center li:hover .over {
+	display: block;
+}
+.center li span{ font-size:11px; padding:10px; position:absolute; bottom:0;}
+.center li .fright{ right:0; color:#50372d; font-size:20px;}
+
+.foot{ width:150px; overflow:hidden; margin:30px auto;}
+.foot ul li{ width:34px; height:34px; overflow:hidden; float:left; margin:0 1px; cursor:pointer;}
+.foot ul li img{
+	transition: all ease-out .5s;
+	-moz-transition: all ease-out .5s;
+	-webkit-transition: all ease-out .5s;
+	-ms-transition: all ease-out .5s;
+}
+.foot ul li:hover img{ margin-top:-40px;}
+
+
+    .login ul{
+	    margin-right:30px;margin-top:20px;
+	}
+	ul li{
+	    float:right;color:#fff;margin-right:5px;
+	}
+	a{
+	    display:block;text-decoration:none;color:white;
+	}
+</style>
+</head>
+
+<body>
+    <div class="login">
+	    <ul>
+		    <li><a href="#">登录</a></li>
+		    <li><a href="#">注册</a></li>
+		</ul>
+	</div>
+
+<div class="top"></div>
+<div class="center">
+	<ul>
+		<li>
+			<img class="show" src="images/splash_icon1.png">
+			<img class="over" src="images/splash_icon1_over.png">
+			<span>HOME</span><span class="fright">01</span>
+		</li>
+		<li>
+			<img class="show" src="images/splash_icon2.png">
+			<img class="over" src="images/splash_icon2_over.png">
+			<span>ABOUT</span><span class="fright">02</span>
+		</li>
+		<li>
+			<img class="show" src="images/splash_icon3.png">
+			<img class="over" src="images/splash_icon3_over.png">
+			<span>LOVE</span><span class="fright">03</span>
+		</li>
+		<li>
+			<img class="show" src="images/splash_icon4.png">
+			<img class="over" src="images/splash_icon4_over.png">
+			<span>PICTURE</span><span class="fright">04</span>
+		</li>
+		<li>
+			<img class="show" src="images/splash_icon5.png">
+			<img class="over" src="images/splash_icon5_over.png">
+			<span>BLOG</span><span class="fright">05</span>
+		</li>
+		<li>
+			<img class="show" src="images/splash_icon6.png">
+			<img class="over" src="images/splash_icon6_over.png">
+			<span>MAIL</span><span class="fright">06</span>
+		</li>
+	</ul>
+</div>
+<div class="foot">
+	<ul>
+		<li><img src="images/soc_icon_1.png"></li>
+		<li><img src="images/soc_icon_2.png"></li>
+		<li><img src="images/soc_icon_3.png"></li>
+		<li><img src="images/soc_icon_4.png"></li>
+	</ul>
+</div>
+</body>
+</html>

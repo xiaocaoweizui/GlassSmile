@@ -1,0 +1,55 @@
+﻿<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>图片滚动</title>
+	<link href="css/reset.css" rel="stylesheet" type="text/css">
+	<style> 
+	    *{margin:0;padding:0;}
+        #scroll{
+		    width:920px;height:270px;background:#9f9;margin:100px auto;
+			position:relative;overflow:hidden;
+		}
+		a{text-decoration:none;color:white;}
+		img{border:0;}
+		ul{list-style:none;position:absolute;left:0;}
+		ul li{
+		    width:230px;height:270px;float:left;
+		}
+	</style>
+</head>
+<body>
+    <div id="scroll">
+	    <ul>
+		    <li><a href="javascript:void(0)"><img src="images/刘德华.jpg" /></a></li>
+		    <li><a href="javascript:void(0)"><img src="images/周华健.jpg" /></a></li>
+		    <li><a href="javascript:void(0)"><img src="images/张学友.jpg" /></a></li>
+		    <li><a href="javascript:void(0)"><img src="images/4.jpg" /></a></li>
+		</ul>
+	</div>
+	
+	<script>
+	    var oDiv, oUl, oLi, totalWidth;
+	    window.onload = function() {
+		    oDiv = document.getElementById("scroll");
+		    oUl = document.getElementsByTagName("ul")[0];
+		    oLi = document.getElementsByTagName("li");
+			
+			// li元素添加一倍
+			oUl.innerHTML = oUl.innerHTML + oUl.innerHTML;
+			oUl.style.width = oLi[0].offsetWidth * oLi.length + "px";
+			totalWidth = oLi[0].offsetWidth * oLi.length ;
+			setInterval(autoPlay, 17);
+		}
+		
+		function autoPlay() {
+		    
+		    if(Math.abs(oUl.offsetLeft) >= totalWidth / 2) {
+			    oUl.style.left = "0";
+			} else {
+			    oUl.style.left = oUl.offsetLeft - 1 + "px";
+			}
+		}
+	</script>
+</body>
+</html>

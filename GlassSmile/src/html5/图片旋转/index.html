@@ -1,0 +1,112 @@
+﻿<!doctype html>
+<html onselectstart="return false;">
+<head>
+    <meta charset="utf-8">
+	<meta name="Generator" content="">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>图片展示</title>
+	<style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei"}
+		img{border:0;}
+		ul li{list-style:none;
+		}
+		body{
+		    background:black;
+		}
+		div.pic{
+		    width:120px;height:180px;
+			margin:150px auto 0;
+			position:relative;transform-style:preserve-3d;
+			transform:perspective(800px) rotateX(-10deg) rotateY(0deg);
+		}
+		div.pic img{
+		    position:absolute;
+			width:100%;height:100%;
+			border-radius:5px;
+			box-shadow:0 0 10px #fff;
+			-webkit-box-reflect:below 10px
+			-webkit-linear-gradient(top, rgba(0,0,0,0) 50%, rgba(0,0,0,1));
+		}
+		div.pic p{
+		    width:1200px;
+			height:1200px;position:absolute;
+			background:-webkit-radial-gradient(center center, 600px 600px, rgba(255, 255, 255, 0.3), rgba(0,0,0, 0));
+			left:50%;top:100%;
+			margin-top:-600px;margin-left:-600px;
+			transform:rotateX(90deg);
+			border-radius:100%;
+		}
+	</style>
+</head>
+<body>
+    <div class="pic">
+	    <img src="images/1.jpg" />
+	    <img src="images/2.jpg" />
+	    <img src="images/3.jpg" />
+	    <img src="images/4.jpg" />
+	    <img src="images/5.jpg" />
+	    <img src="images/6.jpg" />
+	    <img src="images/7.jpg" />
+	    <img src="images/8.jpg" />
+	    <img src="images/9.jpg" />
+	    <img src="images/10.jpg" />
+	    <img src="images/11.jpg" />
+		<p></p>
+	</div>
+	
+	<script src="js/jquery-1.11.3.min.js"></script>
+	<script>
+	    $(function() {
+		    $("div.pic img").each(function(index, item) {
+			    $(item).css("transform", "rotateY(" + index * 33 + "deg) translateZ(350px)");
+				$(item).attr("ondragstart", "return false;");
+			});
+			
+			var roX = 0;
+			var roY = 0;
+	        var xN = 0, yN = 0;
+			var play = null;
+			
+			$(document).mousedown(function(ev) {
+			    clearInterval(play);
+			    var xPrev = ev.clientX;
+				var yPrev = ev.clientY;
+			    $(document).bind("mousemove", function(e) {
+				    var x = e.clientX;
+					var y = e.clientY;
+					xN = (x - xPrev);
+					yN = (y - yPrev);
+					roX += xN * 0.2;
+					roY -= yN * 0.2;
+					roX %= 360;
+					roY %= 360;
+					$("div.pic").css({
+					    "transform":"perspective(800px) rotateX(" + roY + "deg) rotateY(" + roX + "deg)"
+					});
+					
+			        xPrev = e.clientX;
+				    yPrev = e.clientY;
+				}).mouseup(function() {
+				    //$(document).mousemove(function(){});
+					$(document).unbind("mousemove");
+					var play = setInterval(function() {
+					    xN *= 0.95;
+					    yN *= 0.95;
+						if(Math.abs(xN) < 1 && Math.abs(yN) < 1) {
+						    clearInterval(play);
+						}
+						roX += xN * 0.2;
+						roY -= yN * 0.2;
+						$("div.pic").css({
+					        "transform":"perspective(800px) rotateX(" + roY + "deg) rotateY(" + roX + "deg)"
+					    });
+					}, 30);
+				});
+				
+			});
+		});
+	</script>
+</body>
+</html>

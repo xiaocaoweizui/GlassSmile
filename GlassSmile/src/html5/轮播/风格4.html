@@ -1,0 +1,110 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>风格4</title>
+    <style>
+	    *{margin:0;padding:0;}
+		img{border:none;}
+	    #banner{
+		    width:520px;height:280px;
+			margin:50px auto;background:#f6c;
+			position:relative;overflow:hidden;
+		}
+		#banner .pic{
+		    width:10000px;height:100%;
+		}
+		#banner .pic img{float:left;
+		}
+		#banner .tab{width:70px;height:14px;position:absolute;
+		    left:50%;bottom:6px;margin-left:-35px;
+			background:rgba(255,255,255, 0.3);border-radius:7px;
+		}
+		#banner .tab ul li{
+		    width:10px;height:10px;
+			border-radius:100%;
+			background:#666;list-style:none;float:left;
+			margin:2px 2px;cursor:pointer;
+			transition:all 0.7s;
+		}
+		#banner .tab ul li.on{
+		    background:red;
+		}
+		#banner .btn div{
+		    width:40px;height:40px;background:rgba(0, 0, 0, 0.3);
+			font-size:30px;color:white;font-weight:bold;text-align:center;
+			line-height:40px;position:absolute;cursor:pointer;top:50%;
+			margin-top:-20px;border-radius:100%;
+		}
+		#banner .btn div.left{
+		    margin-left:10px;
+		}
+		#banner .btn div.right{
+		    right:0;margin-right:10px;
+		}
+	</style>
+</head>
+<body>
+    <div id="banner">
+	    <div class="pic">
+		    <a href="#"><img src="images/1.jpg" /></a>
+		    <a href="#"><img src="images/2.jpg" /></a>
+		    <a href="#"><img src="images/3.jpg" /></a>
+		    <a href="#"><img src="images/4.jpg" /></a>
+		    <a href="#"><img src="images/5.jpg" /></a>
+		</div>
+		
+		<div class="tab">
+		    <ul>
+			    <li class="on"></li>
+			    <li></li>
+			    <li></li>
+			    <li></li>
+			    <li></li>
+			</ul>
+		</div>
+		
+		<div class="btn">
+		    <div class="left">&lt;</div>
+		    <div class="right">&gt;</div>
+		</div>
+	</div>
+	<script src="js/jquery.js"></script>
+	<script>
+	    var sh;
+	    $(function() {
+		    $("#banner div.tab ul li").click(function() {
+			    var li = $(this);
+			    li.addClass("on").siblings().removeClass("on");
+				$("#banner div.pic").stop(true).animate({
+				    "marginLeft": "-" + 520 * li.index() + "px"
+				}, 500);
+			});
+			
+			$(".left").click(function() {
+			    var index = $("#banner div.tab ul li.on").index();
+				index += $("#banner div.tab ul li").length - 1;
+				index %= $("#banner div.tab ul li").length;
+				$("#banner div.tab ul li").eq(index).click();
+			});
+			$(".right").click(function() {
+			    var index = $("#banner div.tab ul li.on").index();
+				index += + 1;
+				index %= $("#banner div.tab ul li").length;
+				$("#banner div.tab ul li").eq(index).click();
+			});
+			
+			function rightSlide() {
+			    $(".right").click();
+			}
+			
+			sh = setInterval(rightSlide,  4000);
+			$("#banner").hover(function() {
+				clearInterval(sh);
+			}, function() {
+			    sh = setInterval(rightSlide,  4000);
+			});
+		});
+	</script>
+</body>
+</html>

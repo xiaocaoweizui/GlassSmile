@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="Generator" content="">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>QQ在线客服</title>
+	<style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei"}
+		img{border:0;}
+		ul li{list-style:none;}
+		body{
+		    background:url(images/bg.jpg)
+		}
+		.qq{
+		    width:187px;height:193px;
+			background:url(images/qq_icon.png);position:fixed;
+			right:-100px;top:50%;margin-top:-94px;
+		}
+		.con{
+		    width:217px;height:324px;
+			background:url(images/qq_bg.png);position:fixed;
+			right:-217px;top:50%;margin-top:-162px;
+		}
+		ul{height:243px;margin:73px 8px 10px 24px;}
+		/*li{padding:0.5em 0.9em;line-height:30px;}
+		.con img{float:right;margin-top:3px;}*/
+		li{padding:0.7em 0.9em;}
+		.con a{text-decoration:none;color:#06f;}
+		.con img{margin-left:8px;vertical-align:middle}
+	</style>
+</head>
+<body>
+    <div class="qq">
+	
+	</div>
+	<div class="con">
+	    <ul>
+		    <li><a href="http://wpa.qq.com/msgrd?v=3&uin=310510906&site=qq&menu=yes">技术支持:<img src="images/qq.jpg" /></a></li>
+		    <li><a href="http://wpa.qq.com/msgrd?v=3&uin=858045462&site=qq&menu=yes">问题解答:<img src="images/qq.jpg" /></a></li>
+		    <li><a href="#">客服一号:<img src="images/qq.jpg" /></a></li>
+		    <li><a href="#">客服二号:<img src="images/qq.jpg" /></a></li>
+		    <li><a href="#">客服三号:<img src="images/qq.jpg" align="absmiddle" /></a></li>
+		</ul>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script>
+	    $(function() {
+		    $(".qq").hover(function() {
+			    $(this).animate({right:"-187px"}, 500, function() {
+				    $(".con").animate({right:"0px"}, 500);
+				});
+			}, function() {});
+		    $(".con").hover(function() {
+			    
+			}, function() {
+			    $(this).animate({right:"-217px"}, 500, function() {
+				    $(".qq").animate({right:"-100px"}, 500);
+				});
+			});
+		});
+	</script>
+</body>
+</html>

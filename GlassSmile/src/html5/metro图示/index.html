@@ -1,0 +1,114 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>metro图示</title>
+	<style type="text/css">
+	    *{font-family:"微软雅黑";}
+	    a,img{border:0;}
+	    #con{
+		    width:1110px;height:352px;
+			margin:20px auto;
+		}
+		#con .left{
+		    width:500px;
+			height:502px;
+			float:left;
+		}
+		img{width:100%;height:100%;}
+		#con .mid, #con .right{
+		    width:300px;
+			height:250px;
+			float:left;
+			margin-left:2px;
+		}
+		#con .mid .top,#con .mid .bottom, #con .right .top,#con .right .bottom{
+		    width:300px;
+			height:250px;
+			background:blue;
+			float:left;font-size:12px;
+		}
+		#con .mid .bottom, #con .right .bottom{
+		    margin-top:2px;
+			position:relative;
+		}
+		.left, .top{
+		    position:relative;
+		}
+		.left span,.bottom span,.top span{
+		    background:rgba(0, 0, 0, 0.5); padding:0.8em 1.5em;
+			color:white;display:inline-block;
+			position:absolute;
+			bottom: 20px; left:0px;
+			border-right-radius:100%;
+			font-size:12px;
+		}
+		.top, .bottom{
+		    position:relative;
+			overflow:hidden;
+		}
+		.top div, .bottom div{
+		    position:absolute;
+		}
+		.description{
+		    width:300px;
+			height:250px;
+			top:0;color:white;
+			/*transition: all 1s;*/
+			background:rgba(0, 0, 0, 0.5);
+		    padding:20px 10px;
+			display:none;
+			cursor:pointer;
+			/*opacity:0;*/
+		}
+		/*.top:hover .description,.bottom:hover .description{
+		    opacity:1;
+		}*/
+	</style>
+</head>
+<body>
+	<div id="con">
+	    <div class="left">
+		    <a href="#"><img src="images/1.jpg" /></a>
+			<span>自然风景</span>
+		</div>
+	    <div class="mid">
+		    <div class="top"><a href="#"><img src="images/2.jpg" /></a>
+			    <div class="description">
+				    <h1>深夜前的五分钟</h1>
+				    <p>深夜前的五分钟</p>
+				</div>
+			</div>
+		    <div class="bottom">
+			    <a href="#"><img src="images/3.jpg" /></a>
+				<span>清新美女</span>
+			</div>
+		</div>
+	    <div class="right">
+		    <div class="top">
+			    <a href="#"><img src="images/4.jpg" /></a>
+			    <span>宠物</span>
+				
+			</div>
+		    <div class="bottom"><a href="#"><img src="images/5.jpg" /></a>
+			    <div class="description">
+				    <h1>奔跑吧兄弟</h1>
+				    <p>4月17日奔跑吧兄弟即将上映</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<script src="js/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	    $(function() {
+		    $(".top, .bottom").hover(function() {
+			    $(this).find(".description").slideDown("slow");
+			}, function() {
+			    $(this).find(".description").slideToggle("slow");
+			});
+		});
+	</script>
+</body>
+</html>

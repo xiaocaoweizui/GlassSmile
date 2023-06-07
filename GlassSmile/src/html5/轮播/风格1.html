@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script src="js/jquery-1.9.1.min.js"></script>
+<title>轮播</title>
+<style>
+/* CSS Document */
+
+body,ul,li{margin:0; padding:0;}
+body{width:100%; overflow-x:hidden; }
+#productList{width:942px; margin:0 auto;}
+#productList img{width:942px;}
+.proListCont{ width:100%;}
+.proListCont > ul >li{
+	overflow:hidden;
+		float:left;
+		list-style:none;
+}
+ .proListCont { position:relative; height:360px; overflow:hidden; margin:0;  }
+ .proListCont ul { position:absolute; top:0; left:0; width:99999px; }
+.sliderNav{
+		position:absolute;
+		font-size:20px;
+		color:#FFF;
+		left:40%;
+		margin-left:-25px;
+		letter-spacing:10px;
+		bottom:10px;
+		cursor:pointer;
+	}
+.sliderNavNow{ color:#360;}
+</style>
+</head>
+
+<body>
+<script>
+$(document).ready(function(){
+	var goLeft = jQuery("#productList").width();
+	jQuery(".proListCont > ul >li").width( goLeft);
+	var n1 = 0;
+	count1 = jQuery(".sliderNav >span").size();
+	
+	jQuery(".sliderNav >span").each(function(index){
+		jQuery(this).click(function(){
+			jQuery(".sliderNav >span").removeClass("sliderNavNow");
+			if( !jQuery(this).hasClass("sliderNavNow")){
+				jQuery("#productList > .proListCont >ul").animate({left:-goLeft*index},"slow");
+				jQuery(this).addClass("sliderNavNow");
+			}
+		});
+	});
+	
+	 changeImg = function(){
+			 n1 = n1 >= (count1 - 1) ? 0 : n1 + 1;
+			 jQuery(".sliderNav >span").eq(n1).trigger('click');
+			setTimeout(changeImg, 5000);
+	}
+	setTimeout(changeImg, 5000);
+	 
+});
+</script>
+<div id="productList" class="proList">
+        <div class="proListCont">
+            <ul>
+                <li><img src="images/1.jpg"></li>
+                <li><img src="images/2.jpg"></li>
+                <li><img src="images/3.jpg"></li>
+                <li><img src="images/4.png"></li>
+                <li><img src="images/5.jpg"></li>
+            </ul>
+        	<div class="sliderNav">
+            	<span class="sliderNavNow">●</span><span>●</span><span>●</span><span>●</span><span>●</span>
+            </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,102 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>图片拖动</title>
+	<style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei"}
+		ul li{list-style:none;}
+		#box{
+		    width:300px;
+			height:310px;
+			background:#bbbaba;
+			position:absolute;
+			left:100px;
+		}
+		#box1{
+		    height:40px;
+			line-height:40px;
+			padding:0 10px;
+		}
+		.left{
+		    color:yellow;
+			font-weight:bold;
+		}
+		.right{
+		    float:right;
+			font-size:12px;
+		}
+		a{text-decoration:none;color:white;display:block;
+		    padding:0.7em 1.2em;
+			border:1px solid #ccc;
+		}
+		ul{
+		    background:#69f;
+			overflow:hidden;
+		}
+		ul li{
+		    float:left;
+			color:red;
+			font-weight:bold;
+			width:25%;
+		}
+		ul li a:hover{
+		    background:#cc0;
+			border-bottom:1px dashed;
+		}
+		img{border:0;}
+		#box3{
+		     width:300px;
+			 height:300px;
+			 overflow:hidden;
+		}
+	</style>
+</head>
+<body>
+    <div id="box">
+	    <div id="box1">
+		    <span class="left">鼠标选择移动</span>
+		    <span class="right">XX</span>
+		</div>
+		<div id="box2">
+		    <ul>
+			    <li><a href="#img1">标签1</a></li>
+			    <li><a href="#img2">标签2</a></li>
+			    <li><a href="#img3">标签3</a></li>
+			    <li><a href="#img4">标签4</a></li>
+			</ul>
+		</div>
+		<div id="box3">
+		   <img id="img1" src="images/5.jpg" width="300" height="300" />
+		   <img id="img2" src="images/6.jpg" width="300" height="300" />
+		   <img id="img3" src="images/7.jpg" width="300" height="300" />
+		   <img id="img4" src="images/8.jpg" width="300" height="300" />
+		</div>
+		<div id="show"></div>
+		<div id="show2"></div>
+	</div>
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<script>
+	    $(function() {
+		    var x = 0;
+			var y = 0;
+			
+			$("#box").mousedown(function(e) {
+			    x = e.pageX - $("#box").offset().left;
+			    y = e.pageY - $("#box").offset().top;
+			    
+				$(document).mousemove(function(e) {
+				    //$("#box").css("left",(e.pageX - x) + "px");
+				    $("#box").css({"left":(e.pageX - x) + "px", "top":e.pageY - y});
+				}).mouseup(function() {
+				    $(document).off();
+					return false;
+				});
+			});
+		})
+	</script>
+</body>
+</html>

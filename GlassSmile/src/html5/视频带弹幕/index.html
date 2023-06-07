@@ -1,0 +1,90 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>视频弹幕</title>
+    <style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei";}
+	    #video{
+		    width:1000px;height:700px;margin:100px auto;
+			background:url("images/1 (2).jpg") no-repeat;background-size:100% 100%;
+			position:relative;
+		}
+		#video .font{
+		    width:908px;height:280px;background:rgba(255, 255, 255, 0);top:30px;left:47px;
+			position:absolute;overflow:hidden;
+		}
+		#video .font p{
+		    position:absolute;height:25px;display:block;width:200px;
+		}
+		.white{color:white;}
+		.red{color:red;}
+		.green{color:green;}
+		.blue{color:blue;}
+		#video .video_con{
+		    width:908px;height:446px;top:30px;left:47px;
+			position:absolute;
+		}
+		#pl{width:100%;height:80px;background:#444;position:relative;}
+		#pl .pl_con{width:800px;height:40px;background:red;left:50%;top:20px;position:absolute;margin-left:-400px;
+		    border-radius:5px;
+		}
+		#pl .pl_con .txt{
+		    height:40px;width:700px;border-radius:5px 0 0 5px;text-indent:20px;outline:none;
+			border:none;font-size:14px;
+		}
+		#pl .pl_con .but{
+		    width:100px;height:40px;float:right;border:none;
+			border-radius:0 5px 5px 0;cursor:pointer;background:#7db718;font-size:16px;
+			color:white;
+		}
+		#pl .pl_con .but:hover{
+		    background:#699f00;
+		}
+	</style>
+</head>
+
+<body>
+     <div id="video">
+	     <div class="video_con">
+		    <embed src="http://player.youku.com/player.php/sid/XNzE0NDY5ODY0/v.swf" allowFullScreen="true" quality="high" width="908" height="446" wmode="Transparent" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+		 </div>
+		 
+		 <div class="font">
+		     <p style="color:red;">每次都这么晚....</p>
+		     <p style="color:blue;">敢不敢早点!!!</p>
+		     <p style="color:yellow;">累死了!!!</p>
+		 </div>
+	 </div>
+	 
+	 <div id="pl">
+	     <div class="pl_con">
+		     <input type="text" class="txt" placeholder="发弹幕一起交流学习!" />
+			 <input type="button" class="but" value="发表评论" />
+		 </div>
+	 </div>
+	 <script src="js/jquery.js"></script>
+	 <script>
+	     $(function() {
+		     var top = 0;
+			 var arrColor = ["white", "red", "green", "blue"]
+		    $(".but").click(function() {
+			    var val = $.trim($(".txt").val());
+				var L = $(".font").width();
+				var T = $(".font").height();
+				if(val === ""){
+				   alert("请输入内容!");
+				   return false;
+				}
+			    $(".font").append("<p class='" + arrColor[parseInt(Math.random() * 4)] + "'>" + $(".txt").val() + "</p>");
+				
+				$(".font p").each(function() {
+				    top = (top + 25) % 125;
+				    $(this).css({"left":L + "px", "top": top + "px"});
+					$(this).animate({"left":-L + "px"}, parseInt(Math.random() * 3) * 10000);
+				});
+			});
+		 });
+	 </script>
+</body>
+</html>

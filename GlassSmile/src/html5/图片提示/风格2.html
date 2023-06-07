@@ -1,0 +1,56 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+	<title>图片说明</title>
+	<style>
+	    *{margin:0;padding:0;}
+		.b{
+		    position:relative;margin:100px;
+			width:525px;
+		}
+		.b:before{
+		    content:"<";
+			background:#666;
+			color:#fff;
+			padding:10px 10px; position:absolute;
+			font-size:20px;
+			font-weight:bold;
+			top:50%;left:0;
+			margin-top:-15px;
+		}
+		.b:after{
+		    content:">";
+			background:#666;
+			color:#fff;
+			padding:10px 10px; position:absolute;
+			font-size:20px;
+			font-weight:bold;
+			top:50%;right:0;
+			margin-top:-15px;
+		}
+		.d{
+		    width:525px;height:300px;overflow:hidden;position:relative;
+            margin-left:100px;
+             margin-bottom:100px;
+			
+		}
+		.i{
+		    position:absolute;top:525px;
+			transition:all 1s;
+		}
+		.d:hover .i{
+		    top:0;left:0;
+		}
+	</style>
+</head>
+<body>
+    <div class="b">
+        <img src="images/1.jpg" />
+	</div>
+	<div class="d">
+	    <img src="images/1.jpg" />
+	    <img class="i" src="images/2.jpg" />
+	</div>
+</body>
+</html>

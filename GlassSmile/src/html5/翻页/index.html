@@ -1,0 +1,48 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,intial-scale=1">
+<link href="css/jquery.mobile.min.css" rel="stylesheet"></link>
+<!--为移动端，目的是让文字等布局根据设备宽度  默认是一倍-->
+<title>无标题文档</title>
+
+<style>
+  *, body, html{margin:0;padding:0;}
+  
+</style>
+</head>
+<body>
+    <div data-role="page" data-theme="a" id="page1">
+		<div data-role="header">
+		    <h1>翻页</h1>
+			<a href="#">点击</a>
+		</div>
+		<div data-role="content">
+		    <h1>test</h1>
+			<a href="#page2">点击进入详细页面</a>
+		</div>
+		<div data-role="footer" data-position="fixed">
+		    <h1>test</h1>
+			<a href="#">点击</a>
+		</div>
+	</div>
+    <div data-role="page" data-theme="b" id="page2">
+		<div data-role="header">
+		    <h1>test</h1>
+			<a href="#page1" data-transition="flip" data-icon="home">返回</a>
+		</div>
+		<div data-role="content">
+		    <h1>test</h1>
+			<a href="#">点击</a>
+		</div>
+		<div data-role="footer" data-position="fixed">
+		    <h1>test</h1>
+			<a href="#">点击</a>
+		</div>
+	</div>
+	
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.mobile.min.js"></script>
+</body>
+</html>

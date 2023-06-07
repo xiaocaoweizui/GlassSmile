@@ -1,0 +1,211 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="Generator" content="">
+	<meta name="Author" content="">
+	<meta name="Keywords" content="">
+	<meta name="Description" content="">
+	<title>图片展示</title>
+	<style type="text/css">
+	    *{margin:0;padding:0;font-family:"Microsoft YaHei"}
+		img{border:0;}
+		ul li{list-style:none;
+		}
+		body{
+		    background:url(images/bg.jpg);
+		}
+		#con{
+		    width:900px;height:600px;
+			margin:auto;
+		}
+		#con dl{
+		    width:100px;background:#fff;padding:10px;
+			margin-left:200px;
+		}
+		#con dl dt{width:100px;height:100px;}
+		
+		#con dl dd{width:100px;height:30px;
+		    font-size:12px;text-align:center;height:30px;
+		}
+		#con .list{
+		    width:600px;
+			margin-left:260px;
+			border-left:3px solid #69f;
+			padding-top:30px;
+		}
+		#con .list ul li{
+		    height:400px;
+			position:relative;
+            -webkit-animation:sc 2s;
+			margin-top:30px;
+			display:none;
+		}
+		#con .list ul li .bq{
+		    width:120px;height:30px;
+			position:absolute;
+			top:50%;
+			left:-115px;
+		}
+		#con .list ul li .bq font{
+		    width:90px;height:30px;background:#000;
+			display:block;float:left;line-height:30px;
+			color:white;text-align:center;
+		}
+		#con .list ul li .bq img.jt{
+		    position:absolute;left:87px;top:5px;
+		}
+		#con .list ul li .bq span{
+		    border-radius:100%;
+			border:3px solid white;
+			width:8px;height:8px;background:#9f3;
+			display:block;
+			position:absolute;
+			top:7px;right:0px;
+		}
+		#con .list ul li .listCon{
+		    height:400px;background:rgba(255, 255, 255, 0.5);
+			border-radius:10px;margin-left:10px;
+			box-shadow:0 0 10px red;
+		}
+		@-webkit-keyframes sc{
+		    from{
+			    -webkit-transform:rotate(220deg) scale(0.2);
+			}
+			to{
+			    -webkit-transform:rotate(0deg) scale(1);
+			}
+		}
+	</style>
+</head>
+<body>
+    <div id="con">
+	    <dl>
+		    <dt><img src="images/my.jpg" /></dt>
+			<dd>test</dd>
+		</dl>
+		<div class="list">
+		    <ul>
+			    <li>
+				    <div class="bq">
+				        <font>7月25日</font>
+						<img class="jt" src="images/r.png" />
+						<span></span>
+				    </div>
+					<div class="listCon">
+					     tests1111111111
+					</div>
+				</li>
+			    <li>
+				    <div class="bq">
+				        <font>7月30日</font>
+						<img class="jt" src="images/r.png" />
+						<span></span>
+				    </div>
+					<div class="listCon">
+                        tests1111111111
+					</div>
+				</li>
+			    <li>
+				    <div class="bq">
+				        <font>8月21日</font>
+						<img class="jt" src="images/r.png" />
+						<span></span>
+				    </div>
+					<div class="listCon">
+					
+					</div>
+				</li>
+			    <li>
+				    <div class="bq">
+				        <font>9月15日</font>
+						<img class="jt" src="images/r.png" />
+						<span></span>
+				    </div>
+					<div class="listCon">
+					
+					</div>
+				</li>
+			    <li>
+				    <div class="bq">
+				        <font>10月25日</font>
+						<img class="jt" src="images/r.png" />
+						<span></span>
+				    </div>
+					<div class="listCon">
+					
+					</div>
+				</li>
+			    <li>
+				    <div class="bq">
+				        <font>7月25日</font>
+						<img class="jt" src="images/r.png" />
+						<span></span>
+				    </div>
+					<div class="listCon">
+					
+					</div>
+				</li>
+			    <li>
+				    <div class="bq">
+				        <font>7月25日</font>
+						<img class="jt" src="images/r.png" />
+						<span></span>
+				    </div>
+					<div class="listCon">
+					
+					</div>
+				</li>
+			    <li>
+				    <div class="bq">
+				        <font>7月25日</font>
+						<img class="jt" src="images/r.png" />
+						<span></span>
+				    </div>
+					<div class="listCon">
+					
+					</div>
+				</li>
+			    <li>
+				    <div class="bq">
+				        <font>7月25日</font>
+						<img class="jt" src="images/r.png" />
+						<span></span>
+				    </div>
+					<div class="listCon">
+					
+					</div>
+				</li>
+			    <li>
+				    <div class="bq">
+				        <font>7月25日</font>
+						<img class="jt" src="images/r.png" />
+						<span></span>
+				    </div>
+					<div class="listCon">
+					
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<script src="js/jquery.min.js"></script>
+	<script>
+	    $(function() {
+		    $("#con .list ul li:lt(3)").show();
+			
+			$(window).scroll(function() {
+			    var top = $(this).scrollTop() + $(window).height() - 100;
+				
+				$("#con .list ul li").each(function(index, item) {
+				    var height = $(item).offset().top;
+					if(top < height) {
+					    $("#con .list ul li:lt(" + (index + 3) + ")").show();
+						return false;
+					}
+				});
+			});
+		})
+	</script>
+</body>
+</html>

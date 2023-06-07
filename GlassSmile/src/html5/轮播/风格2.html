@@ -1,0 +1,80 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>轮播</title>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script>
+$(document).ready(function() {
+//选择符（文档）.加载完成(执行方法{})
+	//alert("加载完成");
+	$(".slider li").click(function(){
+		$(this).index();
+		$(".banner").animate({marginLeft:-942*$(this).index()+"px"},3000);
+		//选中（“.banner”）.动画（{向左运动}，3000毫秒）
+		$(this).addClass("click").siblings().removeClass("click");
+		//选中（当前li）添加class("click").其他li.去掉class("click")
+	});
+
+});
+</script>
+<style>
+    #productList{width:942px; margin:0 auto;}
+.banner {
+	margin:0;
+	padding:0;
+	width: 99999px;
+}
+.banner li {
+	float: left;
+	list-style: none;
+}
+.banner li img {
+	width: 942px;
+}
+.bannerWidth {
+	width: 942px;
+	height: 360px;
+	overflow: hidden;/* 超出部分隐藏*/
+	position:relative;/*相对布局*/
+}
+.slider {
+		margin:0;
+	padding:0;
+	position:absolute;/*绝对布局*/
+	bottom:5px;
+	left:40%;
+}
+.slider li {
+	list-style: none;
+	float: left;
+	border: #360 solid 1px;
+	padding: 5px;
+	margin: 5px;
+	border-radius:5px;
+}
+.click{ background:#360;}
+</style>
+</head>
+
+<body>
+    <div id="productList" class="proList">
+        <div class="bannerWidth">
+            <ul class="banner">
+                <li><img src="images/1.jpg"></li>
+                <li><img src="images/2.jpg"></li>
+                <li><img src="images/3.jpg"></li>
+                <li><img src="images/4.png"></li>
+                <li><img src="images/5.jpg"></li>
+            </ul>
+            <ul class="slider">
+                <li class="click"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+        </div>
+</body>
+</html>

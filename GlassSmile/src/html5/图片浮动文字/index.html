@@ -1,0 +1,55 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>图片上的文字</title>
+	<style type="text/css">
+	    *,html,body,ul,li,div{margin:0;padding:0;}
+	    body{background:url(images/5.jpg)
+		    background-repeat:none;
+		}
+		#box{
+		    width:400px;
+			height:300px;
+			background:#ccc;
+			position:relative;
+			margin-top:100px;
+			margin-left:200px;
+		}
+		#pic1, #bg{
+		    width:400px;
+			height:300px;
+		}
+		#bg{
+		    background:#333;
+			position:absolute;
+			color:#fff;
+			text-align:center;
+			margin-top:-302px;
+		    opacity: 0;
+		    transition: 0.6s;
+		    transition-duration: 1s;
+			transition-timing-function:ease-out;
+		}
+		#bg:hover{
+		    opacity: 0.5;
+		}
+		h1{
+		    margin:50px 0;
+		}	
+	</style>
+</head>
+<body>
+	<div id="box">
+	    <div id="pic1">
+		    <img src="images/10.jpg" width="400" height="300" />
+			<div id="bg">
+			    <h1>彼此烟光, 流年无影</h1>
+				<p>宁静, 或许只源于心底的冰冷</p>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>

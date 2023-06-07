@@ -1,0 +1,83 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>轮播</title>
+	<style rel="stylesheet" href="/jquery.mobile-1.4.5/jquery.mobile-1.4.5.css"></style>
+	<style type="text/css">
+	    *, div, ul, li{margin:0;padding:0}
+		.banner > ul{border:0px solid red;overflow:hidden;width:9999px;}
+		.banner > ul > li{border:0px solid green; float:left;list-style:none;}
+		.banner > ul > li img{width:942px;height:360px;}
+		.banner{overflow:hidden;width:942px;height:360px;margin:auto;
+		    position:relative;
+			text-align:center;
+		}
+		
+		
+		.current{ color:#360;}
+		.slideNav{
+			position:absolute;width:100%;z-index:10000;height:20px;
+		    overflow:hidden;bottom:10px;
+			left:40%;
+			color:white;
+		}
+		.slideNav ul{
+		}
+		.slideNav li{
+		    margin:1 5px;
+			padding:0 5px;
+			background:#green;
+			list-style:none;
+			disply:inline-block;
+			float:left;
+			letter-spacing:10px;
+			font-size:20px;
+			cursor:pointer;
+		}
+	</style>
+</head>
+<body>
+	<div class="banner">
+		<ul>
+			<li><img src="images/1.jpg" /></li>
+			<li><img src="images/2.jpg" /></li>
+			<li><img src="images/3.jpg" /></li>
+			<li><img src="images/4.png" /></li>
+			<li><img src="images/5.jpg" /></li>
+		</ul>
+		<div class="slideNav">
+			<ul>
+				<li class="current" data-val="1">●</li>
+				<li data-val="2">●</li>
+				<li data-val="3">●</li>
+				<li data-val="4">●</li>
+				<li data-val="5">●</li>
+			</ul>
+		</div>
+	</div>
+	
+	<script src="js/jquery-1.9.1.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	    $(function() {
+		
+			$(".slideNav > ul > li").each(function(index, item) {
+			    $(this).click(function() {
+				    $(this).addClass("current").siblings().removeClass("current");
+				    $(".banner > ul").animate({marginLeft:(-942 * index).toString() + "px"}, "slow");
+				});
+			});
+			
+			var f = function() {
+			    var val = $(".slideNav li.current").data("val");
+				val = val % $(".slideNav li").length;
+				$(".slideNav ul li:eq(" + val + ")").click();
+				setTimeout(f, 5000);
+			}
+			
+			setTimeout(f, 5000);
+		});
+	</script>
+</body>
+</html>
