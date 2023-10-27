@@ -73,3 +73,10 @@ getLawOfLevel(4);
 
  var ret=0.5*89;
  console.log(`the ret is :${ret}`);
+
+
+ // 泡泡 700w
+ // 夜叉 250w
+ // 简易武器 300w
+ // 简易衣服 200w
+// 9JN珍露 300w

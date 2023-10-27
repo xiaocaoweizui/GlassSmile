@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+        <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+            integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+            crossorigin="anonymous">
+
+        <!-- 可选的 Bootstrap 主题文件（一般不用引入） -->
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap-theme.min.css"
+            integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+            crossorigin="anonymous">
+            <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"
+            integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="crossorigin="anonymous"></script>
+        <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+            <script data-main="../app.js" src="../require.js"></script>
+     
+       
+    </head>
+    <body>
+        <div id="app" class="container">
+            <h2>{{ message }}</h2>
+            <!-- <p>{{ url }}</p> -->
+            <!-- <p>{{ url2 }}</p> -->
+            <!-- <button @click="hello">say hello！！</button> -->
+            <h1> 迁移工具-专项</h1>
+            <p></p>
+            <hr>
+            <form class="form-horizontal">
+                <div class="form-group">
+                  <label for="inputCode" class="col-sm-2 control-label">租户Codes</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="inputCode" placeholder="请输入租户code（以逗号分隔）">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-primary">生成</button>
+                  </div>
+                </div>
+                <hr>
+                <div class="form-group">
+                    <label for="inputCode" class="col-sm-2 control-label">数见租户附件迁移url：</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="3" readonly> https://dmp.tj.mycyjg.com/api/monitor/move/attach?origin_endpoint=minio-api-dmp-saas-hw.mypaas.com&origin_bucket=dmp&origin_oss_service=minio&reg_rundeck=1&tenant_codes=cdmf,jxfz,pinyuandichan,ZYTX,xjhajz,shcjzy,GYXJL,lcqh,hljwjadmin,klhy,PDJQ,lllc,jhcf,jyrh,fhhy,ydbxsj</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputCode" class="col-sm-2 control-label">流程中心租户迁移sql：</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="10" readonly> https://dmp.tj.mycyjg.com/api/monitor/move/attach?origin_endpoint=minio-api-dmp-saas-hw.mypaas.com&origin_bucket=dmp&origin_oss_service=minio&reg_rundeck=1&tenant_codes=cdmf,jxfz,pinyuandichan,ZYTX,xjhajz,shcjzy,GYXJL,lcqh,hljwjadmin,klhy,PDJQ,lllc,jhcf,jyrh,fhhy,ydbxsj</textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputCode" class="col-sm-2 control-label">超级工作台租户迁移sql：</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" rows="10" readonly> {{ cjzgtSQL }}</textarea>
+                    </div>
+                </div>
+            </form>
+ 
+        </div>
+        <script type="module">
+            // import{url,fileUrl} from "../tools/CombineTenantCode.js"
+             require(["tools/mergeCjgztSQL"],function(ret){
+                    var app=new Vue({
+                    el: '#app',
+                    data: {
+                        message: 'Hello Vue!' ,
+                        cjzgtSQL:ret.sql
+                    },
+                    methods:{
+                        hello:function(){
+                           
+                        }
+                    }
+                });
+              });
+
+
+    
+      </script>
+    </body>
+</html>

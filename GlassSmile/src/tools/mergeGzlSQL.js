@@ -26,7 +26,7 @@ update p_database a
 INNER JOIN (
 	${combineSQL}
 ) b 
-ON concat('bpm_',b.db_name)=SCHEMA()
+ON UPPER(concat('bpm_',b.db_name))=UPPER(SCHEMA())
 SET a.configs=CONCAT('{"host":"',b.host,'","name":"',b.db_name,'","user":"',b.reader_user,'","password":"',b.reader_password,'"}') 
 where (a.configs like '%e299dd0f773a4d47bae189fb4c1f8758in01.internal.cn-south-1.mysql.rds.myhuaweicloud.com%' or
 a.configs like '%8acd68b085074970af5885793df564f4in01.internal.cn-south-1.mysql.rds.myhuaweicloud.com%' or
