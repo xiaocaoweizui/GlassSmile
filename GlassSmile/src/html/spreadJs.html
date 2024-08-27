@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello SpreadJS Vue</title>
+  <link rel="stylesheet" href="lib/gc.spread.sheets.excel2016colorful.0.0.0.css" type="text/css"/>
+  <style>
+    #app{
+      width: 100%;
+      height:100%;
+    }
+    .vue-demo{
+      width: 800px;
+      height:400px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <app></app>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="lib/gc.spread.sheets.all.0.0.0.js"></script>
+<script src="lib/gc.spread.sheets.vue.js"></script>
+<script type="text/x-template" id="app-template">
+  <div>
+    <gc-spread-sheets
+      v-bind:hostClass='hostClass'
+      @workbookInitialized='spreadInitHandle'
+    >
+      <gc-worksheet  >
+      </gc-worksheet>
+    </gc-spread-sheets>
+  </div>
+</script>
+<script type="text/javascript">
+  window.onload = function () {
+    Vue.component('app', {
+      template: '#app-template',
+      data:function () {
+        return {
+          hostClass: "vue-demo"
+        }
+      },
+      methods: {
+        spreadInitHandle: function (spread) {
+          window.mySpread = spread;
+          console.log('now you can also get spread from window');
+        }
+      }
+    });
+    new Vue({
+      el:"#app",
+    })
+  }
+</script>
+</body>
+</html>

@@ -12,6 +12,7 @@ const data = XLSX.utils.sheet_to_json(sheet);
 // console.log(`Sheet: ${sheetName}`);
 // console.log(data);
 
+
 var strBuilder=[];
 data.forEach(row => strBuilder.push(row.code));
 
