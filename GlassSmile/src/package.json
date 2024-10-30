@@ -60,6 +60,7 @@
     "mime-db": "^1.52.0",
     "mime-types": "^2.1.35",
     "mysql": "^2.18.1",
+    "natural": "^8.0.1",
     "neo-async": "^2.6.2",
     "nlp_compromise": "^7.0.0",
     "node-releases": "^2.0.13",

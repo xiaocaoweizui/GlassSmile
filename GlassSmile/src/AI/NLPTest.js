@@ -1,16 +1,25 @@
 // 需要安装 npm install nlp_compromise
-// github 地址：https://github.com/axa-group/nlp.js
+// github 地址：https://gitee.com/mirrors/compromise-js
+// 文档地址：https://observablehq.com/@spencermountain/tutorial-1
 
-const { NlpManager } = require('node-nlp');
 
-const manager = new NlpManager({ languages: ['en']});
+const  nlp=require('compromise');
 
-manager.addDocument('en', 'I want to buy a computer', 'buy');
-manager.addDocument('en', 'Hello World!', 'greeting');
+let doc = nlp('she sells seashells by the seashore.')
+doc.verbs().toPastTense();
+let text= doc.text();
 
-await manager.train();
+console.log(text);
 
-const  result=await  manager.prcess('en', 'Hello!');
-console.log(result);
 
+// var nlp = require('compromise');
+doc=nlp(`we don't need no education`);
+doc.contractions().expand();
+text= doc.text();
+console.log(text);
+
+//doc=nlp('Tony Hawk did a kickflip');
+doc=nlp("张三读书！");
+text= doc.people();
+console.log(text);
 

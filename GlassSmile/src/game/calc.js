@@ -94,7 +94,7 @@ var calcMagicATK=function(grownUp,magicZz){
   return  1.6*((power+ initPower)*grownUp+magicZz/1560*level);
 }
 
-var growUp=1.3;
+var growUp=1.23;
 var attackZz=1700;
 var magicZz=2900;
 var test= calcPhysicsATK(growUp,attackZz);

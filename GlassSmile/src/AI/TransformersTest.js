@@ -14,7 +14,25 @@ npm cache clean --force
 * npm install
 *
 * */
+// 如果安装了，则可以直接使用
 const { pipeline } = require('@xenova/transformers');
+// const { pipeline,env } = require('https://cdn.jsdelivr.net/npm/@xenova/transformers@2.6.0');
+
+// const  fs=require('fs');
+//
+// //设置当前环境变量，不要允许本地模型，使用远程模型
+// env.allowLocalModels = false;
+//
+// const  detect=async function (text) {
+//   const  model = await pipeline('text-classification');
+//   const  result = await model(text);
+//   //返回情感分析结果
+//   return result;
+// }
+//
+// var text="这个项目很棒！";
+// console.log(await detect(text));
+
 
 //分析词意
 async function analyzeSentiment(text) {
