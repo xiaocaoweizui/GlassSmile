@@ -16,7 +16,7 @@ server.listen(8009);
 server.on('request', function (request, response) {
   // 解析请求的URL
   var url = require('url').parse(request.url);
-  //console.log(`${decodeURI( url.pathname)}`);
+
   //转义中文字符
   var path=decodeURI( url.pathname);
   if (path === '/hello') {

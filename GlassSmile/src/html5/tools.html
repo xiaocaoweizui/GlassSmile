@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+        <link rel="stylesheet" href="../3rd/bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="../3rd/bootstrap/css/bootstrap-theme.min.css"/>
+        <script src="../3rd/jquery-3.3.1.min.js"></script>
+        <script src="../3rd/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../3rd/axios.min.js"></script>
+        <script type="module">
+        import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+
+        createApp({
+          data() {
+            return {
+              message: '价格管理相关job',
+              uatServeUri:"/uatApi/api/run/runExe",
+              items:[
+                { name:"test跨站请求路径",remark:"工具测试",url:"/hello",result:""},
+                { name:"【Job】生成价格政策",remark:"【价格政策申请单】=>【已审核】后",url:"UAT",filePath:"D:\\workspace\\JOBS\\RekTec.XiaoMi.Job.CreatePriceByPriceApply\\RekTec.XiaoMi.Job.CreatePriceByPriceApply.exe"},
+                { name:"【Job】渠道价格计算",remark:"渠道：【价格政策申请单】=>【点击价格计算】后",url:"UAT",filePath:"D:\\workspace\\JOBS\\XiaoMi.CRM.Job.PriceCalculateManyTask\\XiaoMi.CRM.Job.PriceCalculateManyTask.exe"},
+                { name:"【Job】生成区总授权表",remark:"【渠道价格政策申请单】=>【下发邮件】后",url:"UAT",filePath:"D:\\workspace\\JOBS\\RekTec.XiaoMi.Job.CreateGrantTableByPriceApply\\RekTec.XiaoMi.Job.CreateGrantTableByPriceApply.exe"},
+                { name:"【Job】授权表逐级下发",remark:"【价格政策申请单】=>【确认授权】后",url:"UAT",filePath:"D:\\workspace\\JOBS\\RekTec.XiaoMi.Job.GrantRecord\\RekTec.XiaoMi.Job.GrantRecord.exe"},
+                { name:"【Job】价格政策申请单提交OA",remark:"【价格政策申请单】=>【提交】后",url:"UAT",filePath:"D:\\workspace\\JOBS\\RekTec.XiaoMi.Job.PriceApplySubmitOA\\RekTec.XiaoMi.Job.PriceApplySubmitOA.exe"},
+                { name:"【Job】价格授权表提交OA",remark:"【价格政策授权表】=>【提交】后",url:"UAT",filePath:"D:\\workspace\\JOBS\\RekTec.XiaoMi.Job.AuthorizationSystem-价格授权表提交OA\\RekTec.XiaoMi.Job.AuthorizationSystem.exe"},
+                { name:"【Job】国家经理授权表重新计算",remark:"【价格政策授权表】=>【重新计算】后",url:"UAT",filePath:"D:\\workspace\\JOBS\\RekTec.XiaoMi.Job.GrantTableReCalculate\\RekTec.XiaoMi.Job.GrantTableReCalculate.exe"},
+                { name:"【Job】区总授权表共享发邮件",remark:"【生成区总授权表JOB】后",url:"UAT",filePath:"D:\\workspace\\JOBS\\RekTec.XiaoMi.Job.AuthorizationSharingSendsEmails-区总授权表共享发邮件\\RekTec.XiaoMi.Job.AuthorizationSharingSendsEmails.exe"},
+                { name:"【Job】价格计算",remark:"非渠道：【价格政策申请单】=>【点击价格计算】后",url:"UAT",filePath:"D:\\workspace\\JOBS\\RekTec.XiaoMi.Job.PriceCalculate\\RekTec.XiaoMi.Job.PriceCalculate.exe"},
+                { name:"【Job】价格调整(新)",remark:"【区域价格政策调整】=》点击【价格调整】后",url:"UAT",filePath:"D:\\workspace\\JOBS\\PriceJob\\XiaoMi.Job.PriceAdjust-价格调整(新)\\XiaoMi.Job.PriceAdjust.exe"},
+                { name:"【Job】区总授权表邮件下发通知（已授权未通知情况下执行）",remark:"【生成区总授权表Job】后",url:"UAT",filePath:"D:\\workspace\\JOBS\\RekTec.XiaoMi.Job.AuthorizationSharingSendsEmails-区总授权表共享发邮件\\RekTec.XiaoMi.Job.AuthorizationSharingSendsEmails.exe"},
+              ],
+              itemsDev:[
+                { name:"test跨站请求路径",remark:"",url:"/hello",result:""},
+              ]
+            }
+          }
+          ,
+          mounted () {
+            $('[data-toggle="tooltip"]').tooltip()
+          },
+          methods: {
+            changeTab(tabName,e) {
+              //选中状态的变更
+              $(e.target).parent().siblings().removeClass("active");
+              $(e.target).parent().addClass("active");
+              switch (tabName) {
+                case "pannel_UAT":
+                  $("#pannel_DEV").hide();
+                  $("#pannel_UAT").show();
+                  break;
+                case "pannel_DEV":
+                  $("#pannel_DEV").show();
+                  $("#pannel_UAT").hide();
+                  break
+              }
+            },
+           execJob: function(item) {
+             var me = this;
+             item.result="执行中...";
+
+             if (item.url === "UAT") {
+               axios.get(me.uatServeUri, {
+                 params:{
+                   filePath: item.filePath
+                 }
+               }).then(response => {
+
+                 alert(response.data);
+                 item.result = response.data;
+
+
+                 setTimeout(function () {
+                   item.result = ""
+                 },10000);
+
+               });
+             } else {
+
+               axios.get(item.url).then(response => {
+                 alert(response.data);
+                 item.result = response.data;
+
+                 setTimeout(function () {
+                   item.result = ""
+                 },5000);
+               });
+
+             }
+           }
+
+          }
+        }).mount('#app')
+      </script>
+    </head>
+    <body>
+        <div class="container" id="app">
+            <h1>开发提效工具集： <small>—— up up!</small></h1>
+
+            <blockquote>
+                <p>{{ message }}</p>
+                <footer>zhangyi85 <cite title="Source Title">zhangyi85@xiaomi.com</cite></footer>
+            </blockquote>
+
+          <p> <code>【说明】</code> 直接调用价格的相关job</p>
+          <hr>
+          <ul class="nav nav-pills">
+            <li role="presentation"  class="active" >
+              <a href="javascript:void(0)" @click="changeTab('pannel_UAT',$event)">UAT环境</a>
+            </li>
+            <li role="presentation"><a href="javascript:void(0)" @click="changeTab('pannel_DEV',$event)">DEV环境</a></li>
+          </ul>
+          <br>
+          <div class="panel panel-default" id="pannel_UAT">
+            <div class="panel-heading">UAT作业列表</div>
+            <div class="panel-body">
+              <table class="table table-bordered" id="table_UAT">
+                <thead>
+                <tr >
+                  <th>#</th>
+                  <th class="text-center col-md-4">
+                    业务触发点
+                  </th>
+                  <th class="text-center col-md-4" >Job名称</th>
+                  <th class="text-center col-md-2">操作</th>
+                  <th class="text-center col-md-2">返回结果</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in items" >
+                  <td style="vertical-align: middle;">{{ index + 1 }}</td>
+                  <td style="vertical-align: middle;">
+<!--                    <img src="" alt="" class="img-thumbnail">-->
+                     {{ item.remark }}
+                  </td>
+                  <td style="vertical-align: middle;">
+                  <span  :title="item.filePath">
+                     {{ item.name }}
+                  </span>
+                  </td>
+                  <td style="vertical-align: middle;" class="text-center">
+                    <button type="button" class="btn btn-primary btn-sm text-center"
+                            @click="execJob(item)">立即执行</button>
+                  </td>
+                  <td style="vertical-align: middle;" class="text-center">{{ item.result}}</td>
+                </tr>
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+          <div class="panel panel-default" id="pannel_DEV" style="display: none">
+            <div class="panel-heading">DEV作业列表</div>
+            <div class="panel-body">
+              <table class="table table-bordered" id="table_DEV" >
+                <thead>
+                <tr >
+                  <th>#</th>
+                  <th class="text-center col-md-4">
+                    业务触发点
+                  </th>
+                  <th class="text-center col-md-4" >Job名称</th>
+                  <th class="text-center col-md-2">操作</th>
+                  <th class="text-center col-md-2">返回结果</th>
+                </tr>
+
+                </thead>
+                <tbody>
+                <tr v-for="(item,index) in itemsDev" >
+                  <td style="vertical-align: middle;">{{ index + 1 }}</td>
+                  <td style="vertical-align: middle;">
+                    <!--                    <img src="" alt="" class="img-thumbnail">-->
+                   <span data-toggle="tooltip" title="test"> {{ item.remark }} </span>
+                  </td>
+                  <td style="vertical-align: middle;">{{ item.name }}</td>
+                  <td style="vertical-align: middle;" class="text-center">
+                    <button type="button" class="btn btn-primary btn-sm text-center"
+                            @click="execJob(item)">立即执行</button>
+                  </td>
+                  <td style="vertical-align: middle;" class="text-center">{{ item.result}}</td>
+                </tr>
+                </tbody>
+
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+    </body>
+<style type="text/css">
+
+
+</style>
+</html>
