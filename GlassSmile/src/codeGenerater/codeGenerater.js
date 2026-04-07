@@ -10,7 +10,10 @@ const TABLE_SCHEMA = 'intl_commission_system_price';
 const COLUMN_BLACKLIST = new Set(['create_user', 'create_time', 'update_user', 'update_time']);
 
 const TEMPLATE_ROOT = __dirname;
-const OUTPUT_ROOT = path.join(TEMPLATE_ROOT, 'code');
+const LOCAL_OUTPUT_ROOT = path.join(TEMPLATE_ROOT, 'code');
+const BACKEND_PROJECT_ROOT = process.env.CODEGEN_BACKEND_ROOT || 'C:\\code\\mi-intl-price';
+const OUTPUT_MODE = (process.env.CODEGEN_OUTPUT_MODE || 'backend').toLowerCase(); // backend | local
+const DRY_RUN = String(process.env.CODEGEN_DRY_RUN || '').toLowerCase() === 'true';
 
 const params = [
   {
@@ -23,69 +26,108 @@ const params = [
   }
 ];
 
+function backendJavaPath(moduleName, ...parts) {
+  return path.join(
+    BACKEND_PROJECT_ROOT,
+    moduleName,
+    'src',
+    'main',
+    'java',
+    'com',
+    'xiaomi',
+    'intl',
+    'crm',
+    'price',
+    ...parts
+  );
+}
+
+function resolveOutputPathByMode(mode, localPath, backendPath) {
+  return mode === 'backend' ? backendPath : localPath;
+}
+
 const templateJobs = [
   {
     templateName: 'Mapper.java',
-    outputFile: (context) => path.join(OUTPUT_ROOT, 'mapper', `${context.entityName}Mapper.java`)
+    outputFile: (context, mode) => resolveOutputPathByMode(
+      mode,
+      path.join(LOCAL_OUTPUT_ROOT, 'mapper', `${context.entityName}Mapper.java`),
+      backendJavaPath('intl-crm-price-infra', 'infra', 'database', 'mapper', context.fileDirName, `${context.entityName}Mapper.java`)
+    )
   },
   {
     templateName: 'Repository.java',
-    outputFile: (context) => path.join(OUTPUT_ROOT, 'repo', `${context.entityName}Repository.java`)
+    outputFile: (context, mode) => resolveOutputPathByMode(
+      mode,
+      path.join(LOCAL_OUTPUT_ROOT, 'repo', `${context.entityName}Repository.java`),
+      backendJavaPath('intl-crm-price-domain', 'domain', context.fileDirName, 'repo', `${context.entityName}Repository.java`)
+    )
   },
   {
     templateName: 'RepositoryImpl.java',
-    outputFile: (context) => path.join(OUTPUT_ROOT, 'repository', `${context.entityName}RepositoryImpl.java`)
+    outputFile: (context, mode) => resolveOutputPathByMode(
+      mode,
+      path.join(LOCAL_OUTPUT_ROOT, 'repository', `${context.entityName}RepositoryImpl.java`),
+      backendJavaPath('intl-crm-price-infra', 'infra', 'repository', context.fileDirName, `${context.entityName}RepositoryImpl.java`)
+    )
   },
   {
     templateName: 'DO.java',
-    outputFile: (context) => path.join(OUTPUT_ROOT, 'dataobject', `${context.entityName}DO.java`)
+    outputFile: (context, mode) => resolveOutputPathByMode(
+      mode,
+      path.join(LOCAL_OUTPUT_ROOT, 'dataobject', `${context.entityName}DO.java`),
+      backendJavaPath('intl-crm-price-infra', 'infra', 'database', 'dataobject', context.fileDirName, `${context.entityName}DO.java`)
+    )
   },
   {
     templateName: 'Entity.java',
-    outputFile: (context) => path.join(OUTPUT_ROOT, 'entity', `${context.entityName}.java`)
+    outputFile: (context, mode) => resolveOutputPathByMode(
+      mode,
+      path.join(LOCAL_OUTPUT_ROOT, 'entity', `${context.entityName}.java`),
+      backendJavaPath('intl-crm-price-domain', 'domain', context.fileDirName, 'entity', `${context.entityName}.java`)
+    )
   },
   {
     templateName: 'DTO.java',
-    outputFile: (context) => path.join(OUTPUT_ROOT, 'dto', `${context.entityName}DTO.java`)
+    outputFile: (context, mode) => resolveOutputPathByMode(
+      mode,
+      path.join(LOCAL_OUTPUT_ROOT, 'dto', `${context.entityName}DTO.java`),
+      backendJavaPath('intl-crm-price-api', 'api', 'dto', context.fileDirName, `${context.entityName}DTO.java`)
+    )
   },
   {
     templateName: 'ApiService.java',
-    outputFile: (context) => path.join(OUTPUT_ROOT, 'api', 'service', context.fileDirName, `I${context.entityName}Service.java`)
+    outputFile: (context, mode) => resolveOutputPathByMode(
+      mode,
+      path.join(LOCAL_OUTPUT_ROOT, 'api', 'service', context.fileDirName, `I${context.entityName}Service.java`),
+      backendJavaPath('intl-crm-price-api', 'api', 'service', context.fileDirName, `I${context.entityName}Service.java`)
+    )
   },
   {
     templateName: 'AppService.java',
-    outputFile: (context) => path.join(OUTPUT_ROOT, 'app', 'service', context.fileDirName, `${context.entityName}Service.java`)
+    outputFile: (context, mode) => resolveOutputPathByMode(
+      mode,
+      path.join(LOCAL_OUTPUT_ROOT, 'app', 'service', context.fileDirName, `${context.entityName}Service.java`),
+      backendJavaPath('intl-crm-price-app', 'app', 'service', context.fileDirName, `${context.entityName}Service.java`)
+    )
   },
   {
     templateName: 'DomainService.java',
-    outputFile: (context) => path.join(OUTPUT_ROOT, 'service', `${context.entityName}DomainService.java`)
+    outputFile: (context, mode) => resolveOutputPathByMode(
+      mode,
+      path.join(LOCAL_OUTPUT_ROOT, 'service', `${context.entityName}DomainService.java`),
+      backendJavaPath('intl-crm-price-domain', 'domain', context.fileDirName, 'service', `${context.entityName}DomainService.java`)
+    )
   },
   {
     templateName: 'Controller.java',
-    outputFile: (context) => path.join(OUTPUT_ROOT, 'controller', `${context.entityName}Controller.java`)
+    outputFile: (context, mode) => resolveOutputPathByMode(
+      mode,
+      path.join(LOCAL_OUTPUT_ROOT, 'controller', `${context.entityName}Controller.java`),
+      backendJavaPath('intl-crm-price-adaptor', 'adaptor', 'controller', context.fileDirName, `${context.entityName}Controller.java`)
+    )
   }
 ];
-
-function ensureOutputDirectories() {
-  const directories = [
-    'mapper',
-    'repo',
-    'repository',
-    'dataobject',
-    'entity',
-    'dto',
-    'controller',
-    path.join('api', 'service'),
-    path.join('api', 'service', FILE_DIR_NAME),
-    path.join('app', 'service'),
-    path.join('app', 'service', FILE_DIR_NAME),
-    path.join('service')
-  ];
-
-  directories.forEach((dir) => {
-    fs.mkdirSync(path.join(OUTPUT_ROOT, dir), { recursive: true });
-  });
-}
 
 function loadTemplates() {
   const templateNames = [...new Set(templateJobs.map((job) => job.templateName))];
@@ -192,8 +234,35 @@ function buildContext(param, fieldBlocks) {
 }
 
 function writeFileSafely(filePath, content) {
+  if (DRY_RUN) {
+    console.log(`[DRY_RUN] Skip write: ${filePath}`);
+    return;
+  }
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
   fs.writeFileSync(filePath, content, 'utf8');
+}
+
+function clearLocalOutputRootIfNeeded() {
+  if (OUTPUT_MODE !== 'local') {
+    return;
+  }
+  if (DRY_RUN) {
+    console.log(`[DRY_RUN] Skip clear local output root: ${LOCAL_OUTPUT_ROOT}`);
+    return;
+  }
+
+  const resolvedTemplateRoot = path.resolve(TEMPLATE_ROOT);
+  const resolvedLocalOutputRoot = path.resolve(LOCAL_OUTPUT_ROOT);
+  const expectedLocalOutputRoot = path.join(resolvedTemplateRoot, 'code');
+  if (resolvedLocalOutputRoot !== expectedLocalOutputRoot) {
+    throw new Error(
+      `Refuse to clear unexpected local output root: ${resolvedLocalOutputRoot}. Expected: ${expectedLocalOutputRoot}`
+    );
+  }
+
+  fs.rmSync(resolvedLocalOutputRoot, { recursive: true, force: true });
+  fs.mkdirSync(resolvedLocalOutputRoot, { recursive: true });
+  console.log(`Cleared local output root: ${resolvedLocalOutputRoot}`);
 }
 
 async function generateForTable(queryAsync, templates, param) {
@@ -225,21 +294,23 @@ async function generateForTable(queryAsync, templates, param) {
       content = content.replace(/{{fields}}/g, context.dtoFields);
     }
 
-    const outputFile = job.outputFile(context);
+    const outputFile = job.outputFile(context, OUTPUT_MODE);
     writeFileSafely(outputFile, content);
     console.log(`Generated: ${outputFile}`);
   });
 
-  // Compatibility cleanup: remove old-style generated impl file.
-  const legacyDomainServiceImplFile = path.join(
-    OUTPUT_ROOT,
-    'service',
-    'impl',
-    `${context.entityName}DomainServiceImpl.java`
-  );
-  if (fs.existsSync(legacyDomainServiceImplFile)) {
-    fs.unlinkSync(legacyDomainServiceImplFile);
-    console.log(`Removed legacy file: ${legacyDomainServiceImplFile}`);
+  // Compatibility cleanup for local output.
+  if (OUTPUT_MODE === 'local') {
+    const legacyDomainServiceImplFile = path.join(
+      LOCAL_OUTPUT_ROOT,
+      'service',
+      'impl',
+      `${context.entityName}DomainServiceImpl.java`
+    );
+    if (fs.existsSync(legacyDomainServiceImplFile) && !DRY_RUN) {
+      fs.unlinkSync(legacyDomainServiceImplFile);
+      console.log(`Removed legacy file: ${legacyDomainServiceImplFile}`);
+    }
   }
 }
 
@@ -249,14 +320,24 @@ async function main() {
     return;
   }
 
-  ensureOutputDirectories();
+  if (!['backend', 'local'].includes(OUTPUT_MODE)) {
+    throw new Error(`Unsupported CODEGEN_OUTPUT_MODE: ${OUTPUT_MODE}. Expected backend or local.`);
+  }
+  if (OUTPUT_MODE === 'backend' && !fs.existsSync(BACKEND_PROJECT_ROOT)) {
+    throw new Error(`Backend project root not found: ${BACKEND_PROJECT_ROOT}`);
+  }
+
+  clearLocalOutputRootIfNeeded();
+
   const templates = loadTemplates();
 
   const connectAsync = util.promisify(cnn.connect).bind(cnn);
   const queryAsync = util.promisify(cnn.query).bind(cnn);
   const endAsync = util.promisify(cnn.end).bind(cnn);
 
-  console.log(`Start generate. tables=${params.length}, schema=${TABLE_SCHEMA}, module=${FILE_DIR_NAME}`);
+  console.log(
+    `Start generate. tables=${params.length}, schema=${TABLE_SCHEMA}, module=${FILE_DIR_NAME}, mode=${OUTPUT_MODE}, dryRun=${DRY_RUN}`
+  );
 
   await connectAsync();
   try {
