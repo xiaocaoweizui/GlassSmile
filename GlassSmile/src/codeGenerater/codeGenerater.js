@@ -12,7 +12,9 @@ const COLUMN_BLACKLIST = new Set(['create_user', 'create_time', 'update_user', '
 const TEMPLATE_ROOT = __dirname;
 const LOCAL_OUTPUT_ROOT = path.join(TEMPLATE_ROOT, 'code');
 const BACKEND_PROJECT_ROOT = process.env.CODEGEN_BACKEND_ROOT || 'C:\\code\\mi-intl-price';
-const OUTPUT_MODE = (process.env.CODEGEN_OUTPUT_MODE || 'backend').toLowerCase(); // backend | local
+const DEFAULT_OUTPUT_MODE = 'backend';
+const RAW_OUTPUT_MODE = String(process.env.CODEGEN_OUTPUT_MODE || '').trim().toLowerCase();
+const OUTPUT_MODE = ['backend', 'local'].includes(RAW_OUTPUT_MODE) ? RAW_OUTPUT_MODE : DEFAULT_OUTPUT_MODE;
 const DRY_RUN = String(process.env.CODEGEN_DRY_RUN || '').toLowerCase() === 'true';
 
 const params = [
@@ -320,8 +322,10 @@ async function main() {
     return;
   }
 
-  if (!['backend', 'local'].includes(OUTPUT_MODE)) {
-    throw new Error(`Unsupported CODEGEN_OUTPUT_MODE: ${OUTPUT_MODE}. Expected backend or local.`);
+  if (RAW_OUTPUT_MODE && !['backend', 'local'].includes(RAW_OUTPUT_MODE)) {
+    console.warn(
+      `Unsupported CODEGEN_OUTPUT_MODE: ${RAW_OUTPUT_MODE}. Fallback to default mode: ${DEFAULT_OUTPUT_MODE}.`
+    );
   }
   if (OUTPUT_MODE === 'backend' && !fs.existsSync(BACKEND_PROJECT_ROOT)) {
     throw new Error(`Backend project root not found: ${BACKEND_PROJECT_ROOT}`);
