@@ -49,12 +49,20 @@ const templateJobs = [
     outputFile: (context) => path.join(OUTPUT_ROOT, 'dto', `${context.entityName}DTO.java`)
   },
   {
+    templateName: 'ApiService.java',
+    outputFile: (context) => path.join(OUTPUT_ROOT, 'api', 'service', context.fileDirName, `I${context.entityName}Service.java`)
+  },
+  {
+    templateName: 'AppService.java',
+    outputFile: (context) => path.join(OUTPUT_ROOT, 'app', 'service', context.fileDirName, `${context.entityName}Service.java`)
+  },
+  {
     templateName: 'DomainService.java',
     outputFile: (context) => path.join(OUTPUT_ROOT, 'service', `${context.entityName}DomainService.java`)
   },
   {
-    templateName: 'DomainServiceImpl.java',
-    outputFile: (context) => path.join(OUTPUT_ROOT, 'service', 'impl', `${context.entityName}DomainServiceImpl.java`)
+    templateName: 'Controller.java',
+    outputFile: (context) => path.join(OUTPUT_ROOT, 'controller', `${context.entityName}Controller.java`)
   }
 ];
 
@@ -66,8 +74,12 @@ function ensureOutputDirectories() {
     'dataobject',
     'entity',
     'dto',
-    path.join('service'),
-    path.join('service', 'impl')
+    'controller',
+    path.join('api', 'service'),
+    path.join('api', 'service', FILE_DIR_NAME),
+    path.join('app', 'service'),
+    path.join('app', 'service', FILE_DIR_NAME),
+    path.join('service')
   ];
 
   directories.forEach((dir) => {
@@ -217,6 +229,18 @@ async function generateForTable(queryAsync, templates, param) {
     writeFileSafely(outputFile, content);
     console.log(`Generated: ${outputFile}`);
   });
+
+  // Compatibility cleanup: remove old-style generated impl file.
+  const legacyDomainServiceImplFile = path.join(
+    OUTPUT_ROOT,
+    'service',
+    'impl',
+    `${context.entityName}DomainServiceImpl.java`
+  );
+  if (fs.existsSync(legacyDomainServiceImplFile)) {
+    fs.unlinkSync(legacyDomainServiceImplFile);
+    console.log(`Removed legacy file: ${legacyDomainServiceImplFile}`);
+  }
 }
 
 async function main() {
