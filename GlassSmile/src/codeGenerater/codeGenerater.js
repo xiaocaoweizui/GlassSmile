@@ -5,7 +5,7 @@ const util = require('util');
 const cnn = require('../tools/database.js');
 const codeTools = require('./codeTools');
 
-const FILE_DIR_NAME = 'grant';
+const DEFAULT_FILE_DIR_NAME = 'grant';
 const TABLE_SCHEMA = 'intl_commission_system_price';
 const COLUMN_BLACKLIST = new Set(['create_user', 'create_time', 'update_user', 'update_time']);
 
@@ -16,6 +16,18 @@ const DEFAULT_OUTPUT_MODE = 'backend';
 const RAW_OUTPUT_MODE = String(process.env.CODEGEN_OUTPUT_MODE || '').trim().toLowerCase();
 const OUTPUT_MODE = ['backend', 'local'].includes(RAW_OUTPUT_MODE) ? RAW_OUTPUT_MODE : DEFAULT_OUTPUT_MODE;
 const DRY_RUN = String(process.env.CODEGEN_DRY_RUN || '').toLowerCase() === 'true';
+
+function resolveFileDirName(rawValue) {
+  const value = String(rawValue || DEFAULT_FILE_DIR_NAME).trim().toLowerCase();
+  if (!/^[a-z][a-z0-9_]*$/.test(value)) {
+    throw new Error(
+      `Unsupported CODEGEN_FILE_DIR_NAME: ${rawValue}. Expected pattern: ^[a-z][a-z0-9_]*$`
+    );
+  }
+  return value;
+}
+
+const FILE_DIR_NAME = resolveFileDirName(process.env.CODEGEN_FILE_DIR_NAME);
 
 const DEFAULT_PARAMS = [
   {
