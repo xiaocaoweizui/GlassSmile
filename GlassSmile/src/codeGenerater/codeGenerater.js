@@ -17,7 +17,7 @@ const RAW_OUTPUT_MODE = String(process.env.CODEGEN_OUTPUT_MODE || '').trim().toL
 const OUTPUT_MODE = ['backend', 'local'].includes(RAW_OUTPUT_MODE) ? RAW_OUTPUT_MODE : DEFAULT_OUTPUT_MODE;
 const DRY_RUN = String(process.env.CODEGEN_DRY_RUN || '').toLowerCase() === 'true';
 
-const params = [
+const DEFAULT_PARAMS = [
   {
     tableName: 'country_grant_price',
     remark: 'Country grant price'
@@ -27,6 +27,33 @@ const params = [
     remark: 'Country grant price history'
   }
 ];
+
+function parseTableNamesFromEnv(value) {
+  if (!value) {
+    return [];
+  }
+  return String(value)
+    .split(',')
+    .map((item) => item.trim().toLowerCase())
+    .filter(Boolean)
+    .filter((item, index, arr) => arr.indexOf(item) === index);
+}
+
+function buildRemarkFromTableName(tableName) {
+  return String(tableName || '')
+    .split('_')
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+const TABLE_NAMES_FROM_ENV = parseTableNamesFromEnv(process.env.CODEGEN_TABLES);
+const params = TABLE_NAMES_FROM_ENV.length > 0
+  ? TABLE_NAMES_FROM_ENV.map((tableName) => ({
+    tableName,
+    remark: buildRemarkFromTableName(tableName)
+  }))
+  : DEFAULT_PARAMS;
 
 function backendJavaPath(moduleName, ...parts) {
   return path.join(
