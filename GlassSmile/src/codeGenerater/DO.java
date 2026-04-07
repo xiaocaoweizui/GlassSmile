@@ -1,4 +1,4 @@
-package com.xiaomi.intl.crm.price.infra.database.dataobject.price;
+package com.xiaomi.intl.crm.price.infra.database.dataobject.{{fileDirName}};
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -11,7 +11,8 @@ import lombok.EqualsAndHashCode;
 import java.math.BigDecimal;
 
 /**
- * 国际底价主表
+ * {{remark}} table
+ * @author zhangyi85
  */
 @EqualsAndHashCode(callSuper = true)
 @TableName("{{tableName}}")

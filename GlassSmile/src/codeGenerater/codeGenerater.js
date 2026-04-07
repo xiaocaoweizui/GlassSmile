@@ -1,89 +1,252 @@
 const fs = require('fs');
-var cnn = require('../tools/database.js');
-var codeTools = require('./codeTools');
+const path = require('path');
+const util = require('util');
 
-var param = {
-  tableName: 'price_data_dict',
-  entityName: 'PriceDataDict'
+const cnn = require('../tools/database.js');
+const codeTools = require('./codeTools');
+
+const FILE_DIR_NAME = 'grant';
+const TABLE_SCHEMA = 'intl_commission_system_price';
+const COLUMN_BLACKLIST = new Set(['create_user', 'create_time', 'update_user', 'update_time']);
+
+const TEMPLATE_ROOT = __dirname;
+const OUTPUT_ROOT = path.join(TEMPLATE_ROOT, 'code');
+
+const params = [
+  {
+    tableName: 'country_grant_price',
+    remark: 'Country grant price'
+  },
+  {
+    tableName: 'country_grant_price_his',
+    remark: 'Country grant price history'
+  }
+];
+
+const templateJobs = [
+  {
+    templateName: 'Mapper.java',
+    outputFile: (context) => path.join(OUTPUT_ROOT, 'mapper', `${context.entityName}Mapper.java`)
+  },
+  {
+    templateName: 'Repository.java',
+    outputFile: (context) => path.join(OUTPUT_ROOT, 'repo', `${context.entityName}Repository.java`)
+  },
+  {
+    templateName: 'RepositoryImpl.java',
+    outputFile: (context) => path.join(OUTPUT_ROOT, 'repository', `${context.entityName}RepositoryImpl.java`)
+  },
+  {
+    templateName: 'DO.java',
+    outputFile: (context) => path.join(OUTPUT_ROOT, 'dataobject', `${context.entityName}DO.java`)
+  },
+  {
+    templateName: 'Entity.java',
+    outputFile: (context) => path.join(OUTPUT_ROOT, 'entity', `${context.entityName}.java`)
+  },
+  {
+    templateName: 'DTO.java',
+    outputFile: (context) => path.join(OUTPUT_ROOT, 'dto', `${context.entityName}DTO.java`)
+  },
+  {
+    templateName: 'DomainService.java',
+    outputFile: (context) => path.join(OUTPUT_ROOT, 'service', `${context.entityName}DomainService.java`)
+  },
+  {
+    templateName: 'DomainServiceImpl.java',
+    outputFile: (context) => path.join(OUTPUT_ROOT, 'service', 'impl', `${context.entityName}DomainServiceImpl.java`)
+  }
+];
+
+function ensureOutputDirectories() {
+  const directories = [
+    'mapper',
+    'repo',
+    'repository',
+    'dataobject',
+    'entity',
+    'dto',
+    path.join('service'),
+    path.join('service', 'impl')
+  ];
+
+  directories.forEach((dir) => {
+    fs.mkdirSync(path.join(OUTPUT_ROOT, dir), { recursive: true });
+  });
 }
-var querySQL = `SELECT COLUMN_NAME,
-                       DATA_TYPE,
-                       IS_NULLABLE,
-                       COLUMN_DEFAULT,
-                       COLUMN_COMMENT
-                FROM INFORMATION_SCHEMA.COLUMNS
-                WHERE TABLE_NAME = '${param.tableName}'
-                ORDER BY ORDINAL_POSITION;`
 
+function loadTemplates() {
+  const templateNames = [...new Set(templateJobs.map((job) => job.templateName))];
+  const templates = {};
 
+  templateNames.forEach((templateName) => {
+    const templatePath = path.join(TEMPLATE_ROOT, templateName);
+    templates[templateName] = fs.readFileSync(templatePath, 'utf8');
+  });
 
-//1、写mapper文件
-fs.readFile('mapper.java', 'utf8', function (err, data) {
-  if (err) {
-    console.error('读取文件出错:', err)
-    return
+  return templates;
+}
+
+function renderTemplate(template, context) {
+  return template.replace(/{{(\w+)}}/g, (fullMatch, key) => {
+    const value = context[key];
+    return value === undefined || value === null ? '' : String(value);
+  });
+}
+
+async function queryColumns(queryAsync, tableName) {
+  const querySql = `
+    SELECT COLUMN_NAME,
+           DATA_TYPE,
+           IS_NULLABLE,
+           COLUMN_DEFAULT,
+           COLUMN_COMMENT
+    FROM INFORMATION_SCHEMA.COLUMNS
+    WHERE TABLE_NAME = ?
+      AND TABLE_SCHEMA = ?
+    ORDER BY ORDINAL_POSITION;
+  `;
+
+  const rows = await queryAsync(querySql, [tableName, TABLE_SCHEMA]);
+  if (!Array.isArray(rows)) {
+    throw new Error(`Unexpected query result for table ${tableName}`);
   }
-  const result = data.replace(/{{EntityName}}/g, param.tableName)
-  console.log('当前工作目录:', process.cwd());
-  const path = require('path');
-  const dir = path.join(process.cwd(), 'code');
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
+
+  return rows.filter((row) => !COLUMN_BLACKLIST.has(String(row.COLUMN_NAME).toLowerCase()));
+}
+
+function buildFieldBlocks(columns) {
+  const doFields = [];
+  const entityFields = [];
+  const dtoFields = [];
+
+  columns.forEach((column) => {
+    const columnName = column.COLUMN_NAME;
+    const columnComment = column.COLUMN_COMMENT || columnName;
+    const javaName = codeTools.toJavaName(columnName);
+    const javaType = codeTools.toJavaType(column.DATA_TYPE);
+    const javaDtoType = codeTools.toJavaDtoType(column.DATA_TYPE, columnName);
+    const isPrimaryKey = javaName === 'id';
+
+    const tableField = isPrimaryKey
+      ? '@TableId(type = IdType.AUTO)'
+      : `@TableField("${columnName}")`;
+
+    doFields.push(`
+    /**
+     * ${columnComment}
+     */
+    ${tableField}
+    private ${javaType} ${javaName};`);
+
+    entityFields.push(`
+    /**
+     * ${columnComment}
+     */
+    private ${javaType} ${javaName};`);
+
+    const jsonFormat = javaDtoType === 'DateTime'
+      ? '@JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")\n    '
+      : '';
+
+    dtoFields.push(`
+    /**
+     * ${columnComment}
+     */
+    ${jsonFormat}private ${javaDtoType} ${javaName};`);
+  });
+
+  return {
+    fields: doFields.join('\n'),
+    entityFields: entityFields.join('\n'),
+    dtoFields: dtoFields.join('\n')
+  };
+}
+
+function buildContext(param, fieldBlocks) {
+  const entityName = codeTools.toJavaUpperName(param.tableName);
+  const entityNameLower = codeTools.toJavaVariableName(param.tableName);
+
+  return {
+    entityName,
+    entityNameLower,
+    fileDirName: FILE_DIR_NAME,
+    tableName: param.tableName,
+    remark: param.remark,
+    fields: fieldBlocks.fields,
+    entityFields: fieldBlocks.entityFields,
+    dtoFields: fieldBlocks.dtoFields
+  };
+}
+
+function writeFileSafely(filePath, content) {
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(filePath, content, 'utf8');
+}
+
+async function generateForTable(queryAsync, templates, param) {
+  const columns = await queryColumns(queryAsync, param.tableName);
+  if (columns.length === 0) {
+    console.warn(`Skip ${param.tableName}: no available columns.`);
+    return;
   }
 
-  let fileName = `./code/${param.entityName}Mapper.java`;
-  console.log(fileName);
-  fs.writeFile(fileName, result, 'utf8', function (err) {
-    if (err) {
-      console.error('写入文件出错:', err)
-    } else {
-      console.log('文件写入成功')
+  const fieldBlocks = buildFieldBlocks(columns);
+  const context = buildContext(param, fieldBlocks);
+
+  templateJobs.forEach((job) => {
+    const template = templates[job.templateName];
+    const renderContext = {
+      ...context,
+      // Keep backward compatibility with historical templates.
+      fields: context.fields,
+      entityFields: context.entityFields,
+      dtoFields: context.dtoFields
+    };
+
+    let content = renderTemplate(template, renderContext);
+    // Backward compatibility: old templates used {{fields}} for Entity/DTO.
+    if (job.templateName === 'Entity.java') {
+      content = content.replace(/{{fields}}/g, context.entityFields);
     }
-  })
-})
-//
-// //2、写DO文件
-// cnn.connect();
-// cnn.query(querySQL, function (err, result) {
-//   if (!Array.isArray(result)) {
-//     console.error('查询结果不是有效数组:', result);
-//     return;
-//   }
-//   //1、构造代码段
-//   var strBuilder = [];
-//   for (let i = 0; i < result.length; i++) {
-//     let row = result[i];
-//     let javaName = codeTools.toJavaName(row.COLUMN_NAME)
-//     let javaType = codeTools.toJavaType(row.DATA_TYPE)
-//     let tableField = `@TableField("${row.COLUMN_NAME}")`
-//     //主键为常量id
-//     if (javaName === 'id') {
-//       tableField = `@TableId(type = IdType.AUTO)`
-//     }
-//     let str = `
-//     /**
-//      * ${row.COLUMN_COMMENT}
-//      */
-//     ${tableField}
-//     private ${javaType} ${javaName};
-//     `
-//     strBuilder.push(str)
-//   }
-//
-//   fs.readFile('DO.java', 'utf8', function (err, data) {
-//     if (err) {
-//       console.error('读取文件出错:', err)
-//       return
-//     }
-//     const result = data.replace(/{{entityName}}/g, param.entityName).replace(/{{tableName}}/g, param.tableName).replace(/{{fields}}/g, strBuilder.join('\n'));
-//     fs.writeFile(`./code/${param.entityName}DO.java`, result, 'utf8', function (err) {
-//       if (err) {
-//         console.error('写入文件出错:', err)
-//       } else {
-//         console.log('文件写入成功')
-//       }
-//     })
-//   })
-// })
+    if (job.templateName === 'DTO.java') {
+      content = content.replace(/{{fields}}/g, context.dtoFields);
+    }
 
-cnn.end()
+    const outputFile = job.outputFile(context);
+    writeFileSafely(outputFile, content);
+    console.log(`Generated: ${outputFile}`);
+  });
+}
+
+async function main() {
+  if (!Array.isArray(params) || params.length === 0) {
+    console.warn('No tables configured in params.');
+    return;
+  }
+
+  ensureOutputDirectories();
+  const templates = loadTemplates();
+
+  const connectAsync = util.promisify(cnn.connect).bind(cnn);
+  const queryAsync = util.promisify(cnn.query).bind(cnn);
+  const endAsync = util.promisify(cnn.end).bind(cnn);
+
+  console.log(`Start generate. tables=${params.length}, schema=${TABLE_SCHEMA}, module=${FILE_DIR_NAME}`);
+
+  await connectAsync();
+  try {
+    for (const param of params) {
+      await generateForTable(queryAsync, templates, param);
+    }
+  } finally {
+    await endAsync();
+  }
+
+  console.log('Generate finished.');
+}
+
+main().catch((error) => {
+  console.error('Generate failed:', error);
+  process.exitCode = 1;
+});
